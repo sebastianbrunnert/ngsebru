@@ -1,0 +1,14 @@
+<form (submit)="submit()" id="form">
+	<div class="form-group mt" *ngFor="let input of this.ngSForm.inputs; index as i">
+		<ngs-input [ngSInput]="input"></ngs-input>
+	</div>
+
+	<ng-content></ng-content>
+	
+	<div class="d-grid gap-2">
+		<button class="btn btn-primary mt-4 shadow-none" type="submit">
+			{{this.submitText}}
+			<div class="spinner-border spinner-border-sm text-white" role="status" *ngIf="this.ngSForm.loading"></div>
+		</button>
+	</div>
+</form>

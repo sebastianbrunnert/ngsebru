@@ -1,0 +1,30 @@
+.img-responsive, .img-responsive-hover {
+    position: relative;
+    width: auto;
+    height: 200px;
+}
+
+.img-responsive-hover img, .img-responsive img {
+    height: 100%;
+    transition: all 0.2s ease-in;
+}
+
+.img-responsive-hover:hover i {
+    display: block;
+}
+
+.img-responsive-hover:hover img {
+    filter: brightness(0.7);
+    -webkit-filter: brightness(0.7);
+}
+
+.img-responsive-hover i {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: transparent !important;
+    background-color: transparent !important;
+}

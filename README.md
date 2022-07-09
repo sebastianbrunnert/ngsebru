@@ -1,27 +1,16 @@
-# NgSebruUtils
+# NgSebruLib
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+My personal library for standardized parts of Angular apps. If you want to, use it, but there is no documentation of the interface.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- `ng build ng-sebru-lib`
+- `cd dist/ng-sebru-lib`
+- `npm publish`
 
-## Running unit tests
+## Installation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- `npm install ng-sebru-lib`
+- Include ng-sebru-lib css
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Or simply use this repository as template. Pay attention to git initialization (multiple remote origins)

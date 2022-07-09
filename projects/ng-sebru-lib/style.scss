@@ -1,0 +1,28 @@
+$iconColor: red;
+
+@import "~node_modules/font-awesome/css/font-awesome.min.css";
+@import "~node_modules/bootstrap/scss/bootstrap.scss";
+
+.mt {
+    margin-top: 1rem;
+}
+
+.mb {
+    margin-bottom: 1rem;
+}
+
+.mt-md {
+    margin-top: 2rem;
+}
+
+.mt-xl {
+    margin-top: 6rem;
+}
+
+.hover {
+    cursor: pointer;
+}
+
+.fa, .icon {
+    color: $iconColor;
+}

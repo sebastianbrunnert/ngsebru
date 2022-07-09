@@ -1,0 +1,16 @@
+<ng-template #modalContent let-openModal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{this.modal.title}}</h4>
+        <button type="button" class="btn-close shadow-none" (click)="openModal.dismiss()"></button>
+    </div>
+    <div class="modal-body">
+        <span *ngIf="this.modal.text">{{this.modal.text}}</span>
+        <ngs-form *ngIf="this.modal.ngSForm.isExistant()" [ngSForm]="this.modal.ngSForm"></ngs-form>
+        <ng-content></ng-content>
+    </div>
+    <div class="modal-footer" *ngIf="this.modal.buttons.length > 0">
+        <ng-container *ngFor="let button of this.modal.buttons">
+            <button type="button" class="btn btn-{{button.highlighted ? 'primary' : 'secondary'}} shadow-none" (click)="button.onClick(); openModal.dismiss()">{{button.title}}</button>
+        </ng-container>
+    </div>
+</ng-template>

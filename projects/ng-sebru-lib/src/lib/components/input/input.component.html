@@ -1,0 +1,121 @@
+<label for="{{this.ngSInput.id}}" *ngIf="this.ngSInput.name && this.ngSInput.type.toString() != 'check'">
+	{{this.ngSInput.name}}
+	<span *ngIf="!this.ngSInput.required">(optional)</span>
+</label>
+<span *ngIf="this.ngSInput.type == 'multipleSelect' && this.ngSInput.value != []">
+	<br>
+	{{this.ngSInput.value.join(", ")}}
+</span>
+<ng-container *ngIf="this.ngSInput.type == 'multipleText' && this.ngSInput.value != []">
+	<span *ngFor="let value of this.ngSInput.value">
+		<br>
+		<i class="fa fa-trash hover" (click)="$any(this.ngSInput).remove(value)"></i>
+		{{value}}
+	</span>
+</ng-container>
+<ng-container *ngIf="this.ngSInput.type == 'files' && this.ngSInput.value.length > 0">
+	<span *ngFor="let file of this.ngSInput.value">
+		<br>
+		<i class="fa fa-trash hover" (click)="$any(this.ngSInput).remove(file)"></i>
+		{{file.name}}
+	</span>
+</ng-container>
+<div class="input-group">
+	<div class="input-group-prepend" *ngIf="this.ngSInput.prefix">
+		<span class="input-group-text">{{this.ngSInput.prefix}}</span>
+	</div>
+	<ng-container *ngIf="['text','number','password','email','datetime-local'].indexOf(this.ngSInput.type.toString()) >= 0">
+		<input *ngIf="this.ngSInput.suffix || this.ngSInput.icon" type="{{this.ngSInput.type}}" class="form-control shadow-none border-end-0 border" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder}}" [(ngModel)]="this.ngSInput.value" [disabled]="this.ngSInput.disabled">		
+		<input *ngIf="!(this.ngSInput.suffix || this.ngSInput.icon)" type="{{this.ngSInput.type}}" class="form-control shadow-none border" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder}}" [(ngModel)]="this.ngSInput.value" [disabled]="this.ngSInput.disabled">		
+		<span class="input-group-append" *ngIf="this.ngSInput.icon">
+			<button (click)="this.ngSInput.onIconClick()" tabindex="-1" type="button" class="btn bg-white shadow-none" style="border-bottom-left-radius: 0; border-top-left-radius: 0; border-top: 0.5px solid #dee2e6; border-bottom: 0.5px solid #dee2e6; border-right: 0.5px solid #dee2e6; min-height: 100%;">
+				<i class="fa fa-{{this.ngSInput.icon}}"></i>
+			</button>
+		</span>
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'check'">
+		<div class="form-check">
+			<input type="checkbox" class="form-check-input shadow-none border" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" [(ngModel)]="this.ngSInput.value">
+			<label class="form-check-label" for="{{this.ngSInput.name}}">{{this.ngSInput.name}}</label>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'file'">
+		<input class="form-control shadow-none border" type="file" [id]="this.ngSInput.id" (change)="$any(this.ngSInput).upload()" name="{{this.ngSInput.name}}">
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'files'">
+		<input class="d-none" type="file" multiple="true" [id]="this.ngSInput.id" (change)="$any(this.ngSInput).upload()" name="{{this.ngSInput.name}}">
+		<button type="button" class="btn shadow-none border btn-secondary" (click)="$any(this.ngSInput).open()">
+			<i class="fa fa-upload"></i>
+			Hochladen
+		</button>
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'images'">
+		<input class="d-none" type="file" multiple="true" [id]="this.ngSInput.id" (change)="$any(this.ngSInput).upload()" name="{{this.ngSInput.name}}">
+		<div class="p-1" *ngFor="let image of $any(this.ngSInput).previews; index as i">
+			<div class="img-responsive-hover hover">
+				<img src="{{image}}" class="img-fluid">
+				<i class="fa fa-trash fa-4x" aria-hidden="true" (click)="$any(this.ngSInput).remove(i)"></i>
+			</div>
+		</div>
+		<div class="p-1 align-self-center">
+			<i class="fa fa-plus fa-4x hover" aria-hidden="true" (click)="$any(this.ngSInput).open()"></i>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'image'">
+		<div class="p-1 align-self-center">
+			<i class="fa fa-upload fa-4x hover" aria-hidden="true" (click)="$any(this.ngSInput).open()"></i>
+		</div>
+		<input style="display: none;" type="file" multiple="false" [id]="this.ngSInput.id" (change)="$any(this.ngSInput).upload()" name="{{this.ngSInput.name}}">
+		<div class="p-1 img-responsive-hover hover" *ngIf="$any(this.ngSInput).preview">
+			<img src="{{$any(this.ngSInput).preview}}" class="img-fluid">
+			<i class="fa fa-trash fa-4x" aria-hidden="true" (click)="$any(this.ngSInput).remove()"></i>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'select'">
+		<select class="form-select border shadow-none" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" [(ngModel)]="this.ngSInput.value" (change)="$any(this.ngSInput).change($event)">
+			<option selected disabled class="text-muted" value="">Auswählen</option>
+			<option *ngFor="let option of $any(this.ngSInput).options">{{option}}</option>
+		</select>
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'textarea'">
+		<textarea class="form-control border shadow-none" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder}}" [(ngModel)]="this.ngSInput.value" [rows]="$any(this.ngSInput).rows"></textarea>
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'multipleSelect'">
+		<select class="form-select border shadow-none" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" (change)="$any(this.ngSInput).choose()">
+			<option selected disabled class="text-muted" value="">Auswählen</option>
+			<option *ngFor="let option of $any(this.ngSInput).options" class="fa" value="{{option}}">
+				<span *ngIf="this.ngSInput.value.includes(option)">&#xf00c;</span>
+				{{option}}
+			</option>
+		</select>
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'multipleText'">
+		<div class="input-group">
+			<input (keydown)="$any(this.ngSInput).enter($event)" class="form-control shadow-none border border-end-0" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder}}" [(ngModel)]="$any(this.ngSInput).internValue">
+			<span class="input-group-append" *ngIf="this.ngSInput.icon">
+				<button (click)="$any(this.ngSInput).add()" tabindex="-1" type="button" class="btn bg-white shadow-none" style="border-bottom-left-radius: 0; border-top-left-radius: 0; border-top: 0.5px solid #dee2e6; border-bottom: 0.5px solid #dee2e6; border-right: 0.5px solid #dee2e6; min-height: 100%;">
+					<i class="fa fa-{{this.ngSInput.icon}}"></i>
+				</button>
+			</span>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'textEditor'">
+		<ckeditor style="min-width: 100%;" [id]="this.ngSInput.name" [editor]="$any(this.ngSInput).Editor" [(ngModel)]="this.ngSInput.value" [config]="{ toolbar: ['heading','|','bold','italic','underline','|','link','bulletedList','numberedList','|','alignment','outdent','indent','|','fontSize','fontFamily','fontColor','fontBackgroundColor','highlight','|','insertTable','blockQuote','horizontalLine','undo','redo'] }"></ckeditor>
+	</ng-container>
+	<ng-container *ngIf="this.ngSInput.type == 'dragDrop'">
+		<ul cdkDropList class="w-100 list-group" (cdkDropListDropped)="$any(this.ngSInput).moveBlock($event)">
+			<li class="list-group-item" *ngFor="let block of this.ngSInput.value" style="cursor: move;" cdkDrag>
+				<div class="d-flex justify-content-between">
+					{{block}}
+					<i class="fa fa-remove"></i>
+				</div>
+			</li>
+		</ul>
+		<span *ngIf="this.ngSInput.value.length == 0">Keine Elemente.</span>
+	</ng-container>
+	<ng-container *ngIf=""></ng-container>
+	<div class="input-group-postpend" *ngIf="this.ngSInput.suffix">
+		<span class="input-group-text" style="border-bottom-left-radius: 0; border-top-left-radius: 0;">{{this.ngSInput.suffix}}</span>
+	</div>	
+</div>
+<small class="form-text text-danger" *ngIf="this.ngSInput.mark">{{this.ngSInput.mark}}</small>

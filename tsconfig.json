@@ -2,6 +2,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "noImplicitAny": false,
+    "emitDecoratorMetadata": false,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -11,6 +13,16 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
+    "paths": {
+      "ng-sebru-lib": [
+        "dist/ng-sebru-lib/ng-sebru-lib",
+        "dist/ng-sebru-lib"
+      ],
+      "test": [
+        "dist/test/test",
+        "dist/test"
+      ]
+    },
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
