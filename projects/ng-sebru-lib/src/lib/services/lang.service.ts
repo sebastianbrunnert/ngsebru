@@ -12,7 +12,9 @@ export class NgSLangService {
 		this.languages.push(language)
 		if(localStorage.getItem("language") == language.id) {
 			this.chooseLanguage(language)
-		} 
+		} else if(localStorage.getItem("language") == null && this.languages.length == 1) {
+			this.chooseLanguage(language)
+		}
 	}
 
 	public chooseLanguage(language: Language) {
