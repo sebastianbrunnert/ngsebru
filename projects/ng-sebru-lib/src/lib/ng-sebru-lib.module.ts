@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Injector, NgModule, ViewContainerRef } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { NgSInputComponent, NgSFormComponent, NgSDataService } from '../public-api';
+import { NgSInputComponent, NgSFormComponent, NgSDataService, NgSLangService, NgSRestService, NgSLangPipe } from '../public-api';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -17,11 +17,15 @@ import { NgSModalComponent } from './components/modal/modal.component';
 		NgSFormComponent,
 		NgSAlertComponent,
 		NgSSpinnerComponent,
-		NgSModalComponent
+		NgSModalComponent,
+		NgSLangPipe
 	],
 	providers: [
 		NgSDataService,
-		NgSPageService
+		NgSPageService,
+		NgSLangService,
+		NgSRestService,
+		NgSLangPipe
 	],
 	imports: [
 		CommonModule,
