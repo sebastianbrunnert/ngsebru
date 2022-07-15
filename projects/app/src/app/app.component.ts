@@ -1,6 +1,5 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { SetNgSViewContainerRef } from 'projects/ng-sebru-lib/src/public-api';
-import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +7,7 @@ import { AuthService } from './core/services/auth.service';
 })
 export class AppComponent {
   constructor(
-    private authService: AuthService,
-    private viewContainerRef: ViewContainerRef
+    viewContainerRef: ViewContainerRef
   ) {
     SetNgSViewContainerRef(viewContainerRef)
   }

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { Injectable } from "@angular/core"
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap"
 import { NgSForm } from "../../public-api"
 import { NgSAlertType } from "../models/Alert"
 import { NgSError, NgSErrorType } from "../models/Error"
@@ -15,7 +16,8 @@ export class NgSRestService {
 
     constructor(
         public httpClient: HttpClient,
-		private pageService: NgSPageService
+		private pageService: NgSPageService,
+		private ngbModal: NgbModal
     ) {
 		this.defaultEndpoint = "http://127.0.0.1:8000/api"
 	}
@@ -56,7 +58,7 @@ export class NgSRestService {
 			return true
 		} else if(ngSError.level == NgSErrorType.LOGOUT && restBuilder.getAuthenticationType()) {
 			restBuilder.getAuthenticationType().onLogout()
-			// TODO: Close Modals etc.
+			this.ngbModal.dismissAll()
 			return true
 		}
 
@@ -159,38 +161,59 @@ export class RestBuilder {
 	}
 
 	public get(): Promise<any> {
+		this.init()
 		return new Promise((resolve,reject) => {
 			this.restService.httpClient.get(this.endpoint as string + this.url + this.params, {headers: this.headers}).subscribe(response => {
 				resolve(response)
+				this.terminate()
 			}, error => {
 				if(this.handleErrorSelf || !this.restService.onError(error, this)) {
 					reject(error)
 				}
-			});
+				this.terminate()
+			})
 		})
 	}
 
 	public post(): Promise<any> {
+		this.init()
 		return new Promise((resolve,reject) => {
 			this.restService.httpClient.post(this.endpoint as string + this.url + this.params, this.body, {headers: this.headers}).subscribe(response => {
 				resolve(response)
+				this.terminate()
 			}, error => {
 				if(this.handleErrorSelf || !this.restService.onError(error, this)) {
 					reject(error)
 				}
+				this.terminate()
 			})
 		})
 	}
 
 	public delete(): Promise<any> {
+		this.init()
         return new Promise((resolve,reject) => {
             this.restService.httpClient.delete(this.endpoint as string + this.url + this.params, {headers:this.headers}).subscribe(response => {
                 resolve(response)
+				this.terminate()
             }, error => {
 				if(this.handleErrorSelf || !this.restService.onError(error, this)) {
 					reject(error)
 				}
+				this.terminate()
             })
         })
     }
+
+	private init() {
+		if(this.inquirer instanceof NgSForm) {
+			this.inquirer.setLoading(true)
+		}
+	}
+
+	private terminate() {
+		if(this.inquirer instanceof NgSForm) {
+			this.inquirer.setLoading(false)
+		}
+	}
 }
