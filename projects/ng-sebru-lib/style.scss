@@ -19,6 +19,14 @@ $iconColor: black;
     margin-top: 6rem;
 }
 
+a {
+    text-decoration: none;
+}
+
+a.hover:hover {
+    text-decoration: underline;
+}
+
 .hover {
     cursor: pointer;
 }

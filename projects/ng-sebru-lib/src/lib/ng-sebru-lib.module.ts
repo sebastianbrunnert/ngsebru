@@ -40,7 +40,8 @@ import { NgSModalComponent } from './components/modal/modal.component';
 		NgSFormComponent,
 		NgSAlertComponent,
 		NgSSpinnerComponent,
-		NgSModalComponent
+		NgSModalComponent,
+		NgSLangPipe
 	]
 })
 export class NgSebruLibModule { 
