@@ -205,6 +205,21 @@ export class RestBuilder {
         })
     }
 
+	public put(): Promise<any> {
+		this.init()
+		return new Promise((resolve,reject) => {
+			this.restService.httpClient.put(this.endpoint as string + this.url + this.params, this.body, {headers: this.headers}).subscribe(response => {
+				resolve(response)
+				this.terminate()
+			}, error => {
+				if(this.handleErrorSelf || !this.restService.onError(error, this)) {
+					reject(error)
+				}
+				this.terminate()
+			});
+		})
+	}
+
 	private init() {
 		if(this.inquirer instanceof NgSForm) {
 			this.inquirer.setLoading(true)
