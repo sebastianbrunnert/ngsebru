@@ -3,6 +3,7 @@ export * from './lib/components/input/input.component';
 export * from './lib/components/alert/alert.component';
 export * from './lib/components/spinner/spinner.component';
 export * from './lib/components/modal/modal.component';
+export * from './lib/components/card/card.component';
 
 export * from './lib/services/data.service';
 export * from './lib/services/page.service';

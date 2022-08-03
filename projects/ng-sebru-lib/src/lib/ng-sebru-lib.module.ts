@@ -10,6 +10,7 @@ import { NgSPageService } from './services/page.service';
 import { NgSAlertComponent } from './components/alert/alert.component';
 import { NgSSpinnerComponent } from './components/spinner/spinner.component';
 import { NgSModalComponent } from './components/modal/modal.component';
+import { NgSCardComponent } from './components/card/card.component';
 
 @NgModule({
 	declarations: [
@@ -18,6 +19,7 @@ import { NgSModalComponent } from './components/modal/modal.component';
 		NgSAlertComponent,
 		NgSSpinnerComponent,
 		NgSModalComponent,
+		NgSCardComponent,
 		NgSLangPipe
 	],
 	providers: [
@@ -41,6 +43,7 @@ import { NgSModalComponent } from './components/modal/modal.component';
 		NgSAlertComponent,
 		NgSSpinnerComponent,
 		NgSModalComponent,
+		NgSCardComponent,
 		NgSLangPipe
 	]
 })
