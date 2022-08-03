@@ -58,7 +58,10 @@ export class Language {
 	}
 
 	public getEntry(key: String): String {
-		return this.entries.get(key) || key
+		if(this.entries && this.entries.has(key)) {
+			return this.entries.get(key) || key
+		}
+		return key
 	}
 
 	public addEntry(key: String, value: String) {
