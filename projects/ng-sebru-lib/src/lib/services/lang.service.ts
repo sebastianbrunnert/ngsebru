@@ -58,7 +58,7 @@ export class Language {
 	}
 
 	public getEntry(key: String): String {
-		if(this.entries && this.entries.has(key)) {
+		if(this.entries.size > 0 && this.entries.has(key)) {
 			return this.entries.get(key) || key
 		}
 		return key
