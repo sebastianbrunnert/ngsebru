@@ -9,6 +9,6 @@ export class NgSLangPipe implements PipeTransform {
 	constructor(private langService: NgSLangService) {}
 
 	transform(key: String): any {
-		return this.langService.getTranslation(key) || key;
+		return this.langService.language.getTranslation(key)
 	}
 }

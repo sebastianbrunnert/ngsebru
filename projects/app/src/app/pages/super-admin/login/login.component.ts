@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NgSForm, NgSPageService, NgSTextInput } from "projects/ng-sebru-lib/src/public-api";
+import { NgSForm, NgSLangService, NgSPageService, NgSTextInput } from "projects/ng-sebru-lib/src/public-api";
 import { AuthService } from "../../../core/services/auth.service";
 
 @Component({
@@ -13,7 +13,7 @@ export class LoginComponent {
 
 	constructor(
 		private authService: AuthService,
-		private pageService: NgSPageService
+		private pageService: NgSPageService,
 	) {
 		if(this.authService.isSuperAdmin()) {
 			this.pageService.navigate("super-admin/start")
