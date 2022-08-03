@@ -1,0 +1,9 @@
+<div class="card shadow-sm bg-body w-100 h-100">
+	<div class="card-body">
+		<ng-container *ngIf="this.title">
+			<h2 class="fw-bold">{{this.title}}</h2>
+			<hr>
+		</ng-container>
+		<ng-content></ng-content>
+	</div>
+</div>
