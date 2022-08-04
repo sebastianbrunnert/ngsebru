@@ -1,6 +1,6 @@
 <label for="{{this.ngSInput.id}}" *ngIf="this.ngSInput.name && this.ngSInput.type.toString() != 'check'">
 	{{this.ngSInput.name}}
-	<span *ngIf="!this.ngSInput.required">(optional)</span>
+	<span *ngIf="!this.ngSInput.required">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
 </label>
 <span *ngIf="this.ngSInput.type == 'multipleSelect' && this.ngSInput.value != []">
 	<br>
@@ -25,8 +25,8 @@
 		<span class="input-group-text">{{this.ngSInput.prefix}}</span>
 	</div>
 	<ng-container *ngIf="['text','number','password','email','datetime-local'].indexOf(this.ngSInput.type.toString()) >= 0">
-		<input *ngIf="this.ngSInput.suffix || this.ngSInput.icon" type="{{this.ngSInput.type}}" class="form-control shadow-none border-end-0 border" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder}}" [(ngModel)]="this.ngSInput.value" [disabled]="this.ngSInput.disabled">		
-		<input *ngIf="!(this.ngSInput.suffix || this.ngSInput.icon)" type="{{this.ngSInput.type}}" class="form-control shadow-none border" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder}}" [(ngModel)]="this.ngSInput.value" [disabled]="this.ngSInput.disabled">		
+		<input *ngIf="this.ngSInput.suffix || this.ngSInput.icon" type="{{this.ngSInput.type}}" class="form-control shadow-none border-end-0 border" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder|lang}}" [(ngModel)]="this.ngSInput.value" [disabled]="this.ngSInput.disabled">		
+		<input *ngIf="!(this.ngSInput.suffix || this.ngSInput.icon)" type="{{this.ngSInput.type}}" class="form-control shadow-none border" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder|lang}}" [(ngModel)]="this.ngSInput.value" [disabled]="this.ngSInput.disabled">		
 		<span class="input-group-append" *ngIf="this.ngSInput.icon">
 			<button (click)="this.ngSInput.onIconClick()" tabindex="-1" type="button" class="btn bg-white shadow-none" style="border-bottom-left-radius: 0; border-top-left-radius: 0; border-top: 0.5px solid #dee2e6; border-bottom: 0.5px solid #dee2e6; border-right: 0.5px solid #dee2e6; min-height: 100%;">
 				<i class="fa fa-{{this.ngSInput.icon}}"></i>
@@ -46,7 +46,7 @@
 		<input class="d-none" type="file" multiple="true" [id]="this.ngSInput.id" (change)="$any(this.ngSInput).upload()" name="{{this.ngSInput.name}}">
 		<button type="button" class="btn shadow-none border btn-secondary" (click)="$any(this.ngSInput).open()">
 			<i class="fa fa-upload"></i>
-			Hochladen
+			{{"INPUT_DEFAULT_UPLOAD"|lang}}
 		</button>
 	</ng-container>
 	<ng-container *ngIf="this.ngSInput.type == 'images'">
@@ -73,25 +73,25 @@
 	</ng-container>
 	<ng-container *ngIf="this.ngSInput.type == 'select'">
 		<select class="form-select border shadow-none" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" [(ngModel)]="this.ngSInput.value" (change)="$any(this.ngSInput).change($event)">
-			<option selected disabled class="text-muted" value="">Auswählen</option>
+			<option selected disabled class="text-muted" value="">{{"INPUT_DEFAULT_CHOOSE"|lang}}</option>
 			<option *ngFor="let option of $any(this.ngSInput).options">{{option}}</option>
 		</select>
 	</ng-container>
 	<ng-container *ngIf="this.ngSInput.type == 'textarea'">
-		<textarea class="form-control border shadow-none" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder}}" [(ngModel)]="this.ngSInput.value" [rows]="$any(this.ngSInput).rows"></textarea>
+		<textarea class="form-control border shadow-none" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder|lang}}" [(ngModel)]="this.ngSInput.value" [rows]="$any(this.ngSInput).rows"></textarea>
 	</ng-container>
 	<ng-container *ngIf="this.ngSInput.type == 'multipleSelect'">
 		<select class="form-select border shadow-none" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" (change)="$any(this.ngSInput).choose()">
-			<option selected disabled class="text-muted" value="">Auswählen</option>
+			<option selected disabled class="text-muted" value="">{{"INPUT_DEFAULT_CHOOSE"|lang}}</option>
 			<option *ngFor="let option of $any(this.ngSInput).options" class="fa" value="{{option}}">
 				<span *ngIf="this.ngSInput.value.includes(option)">&#xf00c;</span>
-				{{option}}
+				{{option|lang}}
 			</option>
 		</select>
 	</ng-container>
 	<ng-container *ngIf="this.ngSInput.type == 'multipleText'">
 		<div class="input-group">
-			<input (keydown)="$any(this.ngSInput).enter($event)" class="form-control shadow-none border border-end-0" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder}}" [(ngModel)]="$any(this.ngSInput).internValue">
+			<input (keydown)="$any(this.ngSInput).enter($event)" class="form-control shadow-none border border-end-0" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}" placeholder="{{this.ngSInput.placeholder|lang}}" [(ngModel)]="$any(this.ngSInput).internValue">
 			<span class="input-group-append" *ngIf="this.ngSInput.icon">
 				<button (click)="$any(this.ngSInput).add()" tabindex="-1" type="button" class="btn bg-white shadow-none" style="border-bottom-left-radius: 0; border-top-left-radius: 0; border-top: 0.5px solid #dee2e6; border-bottom: 0.5px solid #dee2e6; border-right: 0.5px solid #dee2e6; min-height: 100%;">
 					<i class="fa fa-{{this.ngSInput.icon}}"></i>
@@ -111,7 +111,7 @@
 				</div>
 			</li>
 		</ul>
-		<span *ngIf="this.ngSInput.value.length == 0">Keine Elemente.</span>
+		<span *ngIf="this.ngSInput.value.length == 0">{{"INPUT_DEFAULT_EMPTY"|lang}}</span>
 	</ng-container>
 	<ng-container *ngIf=""></ng-container>
 	<div class="input-group-postpend" *ngIf="this.ngSInput.suffix">

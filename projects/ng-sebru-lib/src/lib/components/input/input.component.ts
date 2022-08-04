@@ -27,7 +27,7 @@ export class NgSInput {
 	public required: Boolean = true
 	public disabled: boolean = false
 	public icon: String = ""
-	public placeholder: String = ""
+	public placeholder: String = "INPUT_DEFAULT_PLACEHOLDER"
 
 	constructor(name: String, type: String, id: String) {
 		this.name = name;
