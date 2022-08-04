@@ -7,7 +7,7 @@
 	
 	<div class="d-grid gap-2">
 		<button class="btn btn-primary mt-4 shadow-none" type="submit">
-			{{this.submitText}}
+			{{this.submitText|lang}}
 			<div class="spinner-border spinner-border-sm text-white" role="status" *ngIf="this.ngSForm.loading"></div>
 		</button>
 	</div>

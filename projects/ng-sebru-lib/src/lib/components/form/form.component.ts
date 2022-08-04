@@ -12,7 +12,7 @@ export class NgSFormComponent {
 	public ngSForm: NgSForm = new NgSForm()
 
 	@Input("submitText")
-	public submitText: String = "Senden"
+	public submitText: String = "FORM_DEFAULT_SEND"
 
 	@Output()
 	public checkSubmit = new EventEmitter<Boolean>();

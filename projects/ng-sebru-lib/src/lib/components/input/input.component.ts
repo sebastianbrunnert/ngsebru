@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import * as Editor from 'projects/ng-sebru-lib/assets/ngs-ckeditor';
 import { IsIteratableCheck } from '../../services/data.service';
+import { NgSInjector } from '../../ng-sebru-lib.module';
+import { NgSLangService } from '../../services/lang.service';
 
 @Component({
   selector: 'ngs-input',
@@ -51,7 +53,7 @@ export class NgSInput {
 		if(this.mark == "") {
 			let test = this.test(this.value)
 			if(!test && this.mark == "") {
-				this.mark = this.name + " ist ungültig."
+				this.mark = this.name + " " + NgSInjector.get(NgSLangService).getTranslation("INPUT_TEST_INVALID") + "."
 			}
 			return test
 		}
@@ -62,7 +64,7 @@ export class NgSInput {
 		this.mark = ""
 		let filled = (this.value != "" && this.value != null && this.value != undefined && this.value != []) || !this.required;
 		if(!filled) {
-			this.mark = this.name + " wird benötigt."
+			this.mark = this.name + " " + NgSInjector.get(NgSLangService).getTranslation("INPUT_REQUIRED") + "."
 		}
 		return filled
 	}
@@ -221,9 +223,9 @@ export class NgSImagesInput extends NgSInput {
 				const file: File = uploadedFiles.item(i)!
 				const fileName: String = file.name.toLowerCase()
 				if(file == null) {
-					this.mark = "Angehängte Datei kann nicht gelesen werden."
+					this.mark = NgSInjector.get(NgSLangService).getTranslation("INPUT_FILE_NOT_READABLE")
 				} else if(!(fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".jpeg") || fileName.endsWith(".svg") || fileName.endsWith(".svg"))) {
-					this.mark = "Angehängte Datei ist keine Bilddatei."
+					this.mark = NgSInjector.get(NgSLangService).getTranslation("INPUT_FILE_NOT_IMAGE")
 				} else {
 					files.push(uploadedFiles.item(i)!)
 					const reader: FileReader = new FileReader()
@@ -264,9 +266,9 @@ export class NgSImageInput extends NgSInput {
 				const file: File = uploadedFiles.item(i)!
 				const fileName: String = file.name.toLowerCase()
 				if(file == null) {
-					this.mark = "Angehängte Datei kann nicht gelesen werden."
+					this.mark = NgSInjector.get(NgSLangService).getTranslation("INPUT_FILE_NOT_READABLE")
 				} else if(!(fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".jpeg") || fileName.endsWith(".svg") || fileName.endsWith(".svg"))) {
-					this.mark = "Angehängte Datei ist keine Bilddatei."
+					this.mark = NgSInjector.get(NgSLangService).getTranslation("INPUT_FILE_NOT_IMAGE")
 				} else {
 					files.push(uploadedFiles.item(i)!)
 					const reader: FileReader = new FileReader()
