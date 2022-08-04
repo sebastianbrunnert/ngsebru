@@ -25,7 +25,6 @@ import { NgSCardComponent } from './components/card/card.component';
 	providers: [
 		NgSDataService,
 		NgSPageService,
-		NgSLangService,
 		NgSRestService,
 		NgSLangPipe
 	],
