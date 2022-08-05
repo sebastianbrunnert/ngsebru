@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { NgSInjector } from "../../public-api";
 import { NgSLangService } from "../services/lang.service";
 
 @Pipe({

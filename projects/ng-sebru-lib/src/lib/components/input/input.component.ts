@@ -52,7 +52,8 @@ export class NgSInput {
 		if(this.mark == "") {
 			let test = this.test(this.value)
 			if(!test && this.mark == "") {
-				this.mark = this.name + " " + NgSInjector.get(NgSLangService).getTranslation("INPUT_TEST_INVALID") + "."
+				const langService = NgSInjector.get(NgSLangService)
+				this.mark = langService.getTranslation(this.name) + " " + langService.getTranslation("INPUT_TEST_INVALID") + "."
 			}
 			return test
 		}
@@ -63,7 +64,8 @@ export class NgSInput {
 		this.mark = ""
 		let filled = (this.value != "" && this.value != null && this.value != undefined && this.value != []) || !this.required;
 		if(!filled) {
-			this.mark = this.name + " " + NgSInjector.get(NgSLangService).getTranslation("INPUT_REQUIRED") + "."
+			const langService = NgSInjector.get(NgSLangService)
+			this.mark = langService.getTranslation(this.name) + " " + langService.getTranslation("INPUT_REQUIRED") + "."
 		}
 		return filled
 	}
