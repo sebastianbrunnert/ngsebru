@@ -18,7 +18,7 @@ export class NgSFormComponent {
 	public checkSubmit = new EventEmitter<Boolean>();
 
 	public submit() {
-		if(this.ngSForm.checkFilledAll() && this.ngSForm.checkTestAll()) {
+		if(!this.ngSForm.loading && this.ngSForm.checkFilledAll() && this.ngSForm.checkTestAll()) {
 			this.checkSubmit.emit()
 			this.ngSForm.onSubmit()
 		}
