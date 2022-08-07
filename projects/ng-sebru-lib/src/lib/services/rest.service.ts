@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap"
-import { NgSForm } from "../../public-api"
-import { NgSAlertType } from "../models/Alert"
 import { NgSError, NgSErrorType } from "../models/Error"
 import { NgSPageService } from "./page.service"
+import { NgSAlertType } from './../components/alert/alert.component'
+import { NgSForm } from './../components/form/form.component'
 
 @Injectable({
     providedIn: 'root'

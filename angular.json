@@ -54,7 +54,10 @@
             "polyfills": "projects/app/src/polyfills.ts",
             "tsConfig": "projects/app/tsconfig.app.json",
             "styles": [
-              "projects/ng-sebru-lib/style.scss"
+              "projects/app/src/style.scss"
+            ],
+            "scripts": [
+              "projects/ng-sebru-lib/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {
@@ -116,7 +119,10 @@
             "tsConfig": "projects/app/tsconfig.spec.json",
             "karmaConfig": "projects/app/karma.conf.js",
             "styles": [
-              "projects/ng-sebru-lib/style.scss"
+              "projects/app/src/style.scss"
+            ],
+            "scripts": [
+              "projects/ng-sebru-lib/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           }
         }

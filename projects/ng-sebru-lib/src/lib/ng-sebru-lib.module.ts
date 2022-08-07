@@ -16,6 +16,7 @@ import { NgSCardComponent } from './components/card/card.component';
 import { NgSFormComponent } from './components/form/form.component';
 import { NgSInputComponent } from './components/input/input.component';
 import { NgSLangPipe } from './pipes/lang.pipe'
+import { NgSDefaultNavigationComponent } from '../public-api';
 
 @NgModule({
 	declarations: [
@@ -25,6 +26,7 @@ import { NgSLangPipe } from './pipes/lang.pipe'
 		NgSSpinnerComponent,
 		NgSModalComponent,
 		NgSCardComponent,
+		NgSDefaultNavigationComponent,
 		NgSLangPipe
 	],
 	providers: [
@@ -47,6 +49,7 @@ import { NgSLangPipe } from './pipes/lang.pipe'
 		NgSAlertComponent,
 		NgSSpinnerComponent,
 		NgSModalComponent,
+		NgSDefaultNavigationComponent,
 		NgSCardComponent,
 		NgSLangPipe
 	]

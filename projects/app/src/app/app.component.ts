@@ -1,6 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { SetNgSViewContainerRef } from 'projects/ng-sebru-lib/src/private-api';
-import { Language, NgSLangService, NgSRestService, RestBuilder } from 'projects/ng-sebru-lib/src/public-api';
+import { Language, NgSLangService, NgSNavigation, NgSRestService, RestBuilder } from 'projects/ng-sebru-lib/src/public-api';
 import { environment } from '../environments/environments';
 
 @Component({
@@ -8,6 +8,11 @@ import { environment } from '../environments/environments';
 	templateUrl: './app.component.html'
 })
 export class AppComponent {
+
+	public navigation: NgSNavigation = new NgSNavigation([{title:"Hi",subItems:[
+		{title:"Hello",action:() => {console.log('hi')}}
+	]}],["bg-white"])
+
 	constructor(
 		viewContainerRef: ViewContainerRef,
 		private restService: NgSRestService,

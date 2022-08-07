@@ -2,7 +2,7 @@ import { ComponentFactoryResolver, ComponentRef, Injectable, Type } from '@angul
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgSViewContainerRef } from '../../private-api';
-import { NgSAlert } from '../models/Alert';
+import { NgSAlert } from './../components/alert/alert.component';
 
 @Injectable({
   providedIn: 'root'
