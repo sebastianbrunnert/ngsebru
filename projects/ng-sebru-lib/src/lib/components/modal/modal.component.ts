@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ComponentRef, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { NgSInjector, NgSPageService } from "../../../public-api";
+import { NgSInjector } from "../../../private-api";
+import { NgSPageService } from "../../services/page.service";
 import { NgSForm } from "../form/form.component";
 
 @Component({

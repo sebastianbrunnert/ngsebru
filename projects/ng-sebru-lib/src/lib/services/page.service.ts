@@ -1,7 +1,7 @@
-import { ComponentFactoryResolver, ComponentRef, Injectable, Type, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, Injectable, Type } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { NgSViewContainerRef } from '../../public-api';
+import { NgSViewContainerRef } from '../../private-api';
 import { NgSAlert } from '../models/Alert';
 
 @Injectable({

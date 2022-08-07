@@ -1,5 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { Language, NgSLangService, NgSRestService, RestBuilder, SetNgSViewContainerRef } from 'projects/ng-sebru-lib/src/public-api';
+import { SetNgSViewContainerRef } from 'projects/ng-sebru-lib/src/private-api';
+import { Language, NgSLangService, NgSRestService, RestBuilder } from 'projects/ng-sebru-lib/src/public-api';
 import { environment } from '../environments/environments';
 
 @Component({

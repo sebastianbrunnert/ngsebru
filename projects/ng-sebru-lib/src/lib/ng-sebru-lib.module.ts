@@ -1,16 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Injector, NgModule, ViewContainerRef } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { NgSInputComponent, NgSFormComponent, NgSDataService, NgSLangService, NgSRestService, NgSLangPipe } from '../public-api';
+import { SetNgSInjector } from '../private-api';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgSPageService } from './services/page.service';
+import { NgSDataService } from './services/data.service';
+import { NgSRestService } from './services/rest.service';
 import { NgSAlertComponent } from './components/alert/alert.component';
 import { NgSSpinnerComponent } from './components/spinner/spinner.component';
 import { NgSModalComponent } from './components/modal/modal.component';
 import { NgSCardComponent } from './components/card/card.component';
+import { NgSFormComponent } from './components/form/form.component';
+import { NgSInputComponent } from './components/input/input.component';
+import { NgSLangPipe } from './pipes/lang.pipe'
 
 @NgModule({
 	declarations: [
@@ -49,16 +54,7 @@ import { NgSCardComponent } from './components/card/card.component';
 export class NgSebruLibModule { 
 
 	constructor(private injector: Injector) {
-		NgSInjector = injector
+		SetNgSInjector(injector)
 	}
 
 }
-
-let NgSInjector: Injector
-let NgSViewContainerRef: ViewContainerRef
-
-function SetNgSViewContainerRef(viewContainerRef: ViewContainerRef) {
-	NgSViewContainerRef = viewContainerRef
-}
-
-export { NgSInjector, NgSViewContainerRef, SetNgSViewContainerRef }
