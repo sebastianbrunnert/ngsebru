@@ -12,12 +12,10 @@ export class NgSDefaultNavigationComponent {
 }
 
 export class NgSNavigation {
-    constructor(
-        public items: NgSNavigationItem[] = [],
-        public classes: String[] = [],
-        public imageUrl: String = "",
-        public barsClasses: String[] = []
-    ) {}
+    public imageUrl: String = ""
+    public items?: NgSNavigationItem[] = []
+    public classes?: String[] = []
+    public barsClasses?: String[] = []
 }
 
 export class NgSNavigationItem {

@@ -9,10 +9,6 @@ import { environment } from '../environments/environments';
 })
 export class AppComponent {
 
-	public navigation: NgSNavigation = new NgSNavigation([{title:"Hi",subItems:[
-		{title:"Hello",action:() => {console.log('hi')}}
-	]}],["bg-white"])
-
 	constructor(
 		viewContainerRef: ViewContainerRef,
 		private restService: NgSRestService,

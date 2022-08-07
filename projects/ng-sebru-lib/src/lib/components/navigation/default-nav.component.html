@@ -1,10 +1,10 @@
-<nav class="navbar navbar-inverse sticky-top navbar-expand-lg shadow-sm {{this.navigation.classes.join(' ')}}">
+<nav class="navbar navbar-inverse sticky-top navbar-expand-lg shadow-sm {{(this.navigation.classes || []).join(' ')}}">
     <div class="container-fluid">
         <a href="/">
             <img src="{{this.navigation.imageUrl}}" height="48px">
         </a>
         <div class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fa fa-bars hover {{this.navigation.barsClasses.join(' ')}}"></i>
+            <i class="fa fa-bars hover {{(this.navigation.barsClasses || []).join(' ')}}"></i>
         </div>
         <div class="navbar-collapse collapse" id="navbarContent">
             <ul class="nav ms-auto">
