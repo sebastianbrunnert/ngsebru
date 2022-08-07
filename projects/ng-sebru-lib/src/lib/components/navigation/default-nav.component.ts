@@ -16,7 +16,7 @@ export class NgSNavigation {
         public items: NgSNavigationItem[] = [],
         public classes: String[] = [],
         public imageUrl: String = "",
-        public title: String = ""
+        public barsClasses: String[] = []
     ) {}
 }
 
