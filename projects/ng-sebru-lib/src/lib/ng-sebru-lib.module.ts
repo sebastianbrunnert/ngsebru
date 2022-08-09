@@ -6,6 +6,7 @@ import { SetNgSInjector } from '../private-api';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NgChartsModule } from 'ng2-charts';
 import { NgSPageService } from './services/page.service';
 import { NgSDataService } from './services/data.service';
 import { NgSAlertComponent } from './components/alert/alert.component';
@@ -16,6 +17,7 @@ import { NgSFormComponent } from './components/form/form.component';
 import { NgSInputComponent } from './components/input/input.component';
 import { NgSLangPipe } from './pipes/lang.pipe'
 import { NgSDefaultNavigationComponent } from '../public-api';
+import { NgSBarChartComponent, NgSLineChartComponent } from './components/chart/chart.component';
 
 @NgModule({
 	declarations: [
@@ -26,6 +28,8 @@ import { NgSDefaultNavigationComponent } from '../public-api';
 		NgSModalComponent,
 		NgSCardComponent,
 		NgSDefaultNavigationComponent,
+		NgSLineChartComponent,
+		NgSBarChartComponent,
 		NgSLangPipe
 	],
 	providers: [
@@ -39,7 +43,8 @@ import { NgSDefaultNavigationComponent } from '../public-api';
 		NgbModule,
 		CKEditorModule,
 		DragDropModule,
-		HttpClientModule
+		HttpClientModule,
+		NgChartsModule
 	],
 	exports: [
 		NgSInputComponent,
@@ -49,6 +54,8 @@ import { NgSDefaultNavigationComponent } from '../public-api';
 		NgSModalComponent,
 		NgSDefaultNavigationComponent,
 		NgSCardComponent,
+		NgSLineChartComponent,
+		NgSBarChartComponent,
 		NgSLangPipe
 	]
 })
