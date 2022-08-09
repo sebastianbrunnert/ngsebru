@@ -6,6 +6,7 @@ import { SetNgSInjector } from '../private-api';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NgChartsModule } from 'ng2-charts';
 import { NgSPageService } from './services/page.service';
 import { NgSDataService } from './services/data.service';
 import { NgSAlertComponent } from './components/alert/alert.component';
@@ -39,7 +40,8 @@ import { NgSDefaultNavigationComponent } from '../public-api';
 		NgbModule,
 		CKEditorModule,
 		DragDropModule,
-		HttpClientModule
+		HttpClientModule,
+		NgChartsModule
 	],
 	exports: [
 		NgSInputComponent,
