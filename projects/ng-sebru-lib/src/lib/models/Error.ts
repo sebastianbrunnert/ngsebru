@@ -4,11 +4,11 @@ export class NgSError {
 	}
 
 	public error: String = "";
-	public levelDescription: String = "";
-	public level: NgSErrorType = NgSErrorType.UNKNOWN
+	public description: String = "";
+	public level: NgSErrorLevel = NgSErrorLevel.UNKNOWN
 }
 
-export enum NgSErrorType {
+export enum NgSErrorLevel {
 	UNKNOWN = "UNKNOWN",
     IGNORE = "IGNORE",
     INTERN = "INTERN",
