@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NgSForm, NgSLangService, NgSPageService, NgSTextInput } from "projects/ng-sebru-lib/src/public-api";
+import { NgSForm, NgSPageService, NgSTextInput } from "projects/ng-sebru-lib/src/public-api";
 import { AuthService } from "../../../core/services/auth.service";
 
 @Component({
