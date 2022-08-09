@@ -9,15 +9,6 @@ export class NgSChartComponent {
 
     public primary: String = getComputedStyle(document.body).getPropertyValue("--bs-primary")
     public body: String = getComputedStyle(document.body).getPropertyValue("--bs-body-color")
-
-    public options = {
-		responsive: true,
-		scale: {
-			ticks: {
-				precision: 0
-			}
-		}
-	}
 }
 
 @Component({
