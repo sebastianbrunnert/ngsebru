@@ -1,5 +1,4 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { NgSCollapsableEvent } from 'projects/ng-sebru-lib/src/lib/components/collapsable/collapsables/collapsables.component';
 import { SetNgSViewContainerRef } from 'projects/ng-sebru-lib/src/private-api';
 import { NgSRestService } from 'projects/ng-sebru-lib/src/public-api';
 import { environment } from '../environments/environments';
