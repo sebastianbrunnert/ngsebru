@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap"
-import { NgSError, NgSErrorType } from "../models/Error"
+import { NgSError, NgSErrorLevel } from "../models/Error"
 import { NgSPageService } from "./page.service"
 import { NgSAlertType } from './../components/alert/alert.component'
 import { NgSForm } from './../components/form/form.component'
@@ -40,23 +40,23 @@ export class NgSRestService {
 
 	public onError(error: any, restBuilder: RestBuilder): Boolean {
 		var ngSError: NgSError = new NgSError(error.error)
-		if(ngSError.level == NgSErrorType.UNKNOWN) {
+		if(ngSError.level == NgSErrorLevel.UNKNOWN) {
 			return false
 		}
 
-		if(ngSError.level == NgSErrorType.IGNORE) {
+		if(ngSError.level == NgSErrorLevel.IGNORE) {
 			return true
-		} else if(ngSError.level == NgSErrorType.ALERT) {
+		} else if(ngSError.level == NgSErrorLevel.ALERT) {
 			this.pageService.alert({
-				id: ngSError.levelDescription,
+				id: ngSError.description,
 				message: ngSError.error,
 				type: NgSAlertType.DANGER
 			})
 			return true
-		} else if(ngSError.level == NgSErrorType.INPUT && restBuilder.getInquirer() instanceof NgSForm) {
+		} else if(ngSError.level == NgSErrorLevel.INPUT && restBuilder.getInquirer() instanceof NgSForm) {
 			restBuilder.getInquirer().showError(ngSError.error)
 			return true
-		} else if(ngSError.level == NgSErrorType.LOGOUT && restBuilder.getAuthenticationType()) {
+		} else if(ngSError.level == NgSErrorLevel.LOGOUT && restBuilder.getAuthenticationType()) {
 			restBuilder.getAuthenticationType().onLogout()
 			this.ngbModal.dismissAll()
 			return true

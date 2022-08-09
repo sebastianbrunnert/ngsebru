@@ -56,7 +56,7 @@ export class NgSForm {
 
 	public showError(ngSError: NgSError) {
 		this.setLoading(false)
-		this.getNgSInput(ngSError.levelDescription).mark = ngSError.error
+		this.getNgSInput(ngSError.description).mark = ngSError.error
 	}
 
 	public addNgSInput(ngSInput: NgSInput) {
