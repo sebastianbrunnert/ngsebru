@@ -35,4 +35,9 @@ export class NgSChart {
         this.values.push(value)
     }
 
+    public reset() {
+        this.labels = []
+        this.values = []
+    }
+
 }
