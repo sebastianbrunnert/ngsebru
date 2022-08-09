@@ -54,7 +54,7 @@ export class NgSRestService {
 			})
 			return true
 		} else if(ngSError.level == NgSErrorLevel.INPUT && restBuilder.getInquirer() instanceof NgSForm) {
-			restBuilder.getInquirer().showError(ngSError.error)
+			restBuilder.getInquirer().showError(ngSError)
 			return true
 		} else if(ngSError.level == NgSErrorLevel.LOGOUT && restBuilder.getAuthenticationType()) {
 			restBuilder.getAuthenticationType().onLogout()
