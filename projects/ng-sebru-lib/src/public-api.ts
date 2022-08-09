@@ -19,6 +19,7 @@ export * from './lib/models/Error';
 export * from './lib/decorators/confirmable.decorator';
 
 export * from './lib/pipes/lang.pipe';
+export * from './lib/pipes/date.pipe';
 
 export * from './lib/ng-sebru-lib.module';
 

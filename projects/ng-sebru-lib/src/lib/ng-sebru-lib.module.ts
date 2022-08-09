@@ -16,10 +16,11 @@ import { NgSCardComponent } from './components/card/card.component';
 import { NgSFormComponent } from './components/form/form.component';
 import { NgSInputComponent } from './components/input/input.component';
 import { NgSLangPipe } from './pipes/lang.pipe'
-import { NgSDefaultNavigationComponent } from '../public-api';
 import { NgSBarChartComponent, NgSLineChartComponent } from './components/chart/chart.component';
 import { NgSCollapsableComponent } from './components/collapsable/collapsable.component';
 import { NgSCollapsablesComponent } from './components/collapsable/collapsables/collapsables.component';
+import { NgSDefaultNavigationComponent } from './components/navigation/default-nav.component';
+import { NgSDayTagToFormattedDayPipe, NgSDayTagsToFormattedDaysPipe } from './pipes/date.pipe';
 
 @NgModule({
 	declarations: [
@@ -34,6 +35,8 @@ import { NgSCollapsablesComponent } from './components/collapsable/collapsables/
 		NgSBarChartComponent,
 		NgSCollapsableComponent,
 		NgSCollapsablesComponent,
+		NgSDayTagToFormattedDayPipe,
+		NgSDayTagsToFormattedDaysPipe,
 		NgSLangPipe
 	],
 	providers: [
@@ -62,6 +65,8 @@ import { NgSCollapsablesComponent } from './components/collapsable/collapsables/
 		NgSBarChartComponent,
 		NgSCollapsableComponent,
 		NgSCollapsablesComponent,
+		NgSDayTagToFormattedDayPipe,
+		NgSDayTagsToFormattedDaysPipe,
 		NgSLangPipe
 	]
 })
