@@ -44,4 +44,4 @@ testem.log
 .DS_Store
 Thumbs.db
 
-projects/ng-sebru-lib/node_modules
+/projects/ng-sebru-lib/node_modules
