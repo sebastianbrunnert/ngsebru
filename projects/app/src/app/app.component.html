@@ -1,1 +1,6 @@
 <router-outlet></router-outlet>
+<div class="container">
+    <ngs-collapsables [titles]="['IMPRINT','2','3','A','B']" (open)="this.test($event)">
+        Hello World
+    </ngs-collapsables>
+</div>

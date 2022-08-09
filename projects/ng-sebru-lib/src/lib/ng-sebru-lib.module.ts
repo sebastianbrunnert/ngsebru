@@ -18,6 +18,8 @@ import { NgSInputComponent } from './components/input/input.component';
 import { NgSLangPipe } from './pipes/lang.pipe'
 import { NgSDefaultNavigationComponent } from '../public-api';
 import { NgSBarChartComponent, NgSLineChartComponent } from './components/chart/chart.component';
+import { NgSCollapsableComponent } from './components/collapsable/collapsable.component';
+import { NgSCollapsablesComponent } from './components/collapsable/collapsables/collapsables.component';
 
 @NgModule({
 	declarations: [
@@ -30,6 +32,8 @@ import { NgSBarChartComponent, NgSLineChartComponent } from './components/chart/
 		NgSDefaultNavigationComponent,
 		NgSLineChartComponent,
 		NgSBarChartComponent,
+		NgSCollapsableComponent,
+		NgSCollapsablesComponent,
 		NgSLangPipe
 	],
 	providers: [
@@ -56,6 +60,8 @@ import { NgSBarChartComponent, NgSLineChartComponent } from './components/chart/
 		NgSCardComponent,
 		NgSLineChartComponent,
 		NgSBarChartComponent,
+		NgSCollapsableComponent,
+		NgSCollapsablesComponent,
 		NgSLangPipe
 	]
 })

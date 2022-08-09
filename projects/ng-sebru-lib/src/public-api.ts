@@ -5,6 +5,9 @@ export * from './lib/components/spinner/spinner.component';
 export * from './lib/components/modal/modal.component';
 export * from './lib/components/card/card.component';
 export * from './lib/components/navigation/default-nav.component';
+export * from './lib/components/chart/chart.component';
+export * from './lib/components/collapsable/collapsable.component';
+export * from './lib/components/collapsable/collapsables/collapsables.component';
 
 export * from './lib/services/data.service';
 export * from './lib/services/page.service';
