@@ -32,7 +32,6 @@ import { NgSDefaultNavigationComponent } from '../public-api';
 	providers: [
 		NgSDataService,
 		NgSPageService,
-		NgSRestService,
 		NgSLangPipe
 	],
 	imports: [

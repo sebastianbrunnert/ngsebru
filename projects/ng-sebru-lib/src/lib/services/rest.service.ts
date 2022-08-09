@@ -19,7 +19,7 @@ export class NgSRestService {
 		private pageService: NgSPageService,
 		private ngbModal: NgbModal
     ) {
-		this.defaultEndpoint = "http://127.0.0.1:8000/api"
+		this.defaultEndpoint = "http://127.0.0.1:8000/api/"
 	}
 
 	public setDefaultEndopint(endpoint: String) {
