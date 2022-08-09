@@ -3,5 +3,5 @@
     [datasets]="[{ data: this.ngSChart.values, label: this.ngSChart.title.toString(), borderColor: this.primary.toString(), backgroundColor: this.primary.toString(), hoverBackgroundColor: this.primary.toString() }]"
     [labels]="this.ngSChart.labels"
     [legend]="false"
-    [options]="{ responsive: true }"
+    [options]="this.options"
 ></canvas>

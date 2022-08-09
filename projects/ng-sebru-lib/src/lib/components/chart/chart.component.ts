@@ -9,6 +9,15 @@ export class NgSChartComponent {
 
     public primary: String = getComputedStyle(document.body).getPropertyValue("--bs-primary")
     public body: String = getComputedStyle(document.body).getPropertyValue("--bs-body-color")
+
+    public options = {
+		responsive: true,
+		scale: {
+			ticks: {
+				precision: 0
+			}
+		}
+	}
 }
 
 @Component({
@@ -28,9 +37,9 @@ export class NgSChart {
     public title: String = ""
 
     public labels: String[] = []
-    public values: String[] = []
+    public values: any[] = []
 
-    public addValue(label: String, value: String) {
+    public addValue(label: String, value: any) {
         this.labels.push(label)
         this.values.push(value)
     }
