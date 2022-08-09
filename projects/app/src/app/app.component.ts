@@ -17,8 +17,4 @@ export class AppComponent {
 		SetNgSViewContainerRef(viewContainerRef)
 		this.restService.setDefaultEndopint(environment.endpoint)
 	}
-
-	public test(open: NgSCollapsableEvent) {
-		console.log(open)
-	}
 }
