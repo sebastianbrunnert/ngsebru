@@ -8,7 +8,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgSPageService } from './services/page.service';
 import { NgSDataService } from './services/data.service';
-import { NgSRestService } from './services/rest.service';
 import { NgSAlertComponent } from './components/alert/alert.component';
 import { NgSSpinnerComponent } from './components/spinner/spinner.component';
 import { NgSModalComponent } from './components/modal/modal.component';
