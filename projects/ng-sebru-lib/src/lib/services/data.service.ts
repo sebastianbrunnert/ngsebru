@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import * as shajs from 'sha.js'
 
 @Injectable({
   providedIn: 'root'
 })
 export class NgSDataService {
 
-	public isIteratable(value: any): Boolean {
+ 	public isIteratable(value: any): Boolean {
 		return new IsIteratableCheck(value).result()
 	}
 
@@ -36,15 +37,6 @@ export class IsIteratableCheck extends NgSCheck {
 
 export class Sha256Transformer extends NgSTransformer {
 	public result(): any {
-		var hashVal = 0
-		if(this.value.length == 0) {
-			return hashVal
-		}
-		for(let i = 0; i < this.value.length; i++) {
-			let char = this.value.charCodeAt(i)
-			hashVal = ((hashVal << 5) - hashVal) + char
-			hashVal = hashVal & hashVal
-		}
-		return hashVal
+		return shajs("sha256").update(this.value).digest("hex")
 	}
 }

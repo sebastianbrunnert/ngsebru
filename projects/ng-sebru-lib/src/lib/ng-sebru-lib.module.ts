@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgSPageService } from './services/page.service';
-import { NgSDataService } from './services/data.service';
+import { NgSDataService, Sha256Transformer } from './services/data.service';
 import { NgSAlertComponent } from './components/alert/alert.component';
 import { NgSSpinnerComponent } from './components/spinner/spinner.component';
 import { NgSModalComponent } from './components/modal/modal.component';
