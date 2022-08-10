@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { DayTagToFormattedDayTransformer } from "../services/data.service";
+import { DayTagToFormattedDayTransformer, MillisToFormattedTimeTransformer } from "../services/data.service";
 
 @Pipe({
 	name: "dayTagToFormattedDay",
@@ -18,5 +18,15 @@ export class NgSDayTagToFormattedDayPipe implements PipeTransform {
 export class NgSDayTagsToFormattedDaysPipe implements PipeTransform {
 	transform(key: String[]): any {
         return key.map(dayTag => new DayTagToFormattedDayTransformer(dayTag).result())
+	}
+}
+
+@Pipe({
+	name: "millisToFormattedTime",
+	pure: false
+})
+export class NgSMillisToFormattedTimePipe implements PipeTransform {
+	transform(millis: String): any {
+		return new MillisToFormattedTimeTransformer(millis).result()
 	}
 }
