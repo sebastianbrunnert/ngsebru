@@ -6,6 +6,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class NgSCollapsablesComponent {
 
+    public currentOpen: Number = -1
+
     @Input("titles")
     public titles: String[] = []
 
@@ -13,6 +15,7 @@ export class NgSCollapsablesComponent {
     public open: EventEmitter<NgSCollapsableEvent> = new EventEmitter<NgSCollapsableEvent>()
 
     public openCollapsable(title: String, index: Number) {
+        this.currentOpen = index
         this.open.emit({title: title, index: index})
     }
 
