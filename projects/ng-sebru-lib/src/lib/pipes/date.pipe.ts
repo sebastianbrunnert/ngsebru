@@ -26,7 +26,7 @@ export class NgSDayTagsToFormattedDaysPipe implements PipeTransform {
 	pure: false
 })
 export class NgSMillisToFormattedTimePipe implements PipeTransform {
-	transform(millis: String): any {
+	transform(millis: Number): any {
 		return new MillisToFormattedTimeTransformer(millis).result()
 	}
 }
