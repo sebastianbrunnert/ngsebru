@@ -65,12 +65,29 @@ export class DayTagToDateTransformer extends NgSTransformer {
 	}
 }
 
+export class MillisToDateTransformer extends NgSTransformer {
+	public result(): any {
+		return new Date(this.value)
+	}
+}
+
 export class DayTagToFormattedDayTransformer extends NgSTransformer {
 	public result(): any {
 		return new DateToFormattedDayTransformer(new DayTagToDateTransformer(this.value).result()).result()
 	}
 }
 
+export class MillisToFormattedDayTransformer extends NgSTransformer {
+	public result(): any {
+		return new DateToFormattedDayTransformer(new MillisToDateTransformer(this.value).result()).result()
+	}
+}
+
+export class MillisToFormattedTimeTransformer extends NgSTransformer {
+	public result(): any {
+		return new DateToFormattedTimeTransformer(new MillisToDateTransformer(this.value).result()).result()
+	}
+}
 
 export class DateToFormattedDayTransformer extends NgSTransformer {
 	public result(): any {
@@ -98,5 +115,19 @@ export class DateToFormattedDayTransformer extends NgSTransformer {
 		const dayTags: String[] = NgSInjector.get(NgSDataService).dayTags
 
 		return langService.getTranslation(dayTags[this.value.getDay() == 0 ? 6 : this.value.getDay()-1]) + ", " + day + "." + month + "." + year
+	}
+}
+
+export class DateToFormattedTimeTransformer extends NgSTransformer {
+	public result(): any {
+		let hour = this.value.getHours().toString()
+		let minute = this.value.getMinutes().toString()
+		if(hour.length == 1) {
+			hour = "0" + hour
+		}
+		if(minute.length == 1) {
+			minute = "0" + minute
+		}
+		return hour + ":" + minute
 	}
 }

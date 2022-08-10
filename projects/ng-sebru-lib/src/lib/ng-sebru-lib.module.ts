@@ -20,7 +20,7 @@ import { NgSBarChartComponent, NgSLineChartComponent } from './components/chart/
 import { NgSCollapsableComponent } from './components/collapsable/collapsable.component';
 import { NgSCollapsablesComponent } from './components/collapsable/collapsables/collapsables.component';
 import { NgSDefaultNavigationComponent } from './components/navigation/default-nav.component';
-import { NgSDayTagToFormattedDayPipe, NgSDayTagsToFormattedDaysPipe } from './pipes/date.pipe';
+import { NgSDayTagToFormattedDayPipe, NgSDayTagsToFormattedDaysPipe, NgSMillisToFormattedTimePipe } from './pipes/date.pipe';
 
 @NgModule({
 	declarations: [
@@ -37,6 +37,7 @@ import { NgSDayTagToFormattedDayPipe, NgSDayTagsToFormattedDaysPipe } from './pi
 		NgSCollapsablesComponent,
 		NgSDayTagToFormattedDayPipe,
 		NgSDayTagsToFormattedDaysPipe,
+		NgSMillisToFormattedTimePipe,
 		NgSLangPipe
 	],
 	providers: [
@@ -67,6 +68,7 @@ import { NgSDayTagToFormattedDayPipe, NgSDayTagsToFormattedDaysPipe } from './pi
 		NgSCollapsablesComponent,
 		NgSDayTagToFormattedDayPipe,
 		NgSDayTagsToFormattedDaysPipe,
+		NgSMillisToFormattedTimePipe,
 		NgSLangPipe
 	]
 })
