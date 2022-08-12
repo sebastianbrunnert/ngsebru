@@ -8,6 +8,9 @@ export class NgSCollapsablesComponent {
 
     public currentOpen: Number = -1
 
+    @Input("currentOpen")
+    public currentOpenTitle: String = ""
+
     @Input("titles")
     public titles: String[] = []
 
@@ -16,6 +19,7 @@ export class NgSCollapsablesComponent {
 
     public openCollapsable(title: String, index: Number) {
         this.currentOpen = index
+        this.currentOpenTitle = title
         this.open.emit({title: title, index: index})
     }
 
