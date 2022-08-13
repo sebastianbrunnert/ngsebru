@@ -14,9 +14,17 @@ export class NgSCollapsablesComponent {
     @Output()
     public open: EventEmitter<NgSCollapsableEvent> = new EventEmitter<NgSCollapsableEvent>()
 
+    @Output()
+    public close: EventEmitter<NgSCollapsableEvent> = new EventEmitter<NgSCollapsableEvent>()
+
     public openCollapsable(title: String, index: Number) {
         this.currentOpen = index
         this.open.emit({title: title, index: index})
+    }
+
+    public closeCollapsable(title: String, index: Number) {
+        this.currentOpen = -1
+        this.close.emit({title: title, index: index})
     }
 
 }

@@ -15,10 +15,15 @@ export class NgSCollapsableComponent {
     @Output()
     public open: EventEmitter<void> = new EventEmitter<void>()
 
+    @Output()
+    public close: EventEmitter<void> = new EventEmitter<void>()
+
     public changeState() {
         this.state = !this.state
         if(this.state) {
             this.open.emit()
+        } else {
+            this.close.emit()
         }
     }
 
