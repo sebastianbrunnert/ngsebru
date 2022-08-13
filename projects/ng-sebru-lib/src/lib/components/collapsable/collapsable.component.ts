@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   	selector: 'ngs-collapsable',
@@ -6,25 +6,34 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class NgSCollapsableComponent {
 	
-    @Input("title")
-    public title: String = ""
+    @Input("ngSCollapsable")
+    public ngSCollapsable: NgSCollapsable = new NgSCollapsable()
 
-    @Input("open")
+    public change() {
+        this.ngSCollapsable.change()
+    }
+}
+
+export class NgSCollapsable {
+
     public state: Boolean = false
 
-    @Output()
-    public open: EventEmitter<void> = new EventEmitter<void>()
+    constructor(
+        public title: String = ""
+    ) {}
 
-    @Output()
-    public close: EventEmitter<void> = new EventEmitter<void>()
-
-    public changeState() {
-        this.state = !this.state
+    public change() {
         if(this.state) {
-            this.open.emit()
+            this.onClose()
         } else {
-            this.close.emit()
+            this.onOpen()
         }
+        setTimeout(() => {
+            this.state = !this.state
+        })
     }
 
+    public onOpen() {}
+
+    public onClose() {}
 }
