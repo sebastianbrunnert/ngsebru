@@ -1,16 +1,21 @@
 <nav class="navbar navbar-inverse sticky-top navbar-expand-lg shadow-sm {{(this.navigation.classes || []).join(' ')}}">
     <div class="container-fluid">
-        <a href="/">
+        <a href="/" *ngIf="this.navigation.imageUrl">
             <img src="{{this.navigation.imageUrl}}" height="48px">
         </a>
-        <div class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a href="/" *ngIf="this.navigation.titleHtml">
+            <span [innerHtml]="this.navigation.titleHtml"></span>
+        </a>
+        <div class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fa fa-bars hover {{(this.navigation.barsClasses || []).join(' ')}}"></i>
         </div>
         <div class="navbar-collapse collapse" id="navbarContent">
             <ul class="nav ms-auto">
                 <ng-container *ngFor="let item of this.navigation.items">
                     <li class="nav-item hover" *ngIf="!item.subItems">
-                        <a class="nav-link {{(item.classes || []).join(' ')}}" (click)="item.action()" *ngIf="item.action">
+                        <a class="nav-link {{(item.classes || []).join(' ')}}" (click)="item.action()"
+                            *ngIf="item.action">
                             <i *ngIf="item.icon" class="fa fa-{{item.icon}}"></i>
                             {{item.title|lang}}
                         </a>
@@ -20,7 +25,8 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown" *ngIf="item.subItems">
-                        <a class="nav-link dropdown-toggle {{(item.classes || []).join(' ')}}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle {{(item.classes || []).join(' ')}}" href="#"
+                            id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{item.title|lang}}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end body-bg" aria-labelledby="navbarDropdown">
@@ -28,7 +34,8 @@
                                 <li class="dropdown-item {{(subItem.classes || []).join(' ')}}" *ngIf="subItem.url">
                                     <a href="{{item.url}}">{{subItem.title|lang}}</a>
                                 </li>
-                                <li class="dropdown-item {{(subItem.classes || []).join(' ')}}" *ngIf="subItem.action" (click)="subItem.action()">
+                                <li class="dropdown-item {{(subItem.classes || []).join(' ')}}" *ngIf="subItem.action"
+                                    (click)="subItem.action()">
                                     {{subItem.title|lang}}
                                 </li>
                             </ng-container>
