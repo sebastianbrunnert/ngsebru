@@ -21,11 +21,13 @@ export class StartComponent {
 	public chart: NgSChart = new NgSChart()
 
 	public overviewData: {
+		dates: String[]
 		logs: MatchLog[],
 		days: Number,
 		message: String,
 		userId: String
 	} = {
+			dates: [],
 			logs: [],
 			days: 30,
 			message: "",
@@ -58,6 +60,7 @@ export class StartComponent {
 
 	public setDays(days: Number) {
 		this.overviewData = {
+			dates: this.overviewData.dates,
 			logs: this.overviewData.logs,
 			days: days,
 			message: this.overviewData.message,
@@ -69,6 +72,7 @@ export class StartComponent {
 
 	public setUserId(userId: String) {
 		this.overviewData = {
+			dates: this.overviewData.dates,
 			logs: this.overviewData.logs,
 			days: this.overviewData.days,
 			message: this.overviewData.message,
@@ -94,11 +98,12 @@ export class StartComponent {
 		}
 		restBuilder.get().then((logOverview: LogOverviewResponse) => {
 			this.chart.reset()
+			this.overviewData.dates = Object.keys(logOverview.dates)
 			Object.keys(logOverview.dates).forEach((key) => {
-				this.chart.addValue(key, logOverview.dates[key])
+				this.chart.addValue(new DayTagToFormattedDayTransformer(key).result(), logOverview.dates[key])
 			})
 			if (this.ngSCollapsables.elements.length != this.chart.labels.length) {
-				this.ngSCollapsables = new NgSCollapsables(this.chart.labels.slice().reverse().map((label: String) => new DayTagToFormattedDayTransformer(label).result()))
+				this.ngSCollapsables = new NgSCollapsables(this.chart.labels.slice().reverse())
 				this.ngSCollapsables.onOpen = () => {
 					this.loadLogs()
 				}
@@ -113,7 +118,7 @@ export class StartComponent {
 	}
 
 	public loadLogs() {
-		const restBuilder = new RestBuilder(this.restService).addAuthenticationType("admin").setUrl("log").addParam("day", this.chart.labels[this.chart.labels.length - 1 - (this.ngSCollapsables.currentOpen as number)])
+		const restBuilder = new RestBuilder(this.restService).addAuthenticationType("admin").setUrl("log").addParam("day", this.overviewData.dates[this.overviewData.dates.length - 1 - (this.ngSCollapsables.currentOpen as number)])
 		if (this.overviewData.userId) {
 			restBuilder.addParam("userId", this.overviewData.userId)
 		}
