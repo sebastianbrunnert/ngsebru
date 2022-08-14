@@ -1,5 +1,5 @@
-<div class="mt-md" *ngFor="let title of this.ngSCollapsables.titles; index as i">
-    <ngs-collapsable [title]="title" (open)="this.openCollapsable(i)" (close)="this.closeCollapsable(i)" [open]="this.ngSCollapsables.currentOpen == i">
+<div class="mt-md" *ngFor="let element of this.ngSCollapsables.elements; index as i">
+    <ngs-collapsable [ngSCollapsable]="element">
         <ng-content></ng-content>
     </ngs-collapsable>
 </div>

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { NgSCollapsable } from '../collapsable.component';
 
 @Component({
   	selector: 'ngs-collapsables',
@@ -9,26 +10,33 @@ export class NgSCollapsablesComponent {
     @Input("ngSCollapsables")
     public ngSCollapsables: NgSCollapsables = new NgSCollapsables([])
 
-    public openCollapsable(index: Number) {
-        this.ngSCollapsables.currentOpen = index
-        this.ngSCollapsables.onOpen(index)
-    }
-
-    public closeCollapsable(index: Number) {
-        this.ngSCollapsables.currentOpen = -1
-        this.ngSCollapsables.onClose(index)
-    }
-
 }
 
 export class NgSCollapsables {
+
+    public elements: NgSCollapsable[] = []
+    public currentOpen: Number = -1
+
     constructor(
         public titles: String[] = [],
-        public currentOpen: Number = -1
-    ) {}
-
-    public open(index: Number) {
-        this.currentOpen = index
+    ) {
+        titles.forEach((title) => {
+            const element = new NgSCollapsable(title)
+            element.onOpen = () => {
+                const index = this.elements.indexOf(element)
+                if(this.currentOpen != -1) {
+                    this.elements[this.currentOpen as number].change()
+                }
+                this.currentOpen = index
+                this.onOpen(index)
+            }
+            element.onClose = () => {
+                const index = this.elements.indexOf(element)
+                this.currentOpen = -1
+                this.onClose(index)
+            }
+            this.elements.push(element)
+        });
     }
 
     public onOpen(index: Number) {}
