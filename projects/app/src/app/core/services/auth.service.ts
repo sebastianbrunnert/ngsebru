@@ -13,7 +13,7 @@ export class AuthService {
 		const adminAuthenticationType: BearerAuthenticationType = new BearerAuthenticationType("admin");
 		adminAuthenticationType.setToken(localStorage.getItem("adminToken") || "");
 		adminAuthenticationType.onLogout = () => {
-			localStorage.removeItem("admin");
+			localStorage.removeItem("adminToken");
 			this.pageService.navigate("admin")
 		}
 		this.restService.addAuthenticationType(adminAuthenticationType);

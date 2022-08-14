@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DayTagToFormattedDayTransformer, NgSChart, NgSCollapsables, NgSLangService, NgSNavigation, NgSRestService, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
+import { DayTagToFormattedDayTransformer, NgSChart, NgSCollapsables, NgSLangService, NgSRestService, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
 import { MatchLog } from "../../../core/models/Log";
 import { LogOverviewResponse } from "../../../core/models/Responses";
 
@@ -7,16 +7,6 @@ import { LogOverviewResponse } from "../../../core/models/Responses";
 	templateUrl: "./start.component.html"
 })
 export class StartComponent {
-
-	public navigation: NgSNavigation = {
-		titleHtml: "<span class='text-secondary'>match</span><span class='text-body-bg'>heroes</span>",
-		items: [
-			{ title: "Überblick", url: "super-admin/start", classes: ["text-body-bg", "rounded"] },
-			{ title: "Abmelden", action: () => { this.restService.getAuthenticationType("admin")?.onLogout() }, classes: ["text-body-bg", "rounded"] }
-		],
-		classes: ["bg-primary"],
-		barsClasses: ["text-body-bg"]
-	}
 
 	public chart: NgSChart = new NgSChart()
 

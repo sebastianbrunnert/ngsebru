@@ -1,14 +1,13 @@
 import { Component } from "@angular/core";
-import { NgSLangService } from "projects/ng-sebru-lib/src/public-api";
+import { NgSPageService } from "projects/ng-sebru-lib/src/public-api";
 
 @Component({
-	template: "Hello World"
+	templateUrl: "./home.component.html"
 })
 export class HomeComponent {
 
-
 	constructor(
-		private langService: NgSLangService
+		public pageService: NgSPageService
 	) {
 
 	}
