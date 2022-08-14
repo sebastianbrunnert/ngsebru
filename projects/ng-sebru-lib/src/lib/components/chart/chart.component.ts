@@ -9,19 +9,21 @@ export class NgSChartComponent {
 
     public primary: String = getComputedStyle(document.body).getPropertyValue("--bs-primary")
     public body: String = getComputedStyle(document.body).getPropertyValue("--bs-body-color")
+
+    public options = { responsive: true, scale: { ticks: { precision: 0 } } }
 }
 
 @Component({
     selector: "ngs-line-chart",
     templateUrl: "./line-chart.component.html"
 })
-export class NgSLineChartComponent extends NgSChartComponent {}  
+export class NgSLineChartComponent extends NgSChartComponent { }
 
 @Component({
     selector: "ngs-bar-chart",
     templateUrl: "./bar-chart.component.html"
 })
-export class NgSBarChartComponent extends NgSChartComponent {}  
+export class NgSBarChartComponent extends NgSChartComponent { }
 
 export class NgSChart {
 
