@@ -288,6 +288,10 @@ export class NgSImageInput extends NgSInput {
 	public open() {
 		document.getElementById(this.id as string)!.click()
 	}
+
+	public onReset(): void {
+		this.preview = ""
+	}
 }
 
 export class NgSFilesInput extends NgSInput {
