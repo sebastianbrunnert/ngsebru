@@ -7,18 +7,18 @@ import { NgSAlertType } from './../components/alert/alert.component'
 import { NgSForm } from './../components/form/form.component'
 
 @Injectable({
-    providedIn: 'root'
+	providedIn: 'root'
 })
 export class NgSRestService {
 
 	private defaultEndpoint: String = ""
 	private authenticationTypes: AuthenticationType[] = []
 
-    constructor(
-        public httpClient: HttpClient,
+	constructor(
+		public httpClient: HttpClient,
 		private pageService: NgSPageService,
 		private ngbModal: NgbModal
-    ) {
+	) {
 		this.defaultEndpoint = "http://127.0.0.1:8000/api/"
 	}
 
@@ -26,9 +26,9 @@ export class NgSRestService {
 		this.defaultEndpoint = endpoint
 	}
 
-    public getDefaultEndpoint(): String {
-        return this.defaultEndpoint
-    }
+	public getDefaultEndpoint(): String {
+		return this.defaultEndpoint
+	}
 
 	public addAuthenticationType(authenticationType: AuthenticationType) {
 		this.authenticationTypes.push(authenticationType)
@@ -40,23 +40,23 @@ export class NgSRestService {
 
 	public onError(error: any, restBuilder: RestBuilder): Boolean {
 		var ngSError: NgSError = new NgSError(error.error)
-		if(ngSError.level == NgSErrorLevel.UNKNOWN) {
+		if (ngSError.level == NgSErrorLevel.UNKNOWN) {
 			return false
 		}
 
-		if(ngSError.level == NgSErrorLevel.IGNORE) {
+		if (ngSError.level == NgSErrorLevel.IGNORE) {
 			return true
-		} else if(ngSError.level == NgSErrorLevel.ALERT) {
+		} else if (ngSError.level == NgSErrorLevel.ALERT) {
 			this.pageService.alert({
 				id: ngSError.description,
 				message: ngSError.error,
 				type: NgSAlertType.DANGER
 			})
 			return true
-		} else if(ngSError.level == NgSErrorLevel.INPUT && restBuilder.getInquirer() instanceof NgSForm) {
+		} else if (ngSError.level == NgSErrorLevel.INPUT && restBuilder.getInquirer() instanceof NgSForm) {
 			restBuilder.getInquirer().showError(ngSError)
 			return true
-		} else if(ngSError.level == NgSErrorLevel.LOGOUT && restBuilder.getAuthenticationType()) {
+		} else if (ngSError.level == NgSErrorLevel.LOGOUT && restBuilder.getAuthenticationType()) {
 			restBuilder.getAuthenticationType().onLogout()
 			this.ngbModal.dismissAll()
 			return true
@@ -74,7 +74,7 @@ export class AuthenticationType {
 		this.id = id
 	}
 
-	public onLogout() {}
+	public onLogout() { }
 }
 
 export class BearerAuthenticationType extends AuthenticationType {
@@ -94,7 +94,7 @@ export class RestBuilder {
 	private handleErrorSelf: Boolean = false
 	private authenticationType?: AuthenticationType
 	private inquirer: any
-	
+
 	constructor(private restService: NgSRestService) {
 		this.endpoint = restService.getDefaultEndpoint()
 	}
@@ -126,7 +126,7 @@ export class RestBuilder {
 	}
 
 	public addParam(key: String, value: String): RestBuilder {
-		if(this.params.length == 0) {
+		if (this.params.length == 0) {
 			this.params = "?" + key + "=" + value
 		} else {
 			this.params += "&" + key + "=" + value
@@ -146,7 +146,7 @@ export class RestBuilder {
 
 	public addAuthenticationType(authenticationTypeId: String): RestBuilder {
 		this.authenticationType = this.restService.getAuthenticationType(authenticationTypeId)
-		if(this.authenticationType instanceof BearerAuthenticationType) {
+		if (this.authenticationType instanceof BearerAuthenticationType) {
 			this.addAuthorizationHeader(this.authenticationType.token)
 		}
 		return this
@@ -162,12 +162,12 @@ export class RestBuilder {
 
 	public get(): Promise<any> {
 		this.init()
-		return new Promise((resolve,reject) => {
-			this.restService.httpClient.get(this.endpoint as string + this.url + this.params, {headers: this.headers}).subscribe(response => {
+		return new Promise((resolve, reject) => {
+			this.restService.httpClient.get(this.endpoint as string + this.url + this.params, { headers: this.headers }).subscribe(response => {
 				resolve(response)
 				this.terminate()
 			}, error => {
-				if(this.handleErrorSelf || !this.restService.onError(error, this)) {
+				if (this.handleErrorSelf || !this.restService.onError(error, this)) {
 					reject(error)
 				}
 				this.terminate()
@@ -177,12 +177,12 @@ export class RestBuilder {
 
 	public post(): Promise<any> {
 		this.init()
-		return new Promise((resolve,reject) => {
-			this.restService.httpClient.post(this.endpoint as string + this.url + this.params, this.body, {headers: this.headers}).subscribe(response => {
+		return new Promise((resolve, reject) => {
+			this.restService.httpClient.post(this.endpoint as string + this.url + this.params, this.body, { headers: this.headers }).subscribe(response => {
 				resolve(response)
 				this.terminate()
 			}, error => {
-				if(this.handleErrorSelf || !this.restService.onError(error, this)) {
+				if (this.handleErrorSelf || !this.restService.onError(error, this)) {
 					reject(error)
 				}
 				this.terminate()
@@ -192,27 +192,27 @@ export class RestBuilder {
 
 	public delete(): Promise<any> {
 		this.init()
-        return new Promise((resolve,reject) => {
-            this.restService.httpClient.delete(this.endpoint as string + this.url + this.params, {headers:this.headers}).subscribe(response => {
-                resolve(response)
-				this.terminate()
-            }, error => {
-				if(this.handleErrorSelf || !this.restService.onError(error, this)) {
-					reject(error)
-				}
-				this.terminate()
-            })
-        })
-    }
-
-	public put(): Promise<any> {
-		this.init()
-		return new Promise((resolve,reject) => {
-			this.restService.httpClient.put(this.endpoint as string + this.url + this.params, this.body, {headers: this.headers}).subscribe(response => {
+		return new Promise((resolve, reject) => {
+			this.restService.httpClient.delete(this.endpoint as string + this.url + this.params, { headers: this.headers }).subscribe(response => {
 				resolve(response)
 				this.terminate()
 			}, error => {
-				if(this.handleErrorSelf || !this.restService.onError(error, this)) {
+				if (this.handleErrorSelf || !this.restService.onError(error, this)) {
+					reject(error)
+				}
+				this.terminate()
+			})
+		})
+	}
+
+	public put(): Promise<any> {
+		this.init()
+		return new Promise((resolve, reject) => {
+			this.restService.httpClient.put(this.endpoint as string + this.url + this.params, this.body, { headers: this.headers }).subscribe(response => {
+				resolve(response)
+				this.terminate()
+			}, error => {
+				if (this.handleErrorSelf || !this.restService.onError(error, this)) {
 					reject(error)
 				}
 				this.terminate()
@@ -221,13 +221,13 @@ export class RestBuilder {
 	}
 
 	private init() {
-		if(this.inquirer instanceof NgSForm) {
+		if (this.inquirer instanceof NgSForm) {
 			this.inquirer.setLoading(true)
 		}
 	}
 
 	private terminate() {
-		if(this.inquirer instanceof NgSForm) {
+		if (this.inquirer instanceof NgSForm) {
 			this.inquirer.setLoading(false)
 		}
 	}
