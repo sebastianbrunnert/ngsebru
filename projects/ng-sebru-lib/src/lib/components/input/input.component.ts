@@ -6,13 +6,13 @@ import { NgSInjector } from "../../../private-api";
 import { NgSLangService } from '../../services/lang.service';
 
 @Component({
-  selector: 'ngs-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss']
+	selector: 'ngs-input',
+	templateUrl: './input.component.html',
+	styleUrls: ['./input.component.scss']
 })
 export class NgSInputComponent {
 	@Input("ngSInput")
-	public ngSInput: NgSInput = new NgSInput("","","")
+	public ngSInput: NgSInput = new NgSInput("", "", "")
 }
 
 export class NgSInput {
@@ -34,25 +34,25 @@ export class NgSInput {
 	constructor(name: String, type: String, id: String) {
 		this.name = name;
 		this.type = type
-		if(id != "") {
+		if (id != "") {
 			this.id = id
 		}
 	}
 
 	public test: (value: any) => Boolean = (value: any) => true;
 
-	public onReset() {}
+	public onReset() { }
 
-	public onIconClick() {}
+	public onIconClick() { }
 
 	public checkTest() {
-		if(!this.required && this.value == "") {
+		if (!this.required && this.value == "") {
 			return true
 		}
 
-		if(this.mark == "") {
+		if (this.mark == "") {
 			let test = this.test(this.value)
-			if(!test && this.mark == "") {
+			if (!test && this.mark == "") {
 				const langService = NgSInjector.get(NgSLangService)
 				this.mark = langService.getTranslation(this.name) + " " + langService.getTranslation("INPUT_TEST_INVALID") + "."
 			}
@@ -64,7 +64,7 @@ export class NgSInput {
 	public checkFilled(): Boolean {
 		this.mark = ""
 		let filled = (this.value != "" && this.value != null && this.value != undefined && this.value != []) || !this.required;
-		if(!filled) {
+		if (!filled) {
 			const langService = NgSInjector.get(NgSLangService)
 			this.mark = langService.getTranslation(this.name) + " " + langService.getTranslation("INPUT_REQUIRED") + "."
 		}
@@ -194,15 +194,15 @@ export class NgSFileInput extends NgSInput {
 	}
 
 	public upload() {
-		const files = (<HTMLInputElement> document.getElementById(this.id as string)).files!
-		if(files.length > 0) {
+		const files = (<HTMLInputElement>document.getElementById(this.id as string)).files!
+		if (files.length > 0) {
 			this.setValue(files.item(0))
 		}
 	}
 
 	public onReset(): void {
-		const element = (<HTMLInputElement> document.getElementById(this.id as string))
-		if(element != null) {
+		const element = (<HTMLInputElement>document.getElementById(this.id as string))
+		if (element != null) {
 			element.value = ""
 		}
 	}
@@ -218,15 +218,15 @@ export class NgSImagesInput extends NgSInput {
 	}
 
 	public upload() {
-		const uploadedFiles = (<HTMLInputElement> document.getElementById(this.id as string)).files!
-		if(uploadedFiles.length > 0) {
+		const uploadedFiles = (<HTMLInputElement>document.getElementById(this.id as string)).files!
+		if (uploadedFiles.length > 0) {
 			let files: File[] = []
-			for(var i = 0; i < uploadedFiles.length; i++) {
+			for (var i = 0; i < uploadedFiles.length; i++) {
 				const file: File = uploadedFiles.item(i)!
 				const fileName: String = file.name.toLowerCase()
-				if(file == null) {
+				if (file == null) {
 					this.mark = NgSInjector.get(NgSLangService).getTranslation("INPUT_FILE_NOT_READABLE")
-				} else if(!(fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".jpeg") || fileName.endsWith(".svg") || fileName.endsWith(".svg"))) {
+				} else if (!(fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".jpeg") || fileName.endsWith(".svg") || fileName.endsWith(".svg"))) {
 					this.mark = NgSInjector.get(NgSLangService).getTranslation("INPUT_FILE_NOT_IMAGE")
 				} else {
 					files.push(uploadedFiles.item(i)!)
@@ -261,29 +261,25 @@ export class NgSImageInput extends NgSInput {
 	}
 
 	public upload() {
-		const uploadedFiles = (<HTMLInputElement> document.getElementById(this.id as string)).files!
-		if(uploadedFiles.length > 0) {
-			let files: File[] = []
-			for(var i = 0; i < uploadedFiles.length; i++) {
-				const file: File = uploadedFiles.item(i)!
-				const fileName: String = file.name.toLowerCase()
-				if(file == null) {
-					this.mark = NgSInjector.get(NgSLangService).getTranslation("INPUT_FILE_NOT_READABLE")
-				} else if(!(fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".jpeg") || fileName.endsWith(".svg") || fileName.endsWith(".svg"))) {
-					this.mark = NgSInjector.get(NgSLangService).getTranslation("INPUT_FILE_NOT_IMAGE")
-				} else {
-					files.push(uploadedFiles.item(i)!)
-					const reader: FileReader = new FileReader()
-					reader.onload = () => {
-						this.preview = reader.result as string
-					}
-					reader.readAsDataURL(file)
+		const uploadedFiles = (<HTMLInputElement>document.getElementById(this.id as string)).files!
+		if (uploadedFiles.length > 0) {
+			const file: File = uploadedFiles.item(0)!
+			const fileName: String = file.name.toLowerCase()
+			if (file == null) {
+				this.mark = NgSInjector.get(NgSLangService).getTranslation("INPUT_FILE_NOT_READABLE")
+			} else if (!(fileName.endsWith(".jpg") || fileName.endsWith(".png") || fileName.endsWith(".jpeg") || fileName.endsWith(".svg") || fileName.endsWith(".svg"))) {
+				this.mark = NgSInjector.get(NgSLangService).getTranslation("INPUT_FILE_NOT_IMAGE")
+			} else {
+				const reader: FileReader = new FileReader()
+				reader.onload = () => {
+					this.preview = reader.result as string
 				}
+				reader.readAsDataURL(file)
 			}
-			this.value = this.value.concat(files)
+			this.value = file
 		}
 	}
-	
+
 	public remove() {
 		this.value = ""
 		this.preview = ""
@@ -301,10 +297,10 @@ export class NgSFilesInput extends NgSInput {
 	}
 
 	public upload() {
-		const uploadedFiles = (<HTMLInputElement> document.getElementById(this.id as string)).files!
-		if(uploadedFiles.length > 0) {
+		const uploadedFiles = (<HTMLInputElement>document.getElementById(this.id as string)).files!
+		if (uploadedFiles.length > 0) {
 			let files: File[] = []
-			for(var i = 0; i < uploadedFiles.length; i++) {
+			for (var i = 0; i < uploadedFiles.length; i++) {
 				files.push(uploadedFiles.item(i)!)
 			}
 			this.value = this.value.concat(files)
@@ -312,7 +308,7 @@ export class NgSFilesInput extends NgSInput {
 	}
 
 	public remove(value: File) {
-		if(this.value.includes(value)) {
+		if (this.value.includes(value)) {
 			this.value.splice(this.value.indexOf(value), 1)
 		}
 	}
@@ -331,10 +327,10 @@ export class NgSSelectInput extends NgSInput {
 		this.setStartValue(null)
 	}
 
-	onChange() {}
+	onChange() { }
 
-	change(event:Event) {
-		this.value = this.options[(event.target as any)["selectedIndex"]-1]
+	change(event: Event) {
+		this.value = this.options[(event.target as any)["selectedIndex"] - 1]
 		this.onChange()
 	}
 }
@@ -355,7 +351,7 @@ export class NgSDragDropInput extends NgSInput {
 		this.setStartValue(value)
 	}
 
-	public onMove(previousIndex: number, currentIndex: number) {}
+	public onMove(previousIndex: number, currentIndex: number) { }
 
 	moveBlock(event: CdkDragDrop<string[]>) {
 		moveItemInArray(this.value, event.previousIndex, event.currentIndex)
@@ -365,7 +361,7 @@ export class NgSDragDropInput extends NgSInput {
 }
 
 export class NgSMultipleSelectInput extends NgSInput {
-	
+
 	public options: String[] = []
 
 	constructor(name: String, options: String[], id: String = "") {
@@ -375,9 +371,9 @@ export class NgSMultipleSelectInput extends NgSInput {
 	}
 
 	choose() {
-		let select: HTMLSelectElement = <HTMLSelectElement> document.getElementById(this.id as string)!
+		let select: HTMLSelectElement = <HTMLSelectElement>document.getElementById(this.id as string)!
 
-		if(this.value.indexOf(select.value) != -1) {
+		if (this.value.indexOf(select.value) != -1) {
 			this.value.splice(this.value.indexOf(select.value), 1)
 		} else {
 			this.value.push(select.value)
@@ -398,20 +394,20 @@ export class NgSMultipleTextInput extends NgSInput {
 	}
 
 	add() {
-		if(this.internValue != "" && !this.value.includes(this.internValue)) {
+		if (this.internValue != "" && !this.value.includes(this.internValue)) {
 			this.value.push(this.internValue)
 			this.internValue = ""
 		}
 	}
 
 	remove(value: String) {
-		if(this.value.includes(value)) {
+		if (this.value.includes(value)) {
 			this.value.splice(this.value.indexOf(value), 1)
 		}
 	}
 
 	enter(event: any) {
-		if(this.internValue != "" && event.key == "Enter") {
+		if (this.internValue != "" && event.key == "Enter") {
 			event.preventDefault()
 			this.add()
 		}
