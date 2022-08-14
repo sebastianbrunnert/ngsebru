@@ -9,12 +9,12 @@ import { LogOverviewResponse } from "../../../core/models/Responses";
 export class StartComponent {
 
 	public navigation: NgSNavigation = {
+		titleHtml: "<span class='text-secondary'>match</span><span class='text-body-bg'>heroes</span>",
 		items: [
 			{ title: "Überblick", url: "super-admin/start", classes: ["text-body-bg", "rounded"] },
 			{ title: "Abmelden", action: () => { this.restService.getAuthenticationType("admin")?.onLogout() }, classes: ["text-body-bg", "rounded"] }
 		],
 		classes: ["bg-primary"],
-		imageUrl: "assets/logo/small_transparent_b.png",
 		barsClasses: ["text-body-bg"]
 	}
 
