@@ -1,5 +1,66 @@
-$body-bg: white;
-$body-color: green;
-$primary: blue;
+@font-face {
+    font-family: Oswald;
+    src: url('assets/Oswald.ttf');
+}
+
+$body-bg: #0D78F1;
+$body-color: #E0E3EA;
+$body-color-dark: #333;
+$primary: #F7623A;
+$input-bg: $body-color;
+$input-color: $body-color-dark;
+
+$font-size-base: 1.4rem;
+$font-family-sans-serif: 'Oswald', serif;
 
 @import "~projects/ng-sebru-lib/style.scss";
+
+.border {
+    border: 1px solid $body-color-dark  !important;
+}
+
+.card {
+    background-color: $body-color  !important;
+    color: $body-color-dark;
+}
+
+.btn {
+    color: $body-color  !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: $primary  !important;
+}
+
+.text-body-bg {
+    color: $body-bg  !important;
+}
+
+.text-body-bg:hover {
+    color: $body-bg  !important;
+}
+
+.rounded {
+    border-radius: 2rem !important;
+}
+
+.nav-link:hover {
+    backdrop-filter: brightness(0.7);
+    -webkit-backdrop-filter: brightness(0.7);
+}
+
+.dropdown-item:hover {
+    -webkit-filter: brightness(0.7);
+    filter: brightness(0.7);
+}
+
+.nav-link,
+.dropdown-item {
+    transition: all 0.2s ease-in;
+}
+
+.fa,
+.icon {
+    color: $body-color;
+}

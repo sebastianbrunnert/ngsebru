@@ -10,26 +10,26 @@ export class AuthService {
 		private restService: NgSRestService,
 		private pageService: NgSPageService
 	) {
-		const superAdminAuthenticationType: BearerAuthenticationType = new BearerAuthenticationType("superAdmin");
-		superAdminAuthenticationType.setToken(localStorage.getItem("superAdminToken") || "");
-		superAdminAuthenticationType.onLogout = () => {
-			localStorage.removeItem("superAdminToken");
-			this.pageService.navigate("super-admin")
+		const adminAuthenticationType: BearerAuthenticationType = new BearerAuthenticationType("admin");
+		adminAuthenticationType.setToken(localStorage.getItem("adminToken") || "");
+		adminAuthenticationType.onLogout = () => {
+			localStorage.removeItem("admin");
+			this.pageService.navigate("admin")
 		}
-		this.restService.addAuthenticationType(superAdminAuthenticationType);
+		this.restService.addAuthenticationType(adminAuthenticationType);
 	}
 
-	public loginAsSuperAdmin(token: string, expiration: Number, navigate: Boolean = true): void {
-		localStorage.setItem("superAdminToken", token);
-		localStorage.setItem("superAdminExpiration", expiration.toString());
-		(this.restService.getAuthenticationType("superAdmin")! as BearerAuthenticationType).setToken(token);
-		if(navigate) {
-			this.pageService.navigate("super-admin/start")
+	public loginAsAdmin(token: String, expiration: Number, navigate: Boolean = true): void {
+		localStorage.setItem("adminToken", token.toString());
+		localStorage.setItem("adminExpiration", expiration.toString());
+		(this.restService.getAuthenticationType("admin")! as BearerAuthenticationType).setToken(token);
+		if (navigate) {
+			this.pageService.navigate("admin/start")
 		}
 	}
 
-	public isSuperAdmin() {
-		return localStorage.getItem("superAdminToken") != null && Number(localStorage.getItem("superAdminExpiration")) > Date.now();
+	public isAdmin() {
+		return localStorage.getItem("adminToken") != null && Number(localStorage.getItem("adminExpiration")) > Date.now();
 	}
 
 }

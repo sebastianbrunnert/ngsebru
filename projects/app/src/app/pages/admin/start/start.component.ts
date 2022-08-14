@@ -11,10 +11,10 @@ export class StartComponent {
 		private authService: AuthService,
 		private pageService: NgSPageService
 	) {
-		if(this.authService.isSuperAdmin()) {
+		if (this.authService.isAdmin()) {
 			this.pageService.startSpinner()
 		} else {
-			this.pageService.navigate("super-admin/login")
+			this.pageService.navigate("admin/login")
 		}
 	}
 

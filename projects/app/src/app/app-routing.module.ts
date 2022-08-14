@@ -3,8 +3,8 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
 	{
-		path: "super-admin",
-		loadChildren: () => import("./pages/super-admin/super-admin.module").then(m => m.SuperAdminModule)
+		path: "admin",
+		loadChildren: () => import("./pages/admin/admin.module").then(m => m.AdminModule)
 	},
 	{
 		path: "",
@@ -13,7 +13,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
+	imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
 	exports: [RouterModule]
 })
 export class AppRoutingModule { }

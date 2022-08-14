@@ -5,7 +5,7 @@ import { StartComponent } from "./start/start.component";
 
 const routes: Routes = [
 	{ path: "start", component: StartComponent },
-    { path: "**", component: LoginComponent }
+	{ path: "**", component: LoginComponent }
 ]
 
 @NgModule({
@@ -14,4 +14,4 @@ const routes: Routes = [
 	],
 	exports: [RouterModule]
 })
-export class SuperAdminRoutingModule { }
+export class AdminRoutingModule { }
