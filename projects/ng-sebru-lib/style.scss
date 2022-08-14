@@ -3,6 +3,10 @@ $iconColor: black;
 @import "projects/ng-sebru-lib/node_modules/font-awesome/scss/font-awesome.scss";
 @import "projects/ng-sebru-lib/node_modules/bootstrap/scss/bootstrap.scss";
 
+* {
+    word-wrap: break-word;
+}
+
 .mt {
     margin-top: 1rem;
 }
@@ -31,6 +35,7 @@ a.hover:hover {
     cursor: pointer;
 }
 
-.fa, .icon {
+.fa,
+.icon {
     color: $iconColor;
 }
