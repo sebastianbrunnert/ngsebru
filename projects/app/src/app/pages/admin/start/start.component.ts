@@ -2,7 +2,6 @@ import { Component } from "@angular/core";
 import { DayTagToFormattedDayTransformer, NgSChart, NgSCollapsables, NgSLangService, NgSNavigation, NgSRestService, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
 import { MatchLog } from "../../../core/models/Log";
 import { LogOverviewResponse } from "../../../core/models/Responses";
-import { AuthService } from "../../../core/services/auth.service";
 
 @Component({
 	templateUrl: "./start.component.html"
@@ -11,8 +10,8 @@ export class StartComponent {
 
 	public navigation: NgSNavigation = {
 		items: [
-			{ title: "Überblick", url: "super-admin/start", classes: ["text-body", "rounded"] },
-			{ title: "Abmelden", action: () => { this.restService.getAuthenticationType("admin")?.onLogout() }, classes: ["text-body", "rounded"] }
+			{ title: "Überblick", url: "super-admin/start", classes: ["text-body-bg", "rounded"] },
+			{ title: "Abmelden", action: () => { this.restService.getAuthenticationType("admin")?.onLogout() }, classes: ["text-body-bg", "rounded"] }
 		],
 		classes: ["bg-primary"],
 		imageUrl: "assets/logo/small_transparent_b.png",
@@ -48,7 +47,6 @@ export class StartComponent {
 	public ngSCollapsables: NgSCollapsables = new NgSCollapsables()
 
 	constructor(
-		private authService: AuthService,
 		private restService: NgSRestService,
 		private langService: NgSLangService
 	) {
@@ -87,7 +85,7 @@ export class StartComponent {
 	}
 
 	public loadLogOverview() {
-		const restBuilder = new RestBuilder(this.restService).addAuthenticationType("superAdmin").setUrl("log").addParam("days", this.overviewData.days.toString())
+		const restBuilder = new RestBuilder(this.restService).addAuthenticationType("admin").setUrl("log").addParam("days", this.overviewData.days.toString())
 		if (this.overviewData.userId) {
 			restBuilder.addParam("userId", this.overviewData.userId)
 		}
@@ -115,7 +113,7 @@ export class StartComponent {
 	}
 
 	public loadLogs() {
-		const restBuilder = new RestBuilder(this.restService).addAuthenticationType("superAdmin").setUrl("log").addParam("day", this.chart.labels[this.chart.labels.length - 1 - (this.ngSCollapsables.currentOpen as number)])
+		const restBuilder = new RestBuilder(this.restService).addAuthenticationType("admin").setUrl("log").addParam("day", this.chart.labels[this.chart.labels.length - 1 - (this.ngSCollapsables.currentOpen as number)])
 		if (this.overviewData.userId) {
 			restBuilder.addParam("userId", this.overviewData.userId)
 		}

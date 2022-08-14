@@ -3,7 +3,7 @@
 <div class="container">
     <div class="col-lg-12">
         <div class="row mt-md">
-            <h1>{{"WELCOME"|lang}}, Super-Admin.</h1>
+            <h1>{{"WELCOME"|lang}}, Admin.</h1>
         </div>
         <div class="row mt justify-content-center">
             <button class="btn btn-secondary mx-1 {{this.overviewData.days == 7 ? 'active' : ''}}"
@@ -44,10 +44,6 @@
                 <i class="fa fa-trash"></i>
                 {{this.overviewData.message}}
             </button>
-            <button class="btn btn-secondary mx-1" *ngIf="this.overviewData.storeId" (click)="this.setStoreId('')">
-                <i class="fa fa-trash"></i>
-                {{this.overviewData.storeId}}
-            </button>
             <button class="btn btn-secondary mx-1" *ngIf="this.overviewData.userId" (click)="this.setUserId('')">
                 <i class="fa fa-trash"></i>
                 {{this.overviewData.userId}}
@@ -64,8 +60,6 @@
                         </div>
                         <small *ngIf="log.description">{{log.description}}<br></small>
                         <small class="text-danger" *ngIf="log.exception">{{log.exception}}<br></small>
-                        <a *ngIf="log.storeId" (click)="this.setStoreId(log.storeId)"
-                            class="hover">{{log.storeId}}<br></a>
                         <a *ngIf="log.userId" (click)="this.setUserId(log.userId)" class="hover">{{log.userId}}</a>
                     </div>
                 </div>

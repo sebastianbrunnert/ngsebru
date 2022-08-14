@@ -1,6 +1,6 @@
-<div class="d-flex hover" (click)="this.changeState()">
-    <h5 class="fw-bold">{{this.title|lang}}</h5>
-    <i class="fa ms-auto {{this.state ? 'fa-chevron-up' : 'fa-chevron-down'}}"></i>
+<div class="d-flex hover" (click)="this.change()">
+    <h5 class="fw-bold">{{this.ngSCollapsable.title|lang}}</h5>
+    <i class="fa ms-auto {{this.ngSCollapsable.state ? 'fa-chevron-up' : 'fa-chevron-down'}}"></i>
 </div>
 <hr class="mt-0 pt-0">
-<ng-content *ngIf="this.state"></ng-content>
+<ng-content *ngIf="this.ngSCollapsable.state"></ng-content>

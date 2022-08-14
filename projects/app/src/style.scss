@@ -3,12 +3,10 @@
     src: url('assets/Oswald.ttf');
 }
 
-$body-bg: #0D78F1;
-$body-color: #E0E3EA;
-$body-color-dark: #333;
+$body-bg: #E0E3EA;
+$body-color: #333;
+$secondary: #0D78F1;
 $primary: #F7623A;
-$input-bg: $body-color;
-$input-color: $body-color-dark;
 
 $font-size-base: 1.4rem;
 $font-family-sans-serif: 'Oswald', serif;
@@ -16,16 +14,11 @@ $font-family-sans-serif: 'Oswald', serif;
 @import "~projects/ng-sebru-lib/style.scss";
 
 .border {
-    border: 1px solid $body-color-dark  !important;
-}
-
-.card {
-    background-color: $body-color  !important;
-    color: $body-color-dark;
+    border: 1px solid $gray-600  !important;
 }
 
 .btn {
-    color: $body-color  !important;
+    color: $body-bg  !important;
 }
 
 .btn-primary:hover,
@@ -63,4 +56,27 @@ $font-family-sans-serif: 'Oswald', serif;
 .fa,
 .icon {
     color: $body-color;
+}
+
+.btn-secondary {
+    transition: all 0.1s ease-in;
+    padding: 0.5rem 1rem;
+    border: 2px solid $body-color;
+    width: auto;
+    border-radius: 2rem;
+    color: $body-color  !important;
+    background-color: transparent;
+    outline: none;
+    box-shadow: none !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary.active {
+    color: $body-bg  !important;
+    box-shadow: none;
+}
+
+.text-underline-hover:hover {
+    text-decoration: underline;
 }
