@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MatchGame, Player, Setting, Timer } from "projects/app/src/app/core/models/MatchGame";
-import { NgSForm, NgSInput, NgSLangService, NgSNumberInput, NgSPageService, NgSRestService, NgSTextInput, NgSTimeInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
+import { NgSForm, NgSLangService, NgSModalBuilder, NgSModalType, NgSNumberInput, NgSPageService, NgSRestService, NgSTextInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
 
 @Component({
     templateUrl: "./setup.component.html",
@@ -15,6 +15,8 @@ export class SetupGameComponent {
 
     public playersForm: NgSForm = new NgSForm()
     public timersForm: NgSForm = new NgSForm()
+
+    public editTimerModal: NgSModalBuilder = new NgSModalBuilder().setTitle("EDIT_TIMER").setType(NgSModalType.L)
 
     constructor(
         private route: ActivatedRoute,
@@ -43,7 +45,7 @@ export class SetupGameComponent {
                     matchGame.timers.forEach((timer: Timer, index: number) => {
                         const timerInput = new NgSNumberInput(this.langService.getTranslation(timer.title), "timer-" + index).setValue(timer.seconds as number / 60).setSuffix("MINUTES").setLabelButton("edit")
                         timerInput.onLabelButtonClick = () => {
-                            console.log("45")
+                            this.editTimerModal.open()
                         }
                         this.timersForm.addNgSInput(timerInput)
                     })
