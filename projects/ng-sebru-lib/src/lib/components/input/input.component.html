@@ -1,6 +1,6 @@
 <label for="{{this.ngSInput.id}}" *ngIf="this.ngSInput.name && this.ngSInput.type.toString() != 'check'">
 	<i *ngIf="this.ngSInput.labelButton" (click)="this.ngSInput.onLabelButtonClick()"
-		class="fa fa-{{this.ngSInput.labelButton}}"></i>
+		class="hover fa fa-{{this.ngSInput.labelButton}}"></i>
 	{{this.ngSInput.name|lang}}
 	<span *ngIf="!this.ngSInput.required">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
 </label>
