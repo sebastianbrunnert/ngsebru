@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MatchGame, Player, Setting, Timer } from "projects/app/src/app/core/models/MatchGame";
-import { NgSForm, NgSLangService, NgSNumberInput, NgSPageService, NgSRestService, NgSTextInput, NgSTimeInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
+import { NgSForm, NgSInput, NgSLangService, NgSNumberInput, NgSPageService, NgSRestService, NgSTextInput, NgSTimeInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
 
 @Component({
     templateUrl: "./setup.component.html",
@@ -41,7 +41,11 @@ export class SetupGameComponent {
 
                     this.timersForm.setSubmitable(false)
                     matchGame.timers.forEach((timer: Timer, index: number) => {
-                        this.timersForm.addNgSInput(new NgSNumberInput(this.langService.getTranslation(timer.title), "timer-" + index).setValue(timer.seconds as number / 60).setSuffix("MINUTES").setButton("trash"))
+                        const timerInput = new NgSNumberInput(this.langService.getTranslation(timer.title), "timer-" + index).setValue(timer.seconds as number / 60).setSuffix("MINUTES").setButton("trash")
+                        timerInput.onButtonClick = () => {
+                            this.timersForm.inputs = this.timersForm.inputs.filter((input: NgSInput) => input.id != timerInput.id)
+                        }
+                        this.timersForm.addNgSInput(timerInput)
                     })
 
                     this.game = matchGame
