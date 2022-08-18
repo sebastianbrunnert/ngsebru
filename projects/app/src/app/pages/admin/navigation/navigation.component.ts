@@ -15,7 +15,6 @@ export class AdminNavigationComponent {
         titleHtml: "<span class='text-secondary'>match</span><span class='text-body-bg'>heroes</span>",
         items: [
             { title: "OVERVIEW", url: "admin/start", classes: ["text-body-bg", "rounded"] },
-            { title: "GAMES", url: "admin/games", classes: ["text-body-bg", "rounded"] },
             { title: "LOGOUT", action: () => { this.restService.getAuthenticationType("admin")?.onLogout() }, classes: ["text-body-bg", "rounded"] }
         ],
         classes: ["bg-primary"],
