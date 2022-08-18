@@ -28,11 +28,11 @@
 		*ngIf="['text','number','password','email','datetime-local','date','time'].indexOf(this.ngSInput.type.toString()) >= 0">
 		<input *ngIf="this.ngSInput.suffix || this.ngSInput.icon" type="{{this.ngSInput.type}}"
 			class="form-control shadow-none border-end-0 border" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}"
-			placeholder="{{this.ngSInput.placeholder|lang}}" [(ngModel)]="this.ngSInput.value"
+			placeholder="{{this.ngSInput.placeholder|lang}}" [(ngModel)]="this.ngSInput.value" min="0"
 			[disabled]="this.ngSInput.disabled">
 		<input *ngIf="!(this.ngSInput.suffix || this.ngSInput.icon)" type="{{this.ngSInput.type}}"
 			class="form-control shadow-none border" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}"
-			placeholder="{{this.ngSInput.placeholder|lang}}" [(ngModel)]="this.ngSInput.value"
+			placeholder="{{this.ngSInput.placeholder|lang}}" [(ngModel)]="this.ngSInput.value" min="0"
 			[disabled]="this.ngSInput.disabled">
 		<span class="input-group-append" *ngIf="this.ngSInput.icon">
 			<button (click)="this.ngSInput.onIconClick()" tabindex="-1" type="button" class="btn bg-white shadow-none"
