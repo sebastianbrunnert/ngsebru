@@ -1,6 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { SetNgSViewContainerRef } from 'projects/ng-sebru-lib/src/private-api';
-import { NgSForm, NgSRestService, NgSTextInput } from 'projects/ng-sebru-lib/src/public-api';
+import { NgSRestService } from 'projects/ng-sebru-lib/src/public-api';
 import { environment } from '../environments/environments';
 
 @Component({
@@ -8,10 +8,6 @@ import { environment } from '../environments/environments';
 	templateUrl: './app.component.html'
 })
 export class AppComponent {
-
-	public form: NgSForm = new NgSForm(
-		new NgSTextInput("Name", "name").setButton("trash")
-	)
 
 	constructor(
 		viewContainerRef: ViewContainerRef,

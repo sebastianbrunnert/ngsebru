@@ -24,8 +24,11 @@
 	<div class="input-group-prepend" *ngIf="this.ngSInput.prefix">
 		<span class="input-group-text">{{this.ngSInput.prefix|lang}}</span>
 	</div>
-	<div class="input-group-prepend hover" *ngIf="this.ngSInput.button" (click)="this.ngSInput.onButtonClick()">
-		<i class="fa fa-2x mx-2 fa-{{this.ngSInput.button}}"></i>
+	<div class="input-group-prepend" *ngIf="this.ngSInput.button">
+		<span (click)="this.ngSInput.onButtonClick()" class="input-group-text h-100 hover"
+			style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
+			<i class="fa fa-lg fa-{{this.ngSInput.button}}"></i>
+		</span>
 	</div>
 	<ng-container
 		*ngIf="['text','number','password','email','datetime-local','date','time'].indexOf(this.ngSInput.type.toString()) >= 0">
@@ -139,7 +142,6 @@
 		</ul>
 		<span *ngIf="this.ngSInput.value.length == 0">{{"INPUT_DEFAULT_EMPTY"|lang}}</span>
 	</ng-container>
-	<ng-container *ngIf=""></ng-container>
 	<div class="input-group-postpend" *ngIf="this.ngSInput.suffix">
 		<span class="input-group-text"
 			style="border-bottom-left-radius: 0; border-top-left-radius: 0;">{{this.ngSInput.suffix|lang}}</span>
