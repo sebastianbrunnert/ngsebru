@@ -47,8 +47,11 @@ export class SetupGameComponent {
                         timerInput.onLabelButtonClick = () => {
                             const editTimerForm = new NgSForm(
                                 new NgSTextInput("NAME", "name").setValue(timerInput.name),
-                                new NgSSelectInput("TIME_UNIT", ["SECONDS", "MINUTES", "HOURS"]).setValue(this.langService.getTranslation(timerInput.suffix)),
+                                new NgSSelectInput("TIME_UNIT", ["SECONDS", "MINUTES", "HOURS"], "timeUnit").setValue(timerInput.suffix)
                             )
+                            editTimerForm.onSubmit = () => {
+                                console.log(editTimerForm.getNgSInput("timeUnit").value)
+                            }
                             this.editTimerModal.setNgSForm(editTimerForm)
                             this.editTimerModal.open()
                         }
