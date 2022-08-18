@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MatchGame, Player, Setting, Timer } from "projects/app/src/app/core/models/MatchGame";
-import { NgSForm, NgSLangService, NgSModalBuilder, NgSModalButton, NgSModalType, NgSNumberInput, NgSPageService, NgSRestService, NgSTextInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
+import { NgSForm, NgSLangService, NgSModalBuilder, NgSModalButton, NgSModalType, NgSNumberInput, NgSPageService, NgSRestService, NgSSelectInput, NgSTextInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
 
 @Component({
     templateUrl: "./setup.component.html",
@@ -16,7 +16,7 @@ export class SetupGameComponent {
     public playersForm: NgSForm = new NgSForm()
     public timersForm: NgSForm = new NgSForm()
 
-    public editTimerModal: NgSModalBuilder = new NgSModalBuilder().setTitle("EDIT_TIMER").setType(NgSModalType.L).addButton(new NgSModalButton("SAVE_CHANGES", true))
+    public editTimerModal: NgSModalBuilder = new NgSModalBuilder().setTitle("EDIT_TIMER").setType(NgSModalType.L)
 
     constructor(
         private route: ActivatedRoute,
@@ -45,6 +45,11 @@ export class SetupGameComponent {
                     matchGame.timers.forEach((timer: Timer, index: number) => {
                         const timerInput = new NgSNumberInput(this.langService.getTranslation(timer.title), "timer-" + index).setValue(timer.seconds as number / 60).setSuffix("MINUTES").setLabelButton("edit")
                         timerInput.onLabelButtonClick = () => {
+                            const editTimerForm = new NgSForm(
+                                new NgSTextInput("NAME", "name").setValue(timerInput.name),
+                                new NgSSelectInput("TIME_UNIT", ["SECONDS", "MINUTES", "HOURS"]).setValue(this.langService.getTranslation(timerInput.suffix)),
+                            )
+                            this.editTimerModal.setNgSForm(editTimerForm)
                             this.editTimerModal.open()
                         }
                         this.timersForm.addNgSInput(timerInput)
