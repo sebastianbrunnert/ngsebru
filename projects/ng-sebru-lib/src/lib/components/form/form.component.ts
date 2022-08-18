@@ -18,7 +18,10 @@ export class NgSFormComponent {
 	public checkSubmit = new EventEmitter<Boolean>();
 
 	public submit() {
-		if(!this.ngSForm.loading && this.ngSForm.checkFilledAll() && this.ngSForm.checkTestAll()) {
+		if (!this.ngSForm.submitable) {
+			return
+		}
+		if (!this.ngSForm.loading && this.ngSForm.checkFilledAll() && this.ngSForm.checkTestAll()) {
 			this.checkSubmit.emit()
 			this.ngSForm.onSubmit()
 		}
@@ -28,6 +31,7 @@ export class NgSFormComponent {
 export class NgSForm {
 	public inputs: NgSInput[] = []
 	public loading: Boolean = false
+	public submitable: Boolean = true
 
 	constructor(...ngSFormInputs: NgSInput[]) {
 		this.inputs = ngSFormInputs
@@ -39,7 +43,7 @@ export class NgSForm {
 
 	public reset() {
 		this.inputs.forEach(input => {
-			if(new IsIteratableCheck(input.defaultValue).result()) {
+			if (new IsIteratableCheck(input.defaultValue).result()) {
 				input.value = [...input.defaultValue]
 			} else {
 				input.value = input.defaultValue
@@ -71,10 +75,14 @@ export class NgSForm {
 		return this.inputs.find(input => input.name == name)!
 	}
 
+	public setSubmitable(submitable: Boolean) {
+		this.submitable = submitable
+	}
+
 	public checkTestAll(): Boolean {
 		let result = true
 		this.inputs.forEach(input => {
-			if(!input.checkTest()) {
+			if (!input.checkTest()) {
 				result = false
 			}
 		})
@@ -84,12 +92,18 @@ export class NgSForm {
 	public checkFilledAll(): Boolean {
 		let result = true
 		this.inputs.forEach(input => {
-			if(!input.checkFilled()) {
+			if (!input.checkFilled()) {
 				result = false
 			}
 		})
 		return result
 	}
 
-	public onSubmit() {}
+	public submit() {
+		if (!this.loading && this.checkFilledAll() && this.checkTestAll()) {
+			this.onSubmit()
+		}
+	}
+
+	public onSubmit() { }
 }
