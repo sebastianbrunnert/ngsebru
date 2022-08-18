@@ -1,4 +1,6 @@
 <label for="{{this.ngSInput.id}}" *ngIf="this.ngSInput.name && this.ngSInput.type.toString() != 'check'">
+	<i *ngIf="this.ngSInput.labelButton" (click)="this.ngSInput.onLabelButtonClick()"
+		class="fa fa-{{this.ngSInput.labelButton}}"></i>
 	{{this.ngSInput.name|lang}}
 	<span *ngIf="!this.ngSInput.required">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
 </label>
@@ -23,12 +25,6 @@
 <div class="input-group">
 	<div class="input-group-prepend" *ngIf="this.ngSInput.prefix">
 		<span class="input-group-text">{{this.ngSInput.prefix|lang}}</span>
-	</div>
-	<div class="input-group-prepend" *ngIf="this.ngSInput.button">
-		<span (click)="this.ngSInput.onButtonClick()" class="input-group-text h-100 hover"
-			style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
-			<i class="fa fa-lg fa-{{this.ngSInput.button}}"></i>
-		</span>
 	</div>
 	<ng-container
 		*ngIf="['text','number','password','email','datetime-local','date','time'].indexOf(this.ngSInput.type.toString()) >= 0">
