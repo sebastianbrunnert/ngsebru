@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MatchGame, Player, Setting, Timer } from "projects/app/src/app/core/models/MatchGame";
-import { NgSForm, NgSLangService, NgSModalBuilder, NgSModalType, NgSNumberInput, NgSPageService, NgSRestService, NgSTextInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
+import { NgSForm, NgSLangService, NgSModalBuilder, NgSModalButton, NgSModalType, NgSNumberInput, NgSPageService, NgSRestService, NgSTextInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
 
 @Component({
     templateUrl: "./setup.component.html",
@@ -16,7 +16,7 @@ export class SetupGameComponent {
     public playersForm: NgSForm = new NgSForm()
     public timersForm: NgSForm = new NgSForm()
 
-    public editTimerModal: NgSModalBuilder = new NgSModalBuilder().setTitle("EDIT_TIMER").setType(NgSModalType.L)
+    public editTimerModal: NgSModalBuilder = new NgSModalBuilder().setTitle("EDIT_TIMER").setType(NgSModalType.L).addButton(new NgSModalButton("SAVE_CHANGES", true))
 
     constructor(
         private route: ActivatedRoute,
