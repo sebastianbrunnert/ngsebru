@@ -23,6 +23,11 @@ $font-family-sans-serif: 'Oswald', serif;
     color: $body-bg  !important;
 }
 
+.input-group-text {
+    background-color: $body-bg  !important;
+    border: 1px solid $gray-600  !important;
+}
+
 .btn-primary:hover,
 .btn-primary:focus {
     background-color: $primary  !important;

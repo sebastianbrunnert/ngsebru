@@ -17,5 +17,10 @@
                 <ngs-form [ngSForm]="this.playersForm"></ngs-form>
             </ngs-card>
         </div>
+        <div class="col-lg-6 col-sm-12 mt" *ngIf="this.game.timers">
+            <ngs-card [title]="'TIMERS'|lang">
+                <ngs-form [ngSForm]="this.timersForm"></ngs-form>
+            </ngs-card>
+        </div>
     </div>
 </div>
