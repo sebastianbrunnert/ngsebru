@@ -129,14 +129,14 @@ export class NgSDateTimeInput extends NgSInput {
 
 export class NgSDateInput extends NgSInput {
 	constructor(name: String, id: String = "") {
-		super(name, "time", id)
+		super(name, "date", id)
 		this.setStartValue("")
 	}
 }
 
 export class NgSTimeInput extends NgSInput {
 	constructor(name: String, id: String = "") {
-		super(name, "date", id)
+		super(name, "time", id)
 		this.setStartValue("")
 	}
 }
