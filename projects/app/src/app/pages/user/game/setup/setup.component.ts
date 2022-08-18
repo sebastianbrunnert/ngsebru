@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MatchGame, Player, Setting, Timer } from "projects/app/src/app/core/models/MatchGame";
-import { NgSForm, NgSLangService, NgSModalBuilder, NgSModalButton, NgSModalType, NgSNumberInput, NgSPageService, NgSRestService, NgSSelectInput, NgSTextInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
+import { Confirmable, NgSForm, NgSInput, NgSLangService, NgSModalBuilder, NgSModalButton, NgSModalType, NgSNumberInput, NgSPageService, NgSRestService, NgSSelectInput, NgSTextInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
 
 @Component({
     templateUrl: "./setup.component.html",
@@ -50,9 +50,17 @@ export class SetupGameComponent {
                                 new NgSSelectInput("TIME_UNIT", ["SECONDS", "MINUTES", "HOURS"], "timeUnit").setValue(timerInput.suffix)
                             )
                             editTimerForm.onSubmit = () => {
-                                console.log(editTimerForm.getNgSInput("timeUnit").value)
+                                timerInput.name = editTimerForm.getNgSInput("name").value
+                                timerInput.suffix = editTimerForm.getNgSInput("timeUnit").value
+                                this.editTimerModal.close()
                             }
                             this.editTimerModal.setNgSForm(editTimerForm)
+                            this.editTimerModal.buttons = [
+                                new NgSModalButton("DELETE", false, () => {
+                                    this.timersForm.inputs = this.timersForm.inputs.filter((input: NgSInput) => input != timerInput)
+                                    this.editTimerModal.close()
+                                })
+                            ]
                             this.editTimerModal.open()
                         }
                         this.timersForm.addNgSInput(timerInput)
@@ -64,6 +72,10 @@ export class SetupGameComponent {
                 this.pageService.navigate("game/choose")
             })
         })
+    }
+
+    public start() {
+        console.log(this.game)
     }
 
 }
