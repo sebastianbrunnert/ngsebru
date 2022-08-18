@@ -41,7 +41,7 @@ export class SetupGameComponent {
 
                     this.timersForm.setSubmitable(false)
                     matchGame.timers.forEach((timer: Timer, index: number) => {
-                        this.timersForm.addNgSInput(new NgSNumberInput(this.langService.getTranslation(timer.title), "timer-" + index).setValue(timer.seconds as number / 60).setSuffix("MINUTES"))
+                        this.timersForm.addNgSInput(new NgSNumberInput(this.langService.getTranslation(timer.title), "timer-" + index).setValue(timer.seconds as number / 60).setSuffix("MINUTES").setButton("trash"))
                     })
 
                     this.game = matchGame

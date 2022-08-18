@@ -29,6 +29,7 @@ export class NgSInput {
 	public required: Boolean = true
 	public disabled: boolean = false
 	public icon: String = ""
+	public button: String = ""
 	public placeholder: String = "INPUT_DEFAULT_PLACEHOLDER"
 
 	constructor(name: String, type: String, id: String) {
@@ -44,6 +45,8 @@ export class NgSInput {
 	public onReset() { }
 
 	public onIconClick() { }
+
+	public onButtonClick() { }
 
 	public checkTest() {
 		if (!this.required && this.value == "") {
@@ -109,6 +112,11 @@ export class NgSInput {
 
 	public setDisabled(disabled: Boolean): NgSInput {
 		this.disabled = disabled as boolean
+		return this
+	}
+
+	public setButton(button: String): NgSInput {
+		this.button = button
 		return this
 	}
 }

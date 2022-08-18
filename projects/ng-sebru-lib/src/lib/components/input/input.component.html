@@ -22,7 +22,10 @@
 </ng-container>
 <div class="input-group">
 	<div class="input-group-prepend" *ngIf="this.ngSInput.prefix">
-		<span class="input-group-text">{{this.ngSInput.prefix}}</span>
+		<span class="input-group-text">{{this.ngSInput.prefix|lang}}</span>
+	</div>
+	<div class="input-group-prepend hover" *ngIf="this.ngSInput.button" (click)="this.ngSInput.onButtonClick()">
+		<i class="fa fa-2x mx-2 fa-{{this.ngSInput.button}}"></i>
 	</div>
 	<ng-container
 		*ngIf="['text','number','password','email','datetime-local','date','time'].indexOf(this.ngSInput.type.toString()) >= 0">
@@ -36,7 +39,7 @@
 			[disabled]="this.ngSInput.disabled">
 		<span class="input-group-append" *ngIf="this.ngSInput.icon">
 			<button (click)="this.ngSInput.onIconClick()" tabindex="-1" type="button" class="btn bg-white shadow-none"
-				style="border-bottom-left-radius: 0; border-top-left-radius: 0; border-top: 0.5px solid #dee2e6; border-bottom: 0.5px solid #dee2e6; border-right: 0.5px solid #dee2e6; min-height: 100%;">
+				style="border-bottom-left-radius: 0; border-top-left-radius: 0; min-height: 100%;">
 				<i class="fa fa-{{this.ngSInput.icon}}"></i>
 			</button>
 		</span>
@@ -113,7 +116,7 @@
 				[(ngModel)]="$any(this.ngSInput).internValue">
 			<span class="input-group-append" *ngIf="this.ngSInput.icon">
 				<button (click)="$any(this.ngSInput).add()" tabindex="-1" type="button" class="btn bg-white shadow-none"
-					style="border-bottom-left-radius: 0; border-top-left-radius: 0; border-top: 0.5px solid #dee2e6; border-bottom: 0.5px solid #dee2e6; border-right: 0.5px solid #dee2e6; min-height: 100%;">
+					style="border-bottom-left-radius: 0; border-top-left-radius: 0; min-height: 100%;">
 					<i class="fa fa-{{this.ngSInput.icon}}"></i>
 				</button>
 			</span>
@@ -139,7 +142,7 @@
 	<ng-container *ngIf=""></ng-container>
 	<div class="input-group-postpend" *ngIf="this.ngSInput.suffix">
 		<span class="input-group-text"
-			style="border-bottom-left-radius: 0; border-top-left-radius: 0;">{{this.ngSInput.suffix}}</span>
+			style="border-bottom-left-radius: 0; border-top-left-radius: 0;">{{this.ngSInput.suffix|lang}}</span>
 	</div>
 </div>
 <small class="form-text text-danger" *ngIf="this.ngSInput.mark">{{this.ngSInput.mark|lang}}</small>
