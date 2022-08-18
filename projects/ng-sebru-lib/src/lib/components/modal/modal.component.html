@@ -11,7 +11,7 @@
     <div class="modal-footer" *ngIf="this.modal.buttons.length > 0">
         <ng-container *ngFor="let button of this.modal.buttons">
             <button type="button" class="btn btn-{{button.highlighted ? 'primary' : 'secondary'}} shadow-none"
-                (click)="button.onClick(); openModal.dismiss()">{{button.title}}</button>
+                (click)="button.onClick(); openModal.dismiss()">{{button.title|lang}}</button>
         </ng-container>
     </div>
 </ng-template>
