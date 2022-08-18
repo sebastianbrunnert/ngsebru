@@ -90,7 +90,7 @@
 		<select class="form-select border shadow-none" [id]="this.ngSInput.id" name="{{this.ngSInput.name}}"
 			[(ngModel)]="this.ngSInput.value" (change)="$any(this.ngSInput).change($event)">
 			<option selected disabled class="text-muted" value="">{{"INPUT_DEFAULT_CHOOSE"|lang}}</option>
-			<option *ngFor="let option of $any(this.ngSInput).options">{{option|lang}}</option>
+			<option *ngFor="let option of $any(this.ngSInput).options" value="{{option}}">{{option|lang}}</option>
 		</select>
 	</ng-container>
 	<ng-container *ngIf="this.ngSInput.type == 'textarea'">
