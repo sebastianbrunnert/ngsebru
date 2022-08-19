@@ -99,10 +99,12 @@ export class NgSForm {
 		return result
 	}
 
-	public submit() {
+	public submit(): Boolean {
 		if (!this.loading && this.checkFilledAll() && this.checkTestAll()) {
 			this.onSubmit()
+			return true
 		}
+		return false
 	}
 
 	public onSubmit() { }
