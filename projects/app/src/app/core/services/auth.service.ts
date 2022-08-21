@@ -17,6 +17,14 @@ export class AuthService {
 			this.pageService.navigate("admin")
 		}
 		this.restService.addAuthenticationType(adminAuthenticationType);
+
+		const userAuthenticationType: BearerAuthenticationType = new BearerAuthenticationType("user");
+		userAuthenticationType.setToken(localStorage.getItem("userToken") || "");
+		userAuthenticationType.onLogout = () => {
+			localStorage.removeItem("userToken");
+			this.pageService.navigate("user")
+		}
+		this.restService.addAuthenticationType(userAuthenticationType);
 	}
 
 	public loginAsAdmin(token: String, expiration: Number, navigate: Boolean = true): void {
@@ -26,6 +34,11 @@ export class AuthService {
 		if (navigate) {
 			this.pageService.navigate("admin/start")
 		}
+	}
+
+	public loginAsUser(token: String): void {
+		localStorage.setItem("userToken", token.toString());
+		(this.restService.getAuthenticationType("user")! as BearerAuthenticationType).setToken(token);
 	}
 
 	public isAdmin() {

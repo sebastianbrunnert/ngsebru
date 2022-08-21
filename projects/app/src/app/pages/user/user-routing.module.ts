@@ -3,10 +3,12 @@ import { RouterModule, Routes } from "@angular/router";
 import { ChooseGameComponent } from "./game/choose/choose.component";
 import { SetupGameComponent } from "./game/setup/setup.component";
 import { HomeComponent } from "./home/home.component";
+import { UserLoginComponent } from "./profile/login/login.component";
 
 const routes: Routes = [
 	{ path: "game/choose", component: ChooseGameComponent },
 	{ path: "game/setup/:id", component: SetupGameComponent },
+	{ path: "profile/login", component: UserLoginComponent },
 	{ path: "**", component: HomeComponent }
 ]
 

@@ -3,10 +3,6 @@ export class MatchGame {
     public counters: Counter[] = []
     public players: Player[] = []
     public settings: Setting[] = []
-
-    constructor() {
-        console.log("8")
-    }
 }
 
 export class Timer {
@@ -26,6 +22,7 @@ export class Counter {
 }
 
 export class Player {
+    public title: String = ""
     public name: String = ""
     public counters: Counter[] = []
     public timers: Timer[] = []
