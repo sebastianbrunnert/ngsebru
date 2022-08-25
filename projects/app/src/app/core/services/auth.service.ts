@@ -36,13 +36,20 @@ export class AuthService {
 		}
 	}
 
-	public loginAsUser(token: String): void {
+	public loginAsUser(token: String, navigate: Boolean = true): void {
 		localStorage.setItem("userToken", token.toString());
 		(this.restService.getAuthenticationType("user")! as BearerAuthenticationType).setToken(token);
+		if (navigate) {
+			this.pageService.navigate("")
+		}
 	}
 
 	public isAdmin() {
 		return localStorage.getItem("adminToken") != null && Number(localStorage.getItem("adminExpiration")) > Date.now();
+	}
+
+	public isUser() {
+		return localStorage.getItem("userToken") != null;
 	}
 
 }

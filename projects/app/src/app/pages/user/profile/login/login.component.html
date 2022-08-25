@@ -2,9 +2,11 @@
     <ngs-card>
         <p class="text-center">{{"LOGIN_PROFILE_MISSING"|lang}} <a class="hover"
                 href="profile/register">{{"LOGIN_PROFILE_MISSING_REGISTER"|lang}}</a></p>
-        <button class="w-100 btn btn-secondary" (click)="this.loginWithGoogle()">
-            <img src="assets/icons/google.png" width="24px" class="mb-1 mr-1">
-            {{"LOGIN_WITH_GOOGLE"|lang}}
-        </button>
+        <div class="d-flex justify-content-center">
+            <asl-google-signin-button type='standard' size='large' shape='pill' width="400"></asl-google-signin-button>
+        </div>
+        <div class="row">
+            <ngs-form [ngSForm]="this.form" [submitText]="'LOGIN'"></ngs-form>
+        </div>
     </ngs-card>
 </match-user-navigation>

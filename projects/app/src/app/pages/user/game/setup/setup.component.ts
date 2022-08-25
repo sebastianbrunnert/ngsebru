@@ -27,7 +27,7 @@ export class SetupGameComponent {
         this.route.paramMap.subscribe(params => {
             this.route.queryParamMap.subscribe(queryParams => {
                 this.id = params.get("id") as String
-                const restBuilder: RestBuilder = new RestBuilder(this.restService).setUrl("game/" + this.id)
+                const restBuilder: RestBuilder = new RestBuilder(this.restService).setUrl("game/" + this.id).addAuthenticationType("user")
                 // Check if Game is saved from User and load it
                 if (queryParams.has("id")) {
                     restBuilder.addParam("id", queryParams.get("id") as String)
@@ -36,6 +36,7 @@ export class SetupGameComponent {
                     this.langService.getPromise().then(() => {
                         this.setupPlayersForm(matchGame)
                         this.setupTimersForm(matchGame)
+
                         this.game = Object.assign(new MatchGame(), matchGame)
                     })
                 }, () => {

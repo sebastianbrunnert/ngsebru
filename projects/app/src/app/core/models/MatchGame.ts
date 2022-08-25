@@ -1,8 +1,16 @@
 export class MatchGame {
+    public gameMetaData: GameMetaData = new GameMetaData()
     public timers: Timer[] = []
     public counters: Counter[] = []
     public players: Player[] = []
     public settings: Setting[] = []
+}
+
+export class GameMetaData {
+    public id: String = ""
+    public templateId: String = ""
+    public userId: String = ""
+    public global: Boolean = false
 }
 
 export class Timer {
