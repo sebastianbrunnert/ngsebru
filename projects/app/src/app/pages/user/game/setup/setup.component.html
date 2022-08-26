@@ -1,8 +1,8 @@
 <match-user-navigation>
-    <div class="row text-center mt-md">
-        <h4>{{("GAME_" + this.id.toUpperCase())|lang}}</h4>
-    </div>
     <ng-container *ngIf="this.game">
+        <div class="row text-center mt-md">
+            <h4>{{("GAME_" + this.game!.gameMetaData.templateId.toUpperCase())|lang}}</h4>
+        </div>
         <div class="row">
             <div class="col-lg-6 col-sm-12 mt">
                 <ngs-card [title]="this.game.settings.includes(Setting.TEAM_MODE) ? 'TEAMS' : 'PLAYERS'">

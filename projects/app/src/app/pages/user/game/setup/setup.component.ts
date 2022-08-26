@@ -1,6 +1,8 @@
+import { Location } from "@angular/common";
 import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MatchGame, Player, Setting, Timer } from "projects/app/src/app/core/models/MatchGame";
+import { GameService } from "projects/app/src/app/core/services/game.service";
 import { NgSForm, NgSInput, NgSLangService, NgSModalBuilder, NgSModalButton, NgSModalType, NgSNumberInput, NgSPageService, NgSRestService, NgSSelectInput, NgSTextInput, RestBuilder } from "projects/ng-sebru-lib/src/public-api";
 
 @Component({
@@ -10,7 +12,6 @@ export class SetupGameComponent {
 
     public Setting = Setting
 
-    public id: String = ""
     public game?: MatchGame
 
     public playersForm: NgSForm = new NgSForm()
@@ -20,28 +21,23 @@ export class SetupGameComponent {
 
     constructor(
         private route: ActivatedRoute,
-        private restService: NgSRestService,
+        private location: Location,
         private pageService: NgSPageService,
-        private langService: NgSLangService
+        private langService: NgSLangService,
+        private gameService: GameService
     ) {
         this.route.paramMap.subscribe(params => {
-            this.route.queryParamMap.subscribe(queryParams => {
-                this.id = params.get("id") as String
-                const restBuilder: RestBuilder = new RestBuilder(this.restService).setUrl("game/" + this.id).addAuthenticationType("user")
-                // Check if Game is saved from User and load it
-                if (queryParams.has("id")) {
-                    restBuilder.addParam("id", queryParams.get("id") as String)
-                }
-                restBuilder.get().then((matchGame: MatchGame) => {
-                    this.langService.getPromise().then(() => {
-                        this.setupPlayersForm(matchGame)
-                        this.setupTimersForm(matchGame)
+            this.gameService.getGame(params.get("id") as String).then((matchGame: MatchGame) => {
+                this.langService.getPromise().then(() => {
 
-                        this.game = Object.assign(new MatchGame(), matchGame)
-                    })
-                }, () => {
-                    this.pageService.navigate("game/choose")
+                    this.setupPlayersForm(matchGame)
+                    this.setupTimersForm(matchGame)
+
+                    this.game = matchGame
+                    this.location.go("game/setup/" + this.game.id)
                 })
+            }, () => {
+                this.pageService.navigate("game/choose")
             })
         })
     }

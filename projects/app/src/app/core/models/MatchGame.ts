@@ -1,4 +1,5 @@
 export class MatchGame {
+    public id: String = ""
     public gameMetaData: GameMetaData = new GameMetaData()
     public timers: Timer[] = []
     public counters: Counter[] = []
@@ -7,7 +8,6 @@ export class MatchGame {
 }
 
 export class GameMetaData {
-    public id: String = ""
     public templateId: String = ""
     public userId: String = ""
     public global: Boolean = false
