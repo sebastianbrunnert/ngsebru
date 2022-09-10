@@ -5,7 +5,7 @@ import { NgSViewContainerRef } from '../../private-api';
 import { NgSAlert } from './../components/alert/alert.component';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class NgSPageService {
 
@@ -13,18 +13,18 @@ export class NgSPageService {
 		private title: Title,
 		private router: Router,
 		private componentFactoryResolver: ComponentFactoryResolver
-	) {}
+	) { }
 
 	private alerts: NgSAlert[] = []
 	private spinners: String[] = []
 
 	public alert(alert: NgSAlert) {
-		if(!alert.id) {
+		if (!alert.id) {
 			alert.id = ""
 		}
 
 		var findAlert = this.alerts.find(alertF => alertF.id == alert.id)
-		if(findAlert) {
+		if (findAlert) {
 			findAlert.message = alert.message
 			findAlert.type = alert.type
 		} else {
@@ -76,14 +76,14 @@ export class NgSPageService {
 			if (document.querySelector(selector as string)) {
 				return resolve(document.querySelector(selector as string));
 			}
-	
+
 			const observer = new MutationObserver(mutations => {
 				if (document.querySelector(selector as string)) {
 					resolve(document.querySelector(selector as string));
 					observer.disconnect();
 				}
 			});
-	
+
 			observer.observe(document.body, {
 				childList: true,
 				subtree: true

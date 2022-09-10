@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { NgSInjector } from "../../../private-api";
+import { NgSInjector } from "projects/ng-sebru-lib/src/private-api";
 import { NgSPageService } from "../../services/page.service";
 import { NgSForm } from "../form/form.component";
 
@@ -12,12 +12,12 @@ export class NgSModalComponent implements OnInit, AfterViewInit {
 	@Input("modal")
 	public modal: NgSModalBuilder = new NgSModalBuilder()
 
-	@ViewChild("modalContent", {read: TemplateRef})
+	@ViewChild("modalContent", { read: TemplateRef })
 	public modalContent?: TemplateRef<any>
 
 	constructor(
 		private ngbModal: NgbModal
-	) {}
+	) { }
 
 	ngOnInit(): void {
 		this.modal?.setNgSModalComponent(this)
@@ -28,14 +28,14 @@ export class NgSModalComponent implements OnInit, AfterViewInit {
 	}
 
 	public open() {
-		this.ngbModal.open(this.modalContent, {size:this.modal.type.toString()})
+		this.ngbModal.open(this.modalContent, { size: this.modal.type.toString() })
 	}
 
 	public close() {
 		this.ngbModal.dismissAll()
 	}
 
-	public onLoad() {}
+	public onLoad() { }
 }
 
 export class NgSModalBuilder {
@@ -46,7 +46,7 @@ export class NgSModalBuilder {
 	public buttons: NgSModalButton[] = []
 	public text: String = ""
 	public ngSForm: NgSForm = new NgSForm()
-	
+
 	public setNgSModalComponent(ngSModalComponent: NgSModalComponent): NgSModalBuilder {
 		this.ngSModalComponent = ngSModalComponent
 		return this
@@ -78,7 +78,7 @@ export class NgSModalBuilder {
 	}
 
 	public open() {
-		if(!this.ngSModalComponent) {
+		if (!this.ngSModalComponent) {
 			this.ngSModalComponent = NgSInjector.get(NgSPageService).createComponent(NgSModalComponent).instance
 			this.ngSModalComponent.modal = this
 			this.ngSModalComponent.onLoad = () => {
@@ -98,8 +98,8 @@ export class NgSModalButton {
 	constructor(
 		public title: String = "",
 		public highlighted: Boolean = false,
-		public onClick: () => void = () => {}
-	) {}
+		public onClick: () => void = () => { }
+	) { }
 }
 
 export enum NgSModalType {
