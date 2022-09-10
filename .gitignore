@@ -45,3 +45,5 @@ testem.log
 Thumbs.db
 
 /projects/ng-sebru-lib/node_modules
+
+/.angular

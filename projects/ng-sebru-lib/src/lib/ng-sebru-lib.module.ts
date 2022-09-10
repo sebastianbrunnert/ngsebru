@@ -72,7 +72,7 @@ import { NgSDayTagToFormattedDayPipe, NgSDayTagsToFormattedDaysPipe, NgSMillisTo
 		NgSLangPipe
 	]
 })
-export class NgSebruLibModule { 
+export class NgSebruLibModule {
 
 	constructor(private injector: Injector) {
 		SetNgSInjector(injector)

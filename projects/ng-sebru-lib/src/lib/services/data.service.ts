@@ -4,13 +4,13 @@ import { NgSInjector } from '../../private-api';
 import { NgSLangService } from './lang.service';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class NgSDataService {
 
 	public dayTags: String[] = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 
- 	public isIteratable(value: any): Boolean {
+	public isIteratable(value: any): Boolean {
 		return new IsIteratableCheck(value).result()
 	}
 
@@ -18,7 +18,7 @@ export class NgSDataService {
 
 export class NgSCheck {
 
-	constructor(public value: any) {}
+	constructor(public value: any) { }
 
 	public result(): Boolean {
 		return true
@@ -26,7 +26,7 @@ export class NgSCheck {
 }
 
 export class NgSTransformer {
-	constructor(public value: any) {}
+	constructor(public value: any) { }
 
 	public result(): any {
 		return this.value
@@ -93,28 +93,28 @@ export class DateToFormattedDayTransformer extends NgSTransformer {
 	public result(): any {
 		const langService: NgSLangService = NgSInjector.get(NgSLangService)
 
-		if(new IsTodayCheck(this.value).result()) {
+		if (new IsTodayCheck(this.value).result()) {
 			return langService.getTranslation("TODAY")
 		}
 
 		let day = this.value.getDate().toString()
-		let month = (this.value.getMonth()+1).toString()
+		let month = (this.value.getMonth() + 1).toString()
 		let year = this.value.getFullYear().toString()
-	
-		if(day.length == 1) {
+
+		if (day.length == 1) {
 			day = "0" + day
 		}
-		if(month.length == 1) {
+		if (month.length == 1) {
 			month = "0" + month
 		}
 
-		if(new IsTomorrowCheck(this.value).result()) {
+		if (new IsTomorrowCheck(this.value).result()) {
 			return langService.getTranslation("TOMORROW") + ", " + day + "." + month + "." + year
 		}
 
 		const dayTags: String[] = NgSInjector.get(NgSDataService).dayTags
 
-		return langService.getTranslation(dayTags[this.value.getDay() == 0 ? 6 : this.value.getDay()-1]) + ", " + day + "." + month + "." + year
+		return langService.getTranslation(dayTags[this.value.getDay() == 0 ? 6 : this.value.getDay() - 1]) + ", " + day + "." + month + "." + year
 	}
 }
 
@@ -122,10 +122,10 @@ export class DateToFormattedTimeTransformer extends NgSTransformer {
 	public result(): any {
 		let hour = this.value.getHours().toString()
 		let minute = this.value.getMinutes().toString()
-		if(hour.length == 1) {
+		if (hour.length == 1) {
 			hour = "0" + hour
 		}
-		if(minute.length == 1) {
+		if (minute.length == 1) {
 			minute = "0" + minute
 		}
 		return hour + ":" + minute

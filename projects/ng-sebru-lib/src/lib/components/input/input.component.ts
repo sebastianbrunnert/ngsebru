@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import * as Editor from 'projects/ng-sebru-lib/assets/ngs-ckeditor';
 import { IsIteratableCheck } from '../../services/data.service';
-import { NgSInjector } from "../../../private-api";
 import { NgSLangService } from '../../services/lang.service';
+import { NgSInjector } from 'projects/ng-sebru-lib/src/private-api';
 
 @Component({
 	selector: 'ngs-input',
