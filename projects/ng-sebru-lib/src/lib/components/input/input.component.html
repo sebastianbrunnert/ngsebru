@@ -123,7 +123,7 @@
 	</ng-container>
 	<ng-container *ngIf="this.ngSInput.type == 'textEditor'">
 		<ckeditor style="min-width: 100%;" [id]="this.ngSInput.name" [editor]="$any(this.ngSInput).Editor"
-			[(ngModel)]="this.ngSInput.value"
+			*ngIf="$any(this.ngSInput).Editor" [(ngModel)]="this.ngSInput.value"
 			[config]="{ toolbar: ['heading','|','bold','italic','underline','|','link','bulletedList','numberedList','|','alignment','outdent','indent','|','fontSize','fontFamily','fontColor','fontBackgroundColor','highlight','|','insertTable','blockQuote','horizontalLine','undo','redo'] }">
 		</ckeditor>
 	</ng-container>

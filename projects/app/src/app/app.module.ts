@@ -6,15 +6,16 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 
 @NgModule({
-	declarations: [
-		AppComponent
-	],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		NgSebruLibModule,
-		CoreModule
-	],
-	bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    AppRoutingModule,
+    NgSebruLibModule,
+    CoreModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
