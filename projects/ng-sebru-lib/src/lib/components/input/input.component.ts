@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
-import * as Editor from 'projects/ng-sebru-lib/assets/ngs-ckeditor';
 import { IsIteratableCheck } from '../../services/data.service';
 import { NgSLangService } from '../../services/lang.service';
 import { NgSInjector } from 'projects/ng-sebru-lib/src/private-api';
@@ -165,10 +164,17 @@ export class NgSTextAreaInput extends NgSInput {
 }
 
 export class NgSTextEditorInput extends NgSInput {
-	public Editor = Editor
+	public Editor
 
 	constructor(name: String, id: String = "") {
 		super(name, "textEditor", id)
+		const jsElmCK = document.createElement('script');
+		jsElmCK.type = 'application/javascript';
+		jsElmCK.src = 'assets/ckeditor.js';
+		document.body.appendChild(jsElmCK);
+		jsElmCK.onload = () => {
+			this.Editor = (window as any).ClassicEditor;
+		};
 		this.setStartValue("")
 	}
 }
