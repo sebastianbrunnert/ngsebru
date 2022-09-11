@@ -59,6 +59,13 @@
             "scripts": [
               "projects/ng-sebru-lib/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
+            "optimization": {
+              "scripts": true,
+              "styles": {
+                "minify": true,
+                "inlineCritical": false
+              }
+            },
             "assets": [
               "projects/app/src/assets",
               {
@@ -150,8 +157,8 @@
               "outputHashing": "media",
               "fileReplacements": [
                 {
-                  "replace": "projects/app/src/environments/environment.ts",
-                  "with": "projects/app/src/environments/environment.prod.ts"
+                  "replace": "projects/app/src/environments/environments.ts",
+                  "with": "projects/app/src/environments/environments.prod.ts"
                 }
               ]
             },
@@ -182,7 +189,7 @@
           "options": {
             "routes": [
               "/"
-            ]
+            ],
           },
           "configurations": {
             "production": {
