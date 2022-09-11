@@ -59,6 +59,13 @@
             "scripts": [
               "projects/ng-sebru-lib/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
+            "optimization": {
+              "scripts": true,
+              "styles": {
+                "minify": true,
+                "inlineCritical": false
+              }
+            },
             "assets": [
               {
                 "glob": "**/*",
@@ -181,7 +188,7 @@
           "options": {
             "routes": [
               "/"
-            ]
+            ],
           },
           "configurations": {
             "production": {

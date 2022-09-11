@@ -5,6 +5,7 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { existsSync } from 'fs';
 import { join } from 'path';
+import 'localstorage-polyfill'
 
 const distFolder = join(process.cwd(), 'dist/app/browser');
 const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index.html';
@@ -16,6 +17,7 @@ const template = fs.readFileSync(join(distFolder, indexHtml)).toString();
 const win = domino.createWindow(template);
 win.Object = Object;
 win.Math = Math;
+global['localStorage'] = localStorage;
 global['window'] = win;
 global['document'] = win.document;
 global['self'] = win;
