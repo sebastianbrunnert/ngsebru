@@ -1,4 +1,3 @@
-import { SocialLoginModule } from "@abacritt/angularx-social-login";
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NgSebruLibModule } from "projects/ng-sebru-lib/src/public-api";
@@ -12,8 +11,7 @@ import { UserRoutingModule } from "./user-routing.module";
 	imports: [
 		CommonModule,
 		UserRoutingModule,
-		NgSebruLibModule,
-		SocialLoginModule
+		NgSebruLibModule
 	]
 })
 export class UserModule { }
