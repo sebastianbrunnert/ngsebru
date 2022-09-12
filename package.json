@@ -1,6 +1,6 @@
 {
-  "name": "matchheroes-web-ng",
-  "version": "1.0.0",
+  "name": "ng-sebru-lib",
+  "version": "1.0.5",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

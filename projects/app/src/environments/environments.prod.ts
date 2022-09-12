@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    endpoint: "https://api.matchheroes.de/"
+    endpoint: "https://api.ngsebrulib.de/"
 };
