@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Injector, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { SetNgSInjector } from '../private-api';
+import { SetNgSInjector } from '../public-api';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { DragDropModule } from '@angular/cdk/drag-drop';

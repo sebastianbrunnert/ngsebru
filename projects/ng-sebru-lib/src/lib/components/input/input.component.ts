@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import { IsIteratableCheck } from '../../services/data.service';
 import { NgSLangService } from '../../services/lang.service';
-import { NgSInjector } from 'projects/ng-sebru-lib/src/private-api';
+import { NgSInjector } from 'projects/ng-sebru-lib/src/public-api';
 
 @Component({
 	selector: 'ngs-input',

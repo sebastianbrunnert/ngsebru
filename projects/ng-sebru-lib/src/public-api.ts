@@ -23,4 +23,17 @@ export * from './lib/pipes/date.pipe';
 
 export * from './lib/ng-sebru-lib.module';
 
-export * from './private-api'
+import { Injector, ViewContainerRef } from "@angular/core"
+
+let NgSInjector: Injector
+let NgSViewContainerRef: ViewContainerRef
+
+function SetNgSViewContainerRef(viewContainerRef: ViewContainerRef) {
+    NgSViewContainerRef = viewContainerRef
+}
+
+function SetNgSInjector(injector: Injector) {
+    NgSInjector = injector
+}
+
+export { NgSInjector, NgSViewContainerRef, SetNgSViewContainerRef, SetNgSInjector }

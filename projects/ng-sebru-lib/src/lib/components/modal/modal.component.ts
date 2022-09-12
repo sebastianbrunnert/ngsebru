@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { NgSInjector } from "projects/ng-sebru-lib/src/private-api";
+import { NgSInjector } from "projects/ng-sebru-lib/src/public-api";
 import { NgSPageService } from "../../services/page.service";
 import { NgSForm } from "../form/form.component";
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as shajs from 'sha.js'
-import { NgSInjector } from '../../private-api';
+import { NgSInjector } from '../../public-api';
 import { NgSLangService } from './lang.service';
 
 @Injectable({
