@@ -21,6 +21,9 @@
       "test": [
         "dist/test/test",
         "dist/test"
+      ],
+      "@angular/*": [
+        "./node_modules/@angular/*"
       ]
     },
     "experimentalDecorators": true,
