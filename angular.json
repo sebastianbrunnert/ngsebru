@@ -16,10 +16,24 @@
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ng-sebru-lib/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ng-sebru-lib/tsconfig.lib.prod.json",
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                }
+              }
             },
             "development": {
-              "tsConfig": "projects/ng-sebru-lib/tsconfig.lib.json"
+              "tsConfig": "projects/ng-sebru-lib/tsconfig.lib.json",
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                }
+              }
             }
           },
           "defaultConfiguration": "production"
@@ -55,9 +69,6 @@
             "tsConfig": "projects/app/tsconfig.app.json",
             "styles": [
               "projects/app/src/style.scss"
-            ],
-            "scripts": [
-              "projects/ng-sebru-lib/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
             "optimization": {
               "scripts": true,
@@ -99,11 +110,24 @@
                   "with": "projects/app/src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                }
+              }
             },
             "development": {
               "buildOptimizer": false,
-              "optimization": true,
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                }
+              },
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
@@ -139,9 +163,6 @@
             "karmaConfig": "projects/app/karma.conf.js",
             "styles": [
               "projects/app/src/style.scss"
-            ],
-            "scripts": [
-              "projects/ng-sebru-lib/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           }
         },
