@@ -1,0 +1,24 @@
+{
+    "name": "ngsebru",
+    "version": "2.0.0",
+    "description": "Powerful tool to create Angular apps with pre-configured modules",
+    "license": "MIT",
+    "author": "Sebastian Brunnert",
+    "main": "./lib/main.js",
+    "bin": {
+        "ngsebru": "./lib/main.js"
+    },
+    "scripts": {
+        "build": "tsc -p .",
+        "local": "sudo npm uninstall -g && sudo npm install --force -g && ngsebru"
+    },
+    "dependencies": {
+        "inquirer": "^7.3.3",
+        "nanospinner": "^1.1.0"
+    },
+    "devDependencies": {
+        "@types/inquirer": "^7.3.1",
+        "@types/node": "^18.11.10",
+        "typescript": "^4.4.2"
+    }
+}
