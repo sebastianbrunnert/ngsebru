@@ -4,13 +4,19 @@
     "description": "Powerful tool to create Angular apps with pre-configured modules",
     "license": "MIT",
     "author": "Sebastian Brunnert",
-    "main": "./lib/main.js",
+    "main": "./lib/index.js",
     "bin": {
-        "ngsebru": "./lib/main.js"
+        "ngsebru": "./lib/index.js"
     },
+    "files": [
+        "lib",
+        "template"
+    ],
     "scripts": {
         "build": "tsc -p .",
-        "local": "sudo npm uninstall -g && sudo npm install --force -g && ngsebru"
+        "setup": "sudo npm uninstall -g && sudo npm install --force -g",
+        "local": "sudo npm run setup && ngsebru",
+        "start": "node ./lib/index.js"
     },
     "dependencies": {
         "inquirer": "^7.3.3",

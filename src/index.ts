@@ -5,6 +5,7 @@ import { createSpinner } from 'nanospinner';
 
 import fs from 'fs';
 import { ConfigsRunner } from './configs';
+import { FilesRunner } from './files';
 
 const questions = [
     {
@@ -17,17 +18,20 @@ const questions = [
         name: "cssLib",
         message: "What CSS library do you want to use?",
         choices: ["Bootstrap", "TailwindCSS"],
+    },
+    {
+        type: "confirm",
+        name: "backend",
+        message: "Do you want to use a SSR-backend?"
     }
 ];
 
 prompt(questions).then((answers: { name: String, cssLib: String }) => {
-    // Check if name is valid (not empty, no spaces, just letters and numbers)
     if (answers.name === "" || answers.name.match(/[^a-zA-Z0-9]/)) {
         createSpinner("Invalid name!").error()
         return;
     }
 
-    // Check if folder exists
     if (fs.existsSync(answers.name as string)) {
         createSpinner("Folder already exists!").error()
         return;
@@ -35,15 +39,18 @@ prompt(questions).then((answers: { name: String, cssLib: String }) => {
 
     const spinner = createSpinner("Creating project...").start()
 
-    // Create folder
     fs.mkdirSync(answers.name as string);
 
     const configs = new ConfigsRunner(answers.name);
     configs.packageJson();
+    configs.angularJson();
+    configs.tsConfig();
 
-    setTimeout(() => {
-        spinner.success({
-            text: "Project created!",
-        })
-    }, 1000)
+    const files = new FilesRunner(answers.name);
+    files.bootstrap();
+    files.install();
+
+    spinner.success({
+        text: "Project created!",
+    })
 })

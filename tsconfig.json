@@ -7,6 +7,7 @@
             "dom"
         ],
         "outDir": "./lib",
+        "rootDir": "./src",
         "moduleResolution": "node",
         "removeComments": true,
         "esModuleInterop": true,
@@ -15,9 +16,8 @@
         "resolveJsonModule": true,
     },
     "exclude": [
-        "node_modules"
-    ],
-    "include": [
-        "src/**/*"
+        "./node_modules/*/**",
+        "./template/*/**",
+        "./lib/*/**",
     ]
 }
