@@ -26,7 +26,7 @@ const questions = [
     }
 ];
 
-prompt(questions).then((answers: { name: String, cssLib: String }) => {
+prompt(questions).then((answers: { name: String, cssLib: String, backend: Boolean }) => {
     if (answers.name === "" || answers.name.match(/[^a-zA-Z0-9]/)) {
         createSpinner("Invalid name!").error()
         return;
@@ -46,7 +46,7 @@ prompt(questions).then((answers: { name: String, cssLib: String }) => {
     configs.angularJson();
     configs.tsConfig();
 
-    const files = new FilesRunner(answers.name);
+    const files = new FilesRunner(answers.name, answers.cssLib == "Bootstrap" ? "bt" : "tw", answers.backend);
     files.bootstrap();
     files.install();
 

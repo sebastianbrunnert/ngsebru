@@ -14,7 +14,7 @@
     ],
     "scripts": {
         "build": "tsc -p .",
-        "setup": "sudo npm uninstall -g && sudo npm install --force -g",
+        "setup": "npm run build && sudo npm uninstall -g && sudo npm install --force -g",
         "local": "sudo npm run setup && ngsebru",
         "start": "node ./lib/index.js"
     },
