@@ -10,7 +10,7 @@ export class ConfigsRunner {
     ) { }
 
     public packageJson() {
-        packegeJsonTemplate.name = this.name as string;
+        packegeJsonTemplate.name = this.name as string
         fs.writeFileSync(`${this.name}/package.json`, JSON.stringify(packegeJsonTemplate, null, 4));
     }
 

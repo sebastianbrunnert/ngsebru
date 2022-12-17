@@ -39,15 +39,14 @@ prompt(questions).then((answers: { name: String, cssLib: String, backend: Boolea
 
     const spinner = createSpinner("Creating project...").start()
 
-    fs.mkdirSync(answers.name as string);
-
-    const configs = new ConfigsRunner(answers.name);
-    configs.packageJson();
-    configs.angularJson();
-    configs.tsConfig();
-
     const files = new FilesRunner(answers.name, answers.cssLib == "Bootstrap" ? "bt" : "tw", answers.backend);
     files.bootstrap();
+
+    const configs = new ConfigsRunner(answers.name);
+    configs.tsConfig();
+    configs.packageJson();
+    configs.angularJson();
+
     files.install();
 
     spinner.success({

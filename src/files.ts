@@ -11,15 +11,17 @@ export class FilesRunner {
     ) { }
 
     public bootstrap() {
-        // TODO:
-        // dominio
-        // CSS Lib
-        this.copyFolder(path.join(__dirname + "/../template/"), this.name + "/projects");
+        this.copyFolder(path.join(__dirname + "/../template/"), this.name + "/");
         fs.writeFileSync(this.name + "/.gitignore", "/dist\n/tmp\n/out-tsc\n/bazel-out\n/node_modules\nchrome-profiler-events*.json\n/.idea\n.project\n.classpath\n.c9\n*.launch\n.settings/\n.sublime-workspace\n.vscode/*\n!.vscode/settings.json\n!.vscode/tasks.json\n!.vscode/launch.json\n!.vscode/extensions.json\n.history/*\n/angular/cache\n/.sass-cache\n/connect.lock\n/coverage\n/libpeerconnection.log\nnpm-debug.log\nyarn-error.log\ntestem.log\n/typing\n.DS_Store\nThumbs.db\n/projects/ngsebru-lib/node_modules\n/.angular");
     }
 
     public install() {
-        exec.execSync("cd " + this.name + " && npm i", { stdio: "inherit" });
+        exec.execSync("cd " + this.name + " && npm i", { stdio: "ignore" });
+        if (this.cssLib == "tw") {
+            exec.execSync("cd " + this.name + " && npm i tailwindcss postcss postcss-cli autoprefixer", { stdio: "ignore" });
+        } else if (this.cssLib == "bt") {
+            exec.execSync("cd " + this.name + " && npm i bootstrap @popperjs/core @ng-bootstrap/ng-bootstrap", { stdio: "ignore" });
+        }
     }
 
     private copyFolder(source, target) {
