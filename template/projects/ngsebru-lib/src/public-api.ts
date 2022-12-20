@@ -1,2 +1,14 @@
+import { Injector, ViewContainerRef } from "@angular/core"
 
-export * from './lib/components/structure/enter-leave.component';
+let NgSInjector: Injector
+let NgSViewContainerRef: ViewContainerRef
+
+function SetNgSViewContainerRef(viewContainerRef: ViewContainerRef) {
+    NgSViewContainerRef = viewContainerRef
+}
+
+function SetNgSInjector(injector: Injector) {
+    NgSInjector = injector
+}
+
+export { NgSInjector, NgSViewContainerRef, SetNgSViewContainerRef, SetNgSInjector }

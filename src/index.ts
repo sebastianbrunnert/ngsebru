@@ -27,7 +27,7 @@ const questions = [
 ];
 
 prompt(questions).then((answers: { name: String, cssLib: String, backend: Boolean }) => {
-    if (answers.name === "" || answers.name.match(/[^a-zA-Z0-9]/)) {
+    if (answers.name === "" || !answers.name.match(/^[a-zA-Z0-9-_]+$/)) {
         createSpinner("Invalid name!").error()
         return;
     }

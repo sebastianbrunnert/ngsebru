@@ -59,13 +59,18 @@
                         "tsConfig": "projects/app/tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
-                            "projects/app/src/favicon.ico",
-                            "projects/app/src/assets"
+                            "projects/app/src/assets/**/*",
+                            {
+                                "glob": "**/*",
+                                "input": "projects/ngsebru-lib/src/assets",
+                                "output": "assets"
+                            }
                         ],
                         "styles": [
                             "projects/app/src/styles.scss"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "allowedCommonJsDependencies": ["sha.js"]
                     },
                     "configurations": {
                         "production": {

@@ -7,4 +7,13 @@ module.exports = {
     	extend: {},
     },
     plugins: [],
+    safelist: [{
+        pattern: /text-./
+    }, {
+        pattern: /bg-./
+    }, {
+        pattern: /w-./
+    }, {
+        pattern: /h-./
+    }]
 }
