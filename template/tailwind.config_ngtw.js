@@ -15,5 +15,7 @@ module.exports = {
         pattern: /w-./
     }, {
         pattern: /h-./
+    }, {
+        pattern: /border-./
     }]
 }
