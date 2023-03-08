@@ -1,0 +1,36 @@
+<div class="d-inline-block rounded-2 shadow p-3 user-select-none">
+    <div class="d-flex justify-content-between mb-3">
+        <div role="button" class="bg-hover p-2 rounded-2" (click)="this.prevMonth()">
+            <ngs-icon [type]="'left_arrow'"></ngs-icon>
+        </div>
+        <p class="text-center my-auto fw-semibold text-sm px-4">{{this.monthName|lang}} {{this.currentYear}}</p>
+        <div role="button" class="bg-hover p-2 rounded-2" (click)="this.nextMonth()">
+            <ngs-icon [type]="'right_arrow'"></ngs-icon>
+        </div>
+    </div>
+    <div class="p-1">
+        <div class="main">
+            <table class="w-100">
+                <thead>
+                    <tr>
+                        <th class="fw-normal text-center text-muted text-sm p-2" *ngFor="let day of this.weekdays">{{day|lang}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let week of this.weeks">
+                        <ng-container *ngFor="let day of week">
+                            <td *ngIf="day.index == -1"></td>
+
+                            <td *ngIf="day.index != -1" class="fw-bold text-sm text-center rounded-2 p-2" (click)="this.selectDay(day)"
+                                [class.bg-hover]="this.selected != day.dayTag && !day.blocked" 
+                                [class.bg-primary]="this.selected == day.dayTag" 
+                                [class.text-white]="this.selected == day.dayTag"
+                                [class.cursor-pointer]="!day.blocked"
+                                [class.text-muted]="day.blocked">{{day.index}}</td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

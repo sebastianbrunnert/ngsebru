@@ -1,0 +1,9 @@
+<div [style]="'width: ' + this.size + 'px;'">
+    <svg
+        [style]="this.usesCustomColor ? 'color: ' + this.customColorCode + ';' : ''" 
+        aria-hidden="true" 
+        class="{{this.usesCustomColor ? '' : 'text-' + this.color}}" 
+        fill="currentColor" 
+        viewBox="0 0 24 24" [innerHtml]="this.iconText.toString() | safeHtml">
+    </svg>
+</div>

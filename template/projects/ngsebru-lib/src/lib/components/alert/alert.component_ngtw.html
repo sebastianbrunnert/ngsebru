@@ -1,0 +1,9 @@
+<div id="alert-{{this.id}}"></div>
+<ngs-enter-leave [active]="this.pageService.findAlert(this.id) != null && this.pageService.findAlert(this.id).message != null" [clickout]="false">
+    <div class="bg-{{this.loadAlert.type}}-100 border border-{{this.loadAlert.type}}-400 text-{{this.loadAlert.type}}-700 p-3 rounded relative">
+        <span class="block sm:inline">{{this.loadAlert.message}}</span>
+        <span class="absolute top-0 bottom-0 right-0 p-3 cursor-pointer" (click)="this.pageService.removeAlert(this.id)">
+            <ngs-icon [type]="'close'" [color]="this.loadAlert.type + '-700'"></ngs-icon>
+        </span>
+    </div>
+</ngs-enter-leave>

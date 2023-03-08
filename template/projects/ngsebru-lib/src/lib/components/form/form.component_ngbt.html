@@ -1,0 +1,10 @@
+<form id="form" (submit)="$event.preventDefault(); this.validate()">
+    <div class="mb-4" *ngFor="let input of this.form.inputs">
+        <ngs-input [input]="input"></ngs-input>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block w-100">
+        <div class="spinner-border spinner-border-sm" role="status" *ngIf="this.form.loading"></div>
+        {{this.submitText|lang}}
+    </button>
+</form>

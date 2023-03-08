@@ -1,0 +1,9 @@
+<div id="alert-{{this.id}}"></div>
+<ngs-enter-leave [active]="this.pageService.findAlert(this.id) != null && this.pageService.findAlert(this.id).message != null" [clickout]="false">
+    <div class="alert alert-{{this.loadAlert.type}} d-flex justify-content-between align-items-center">
+        <span class="alert-message">{{this.loadAlert.message}}</span>
+        <span class="cursor-pointer" (click)="this.pageService.removeAlert(this.id)">
+            <ngs-icon [type]="'close'" [color]="this.loadAlert.type"></ngs-icon>
+        </span>
+    </div>
+</ngs-enter-leave>

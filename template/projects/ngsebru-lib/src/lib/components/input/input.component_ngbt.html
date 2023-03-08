@@ -1,0 +1,80 @@
+<ng-container *ngIf="this.input">
+    <label for="input">{{this.input!.label}} <span *ngIf="!this.input!.required">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span></label>
+    <div class="input-group">
+        <span *ngIf="this.input!.prefix" class="input-group-text">{{this.input!.prefix}}</span>
+
+        <ng-container [ngSwitch]="this.input!.type.toString()">
+            <input
+                (ngModelChange)="this.input!.onInput($event)"
+                (focus)="this.input!.onInputFocus()"
+                [disabled]="this.input!.disabled.toString()" 
+                [(ngModel)]="this.input!.value"
+                (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
+                type="text" id="input" 
+                class="form-control shadow-none border"
+                [class.border-end-0]="this.input!.icon" 
+                placeholder="{{this.input!.placeholder|lang}}"
+                *ngSwitchCase="'text'">
+
+            <input
+                (ngModelChange)="this.input!.onInput($event)"
+                (focus)="this.input!.onInputFocus()"
+                [disabled]="this.input!.disabled.toString()" 
+                [(ngModel)]="this.input!.value"
+                (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
+                type="number" id="input" 
+                class="form-control shadow-none border"
+                [class.border-end-0]="this.input!.icon" 
+                placeholder="{{this.input!.placeholder|lang}}"
+                min="{{$any(this.input).min || null}}"
+                max="{{$any(this.input).max || null}}"
+                step="{{$any(this.input).steps || 1}}"
+                *ngSwitchCase="'number'">
+
+            <textarea
+                (ngModelChange)="this.input!.onInput($event)"
+                (focus)="this.input!.onInputFocus()"
+                [disabled]="this.input!.disabled.toString()" 
+                [(ngModel)]="this.input!.value"
+                (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
+                id="input" 
+                class="form-control shadow-none border"
+                [class.border-end-0]="this.input!.icon" 
+                placeholder="{{this.input!.placeholder|lang}}"
+                rows="{{$any(this.input).rows || 3}}"
+                *ngSwitchCase="'textarea'"></textarea>
+
+            <input
+                (ngModelChange)="this.input!.onInput($event)"
+                (click)="$any(this.input!).openDatepicker();"
+                [disabled]="this.input!.disabled.toString()" 
+                [(ngModel)]="this.input!.value"
+                (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
+                type="date" id="input"
+                class="form-control shadow-none border"
+                [class.border-end-0]="this.input!.icon" 
+                placeholder="{{this.input!.placeholder|lang}}"
+                autocomplete="off"
+                *ngSwitchCase="'date'">
+        </ng-container>
+
+        <div class="input-group-text bg-white border-start-0" *ngIf="this.input!.icon">
+            <ngs-icon [type]="this.input!.icon"></ngs-icon>
+        </div>
+
+        <span *ngIf="this.input!.suffix" class="input-group-text" id="basic-addon1">{{this.input!.suffix}}</span>
+    </div>
+
+    <ngs-enter-leave *ngIf="this.input.type.toString() == 'date'" [active]="$any(this.input).open" (onClose)="$any(this.input).open = false">
+        <div class="position-absolute bg-white border" style="z-index: 1000; top: 100%; left: 0px;">
+            <ngs-datepicker 
+                [selected]="this.input!.value" 
+                [min]="$any(this.input!).min"
+                [max]="$any(this.input!).max"
+                [blocked]="$any(this.input!).blocked" 
+                (onSelected)="this.input!.value = $event; $any(this.input).open = false"></ngs-datepicker>
+        </div>
+    </ngs-enter-leave>
+
+    <small class="form-text text-danger" *ngIf="this.input!.mark">{{this.input!.mark|lang}}</small>
+</ng-container>

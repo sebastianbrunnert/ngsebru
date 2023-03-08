@@ -1,0 +1,104 @@
+<ng-container *ngIf="this.input">
+    <label for="input" class="block mb-2 text-sm font-medium text-gray-900">{{this.input!.label}} <span *ngIf="!this.input!.required">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span></label>
+    <div class="flex">
+        <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md" *ngIf="this.input!.prefix">
+            {{this.input!.prefix}}
+        </span>
+
+        <div class="relative w-full">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none" *ngIf="this.input!.icon != ''" (click)="this.input.onIconClick()">
+                <ngs-icon [type]="this.input!.icon"></ngs-icon>
+            </div>
+            
+            <ng-container [ngSwitch]="this.input!.type.toString()">
+                
+                <input
+                    (ngModelChange)="this.input!.onInput($event)"
+                    (focus)="this.input!.onInputFocus()"
+                    [disabled]="this.input!.disabled.toString()" 
+                    [(ngModel)]="this.input!.value"
+                    (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
+                    type="text" id="input" 
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
+                    [class.rounded-l-lg]="!this.input!.prefix" 
+                    [class.rounded-r-lg]="!this.input!.suffix" 
+                    [class.bg-gray-100]="this.input!.disabled"
+                    [class.cursor-not-allowed]="this.input!.disabled"
+                    [class.pl-10]="this.input!.icon != ''"
+                    placeholder="{{this.input!.placeholder|lang}}"
+                    *ngSwitchCase="'text'">
+
+                <input
+                    (ngModelChange)="this.input!.onInput($event)"
+                    (focus)="this.input!.onInputFocus()"
+                    [disabled]="this.input!.disabled.toString()" 
+                    [(ngModel)]="this.input!.value"
+                    (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
+                    type="number" id="input"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0"
+                    [class.rounded-l-lg]="!this.input!.prefix"
+                    [class.rounded-r-lg]="!this.input!.suffix"
+                    [class.bg-gray-100]="this.input!.disabled"
+                    [class.cursor-not-allowed]="this.input!.disabled"
+                    [class.pl-10]="this.input!.icon != ''"
+                    placeholder="{{this.input!.placeholder|lang}}"
+                    min="{{$any(this.input).min || null}}"
+                    max="{{$any(this.input).max || null}}"
+                    step="{{$any(this.input).steps || 1}}"
+                    *ngSwitchCase="'number'">
+
+                <textarea
+                    (ngModelChange)="this.input!.onInput($event)"
+                    (focus)="this.input!.onInputFocus()"
+                    [disabled]="this.input!.disabled.toString()" 
+                    [(ngModel)]="this.input!.value"
+                    (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
+                    id="input" 
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
+                    [class.rounded-l-lg]="!this.input!.prefix" 
+                    [class.rounded-r-lg]="!this.input!.suffix" 
+                    [class.bg-gray-100]="this.input!.disabled"
+                    [class.cursor-not-allowed]="this.input!.disabled"
+                    [class.pl-10]="this.input!.icon != ''"
+                    placeholder="{{this.input!.placeholder|lang}}"
+                    rows="{{$any(this.input).rows || 3}}"
+                    *ngSwitchCase="'textarea'"></textarea>
+
+                <ng-container *ngSwitchCase="'date'">
+                    <input
+                        (ngModelChange)="this.input!.onInput($event)"
+                        (click)="$any(this.input!).openDatepicker();"
+                        [disabled]="this.input!.disabled.toString()" 
+                        [(ngModel)]="this.input!.value"
+                        (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
+                        type="date" id="input"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0 pointer-cursor"
+                        [class.rounded-l-lg]="!this.input!.prefix"
+                        [class.rounded-r-lg]="!this.input!.suffix"
+                        [class.bg-gray-100]="this.input!.disabled"
+                        [class.cursor-not-allowed]="this.input!.disabled"
+                        [class.pl-10]="this.input!.icon != ''"
+                        placeholder="{{this.input!.placeholder|lang}}"
+                        autocomplete="off">
+
+                    <ngs-enter-leave [active]="$any(this.input).open" (onClose)="$any(this.input).open = false">
+                        <div class="bg-white absolute left-0 z-10 rounded-lg">
+                            <ngs-datepicker 
+                                [selected]="this.input!.value" 
+                                [min]="$any(this.input!).min"
+                                [max]="$any(this.input!).max"
+                                [blocked]="$any(this.input!).blocked" 
+                                (onSelected)="this.input!.value = $event; $any(this.input).open = false"></ngs-datepicker>
+                        </div>
+                    </ngs-enter-leave>
+                </ng-container>
+            </ng-container>
+        </div>
+
+        <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-md" *ngIf="this.input!.suffix">
+            {{this.input!.suffix}}
+        </span>
+    </div>
+
+    <p class="mt-2 text-sm text-red-600">{{this.input!.mark}}</p>
+</ng-container>
