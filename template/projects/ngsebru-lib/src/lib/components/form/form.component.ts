@@ -108,4 +108,14 @@ export class NgSForm {
 
     public onSubmit() { }
 
+    public getValues(): Object {
+        let result: {
+            [key: string]: any
+        } = {}
+        this.inputs.forEach(input => {
+            result[input.id as string] = input.value
+        })
+        return result
+    }
+
 }
