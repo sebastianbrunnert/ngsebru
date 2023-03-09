@@ -1,12 +1,10 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @Component({
     selector: "ngs-enter-leave",
     standalone: true,
     template: "<div [@enterLeave]=\"openCloseTrigger\" (@enterLeave.start)=\"this.finished = false\" (@enterLeave.done)=\"this.finished = true\" class=\"enter-leave\"><ng-content *ngIf=\"this.active || !this.finished\"></ng-content></div>",
-    imports: [BrowserAnimationsModule],
     animations: [
         trigger("enterLeave", [
             state(
