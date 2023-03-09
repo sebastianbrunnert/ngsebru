@@ -174,6 +174,12 @@ export class NgSTextInput extends NgSInput {
     }
 }
 
+export class NgSPasswordInput extends NgSInput {
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.PASSWORD, id)
+    }
+}
+
 export class NgSNumberInput extends NgSInput {
 
     public min?: Number

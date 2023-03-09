@@ -10,6 +10,18 @@
                 [disabled]="this.input!.disabled.toString()" 
                 [(ngModel)]="this.input!.value"
                 (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
+                type="password" id="input" 
+                class="form-control shadow-none border"
+                [class.border-end-0]="this.input!.icon" 
+                placeholder="{{this.input!.placeholder|lang}}"
+                *ngSwitchCase="'password'">
+
+            <input
+                (ngModelChange)="this.input!.onInput($event)"
+                (focus)="this.input!.onInputFocus()"
+                [disabled]="this.input!.disabled.toString()" 
+                [(ngModel)]="this.input!.value"
+                (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
                 type="text" id="input" 
                 class="form-control shadow-none border"
                 [class.border-end-0]="this.input!.icon" 

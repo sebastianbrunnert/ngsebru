@@ -34,6 +34,22 @@
                     [disabled]="this.input!.disabled.toString()" 
                     [(ngModel)]="this.input!.value"
                     (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
+                    type="password" id="input" 
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
+                    [class.rounded-l-lg]="!this.input!.prefix" 
+                    [class.rounded-r-lg]="!this.input!.suffix" 
+                    [class.bg-gray-100]="this.input!.disabled"
+                    [class.cursor-not-allowed]="this.input!.disabled"
+                    [class.pl-10]="this.input!.icon != ''"
+                    placeholder="{{this.input!.placeholder|lang}}"
+                    *ngSwitchCase="'password'">
+
+                <input
+                    (ngModelChange)="this.input!.onInput($event)"
+                    (focus)="this.input!.onInputFocus()"
+                    [disabled]="this.input!.disabled.toString()" 
+                    [(ngModel)]="this.input!.value"
+                    (keydown.enter)="this.input!.standalone ? this.input!.submit() : null"
                     type="number" id="input"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0"
                     [class.rounded-l-lg]="!this.input!.prefix"
