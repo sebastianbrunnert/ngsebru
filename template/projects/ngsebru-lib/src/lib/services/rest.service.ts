@@ -2,6 +2,8 @@ import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
 import { NgSForm } from "../components/form/form.component"
 import { NgSError, NgSErrorLevel } from "../models/error.model"
+import { NgSPageService } from "./page.service"
+import { NgSAlertType } from "../components/alert/alert.component"
 
 @Injectable({
     providedIn: 'root',
@@ -13,6 +15,7 @@ export class NgSRestService {
 
     constructor(
         public httpClient: HttpClient,
+        private pageService: NgSPageService
     ) {
         this.defaultEndpoint = "http://127.0.0.1:8000/api/"
     }
@@ -42,7 +45,11 @@ export class NgSRestService {
         if (ngSError.level == NgSErrorLevel.IGNORE) {
             return true
         } else if (ngSError.level == NgSErrorLevel.ALERT) {
-            // TODO: Show alert
+            console.log(ngSError)
+            this.pageService.alert({
+                type: NgSAlertType.DANGER,
+                message: ngSError.message
+            })
             return true
         } else if (ngSError.level == NgSErrorLevel.INPUT && restBuilder.getInquirer() instanceof NgSForm) {
             restBuilder.getInquirer().showError(ngSError)
