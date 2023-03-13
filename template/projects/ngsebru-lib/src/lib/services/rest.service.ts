@@ -132,7 +132,7 @@ export class RestBuilder {
     }
 
     public addHeader(key: String, value: String): RestBuilder {
-        this.headers = this.headers.append(key as string, value as string)
+        this.headers[key as string] = value
         return this
     }
 

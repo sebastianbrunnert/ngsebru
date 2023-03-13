@@ -69,4 +69,9 @@ export class NgSIconType {
     public static LEFT_ARROW: String = "left";
     public static RIGHT_ARROW: String = "right";
     public static CLOSE: String = "close";
+    public static MENU: String = "menu";
+    public static LOGOUT: String = "logout";
+    public static PHOTOS: String = "photos";
+    public static SLIDE_SHOW: String = "slideshow";
+    public static TV: String = "tv";
 }
