@@ -15,9 +15,6 @@ export class NgSFormComponent {
     @Input("form")
     public form: NgSForm = new NgSForm()
 
-    @Input("submitText")
-    public submitText: String = "FORM_DEFAULT_SEND"
-
     @Output()
     public submit = new EventEmitter<Boolean>();
 
@@ -32,6 +29,7 @@ export class NgSFormComponent {
 }
 
 export class NgSForm {
+    public submitText: String = "FORM_DEFAULT_SEND"
     public inputs: NgSInput[] = []
     public loading: Boolean = false
     public submitable: Boolean = true
@@ -53,6 +51,11 @@ export class NgSForm {
 
     public setLoading(loading: Boolean): NgSForm {
         this.loading = loading
+        return this
+    }
+
+    public setSubmitText(submitText: String): NgSForm {
+        this.submitText = submitText
         return this
     }
 

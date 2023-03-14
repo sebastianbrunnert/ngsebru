@@ -1,11 +1,11 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { CommonModule } from "@angular/common";
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 @Component({
     selector: "ngs-enter-leave",
     standalone: true,
-    template: "<div [@enterLeave]=\"openCloseTrigger\" (@enterLeave.start)=\"this.finished = false\" (@enterLeave.done)=\"this.finished = true\" class=\"enter-leave\"><ng-content *ngIf=\"this.active || !this.finished\"></ng-content></div>",
+    template: "<div [@enterLeave]=\"openCloseTrigger\" (@enterLeave.start)=\"this.finished = false\" (@enterLeave.done)=\"this.finished = true\"><ng-content *ngIf=\"this.active || !this.finished\"></ng-content></div>",
     imports: [CommonModule],
     animations: [
         trigger("enterLeave", [
@@ -47,7 +47,21 @@ export class NgSEnterLeaveComponent {
 
     @HostListener("document:click", ["$event"])
     public detectClickout(event: any) {
-        if (this.finished && this.clickout && !this.eRef.nativeElement.contains(event.target)) {
+        if (!this.clickout || !this.finished || !this.active) {
+            return
+        }
+
+        var nativeElement = this.eRef.nativeElement;
+
+        while (nativeElement && nativeElement.id != "clickout-target") {
+            nativeElement = nativeElement.firstChild;
+        }
+
+        if (!nativeElement) {
+            nativeElement = this.eRef.nativeElement;
+        }
+
+        if (!nativeElement.contains(event.target)) {
             this.active = false;
             this.onClose.emit(true);
         }
