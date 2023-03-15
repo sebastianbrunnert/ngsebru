@@ -75,4 +75,6 @@ export class NgSIconType {
     public static SLIDE_SHOW: String = "slideshow";
     public static TV: String = "tv";
     public static CHECK: String = "check";
+    public static DELETE: String = "delete";
+    public static SETTINGS: String = "settings";
 }

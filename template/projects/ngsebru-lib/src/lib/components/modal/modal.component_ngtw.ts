@@ -1,7 +1,9 @@
 import { CommonModule } from "@angular/common";
-import { AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { NgSInjector } from "projects/ngsebru-lib/src/public-api";
 import { NgSColor } from "../../models/color.model";
 import { NgSLangPipe } from "../../pipes/lang.pipe";
+import { NgSPageService } from "../../services/page.service";
 import { NgSForm, NgSFormComponent } from "../form/form.component";
 import { NgSIconComponent } from "../icons/icon.component";
 import { NgSEnterLeaveComponent } from "../structure/enter-leave.component";
@@ -20,11 +22,21 @@ export class NgSModalComponent implements OnInit, AfterViewInit {
     @ViewChild("modalContent", { read: TemplateRef })
     public modalContent?: TemplateRef<any>;
 
-    constructor() { }
+    constructor(
+        private changeDetectorRef: ChangeDetectorRef
+    ) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.modal.setNgSModalComponent(this)
+    }
 
-    ngAfterViewInit() { }
+    ngAfterViewInit() {
+        this.onLoad()
+        this.changeDetectorRef.detectChanges()
+    }
+
+    public onLoad() { }
+
 }
 
 export class NgSModal {
@@ -32,9 +44,15 @@ export class NgSModal {
     public title: String = ""
     public type: String = NgSModalType.L
     public buttons: NgSModalButton[] = []
-    public text: String = ""
-    public ngSForm: NgSForm = new NgSForm()
+    public text?: String
+    public ngSForm?: NgSForm
     public active: Boolean = false
+    private ngSModalComponent?: NgSModalComponent
+
+    public setNgSModalComponent(ngSModalComponent: NgSModalComponent): NgSModal {
+        this.ngSModalComponent = ngSModalComponent
+        return this
+    }
 
     public setTitle(title: String): NgSModal {
         this.title = title
@@ -62,7 +80,15 @@ export class NgSModal {
     }
 
     public open() {
-        this.active = true
+        if (!this.ngSModalComponent) {
+            this.ngSModalComponent = NgSInjector.get(NgSPageService).createComponent(NgSModalComponent).instance
+            this.ngSModalComponent.modal = this
+            this.ngSModalComponent.onLoad = () => {
+                this.active = true
+            }
+        } else {
+            this.active = true
+        }
     }
 
 

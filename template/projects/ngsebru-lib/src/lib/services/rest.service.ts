@@ -45,7 +45,6 @@ export class NgSRestService {
         if (ngSError.level == NgSErrorLevel.IGNORE) {
             return true
         } else if (ngSError.level == NgSErrorLevel.ALERT) {
-            console.log(ngSError)
             this.pageService.alert({
                 type: NgSAlertType.DANGER,
                 message: ngSError.message

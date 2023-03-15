@@ -1,6 +1,6 @@
 import { Component, Injector } from '@angular/core';
 import { NgSLangService } from 'projects/ngsebru-lib/src/lib/services/lang.service';
-import { SetNgSInjector } from 'projects/ngsebru-lib/src/public-api';
+import { SetNgSInjector, SetNgSViewContainerRef } from 'projects/ngsebru-lib/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +13,7 @@ export class AppComponent {
     private injector: Injector
   ) {
     SetNgSInjector(this.injector)
+    SetNgSViewContainerRef(this.viewContainerRef)
     this.langService.loadGermanDefaults()
   }
 

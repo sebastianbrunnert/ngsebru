@@ -21,16 +21,16 @@
                                 {{this.modal.text | lang}}
                             </p>
                         </div>
-                        <div class="p-4 border-t" *ngIf="this.modal.ngSForm">
+                        <div class="p-4 border-t" *ngIf="this.modal.ngSForm != null">
                             <ngs-form [form]="this.modal.ngSForm"></ngs-form>
                         </div>
                         <div class="p-4 border-t" *ngIf="this.modalContent">
                             <ng-container *ngTemplateOutlet="this.modalContent"></ng-container>
                         </div>
                         <div class="p-4 border-t" *ngIf="this.modal.buttons.length > 0">
-                            <div class="flex justify-start">
+                            <div class="grid gris-cols-{{this.modal.buttons.length}} space-x-2">
                                 <ng-container *ngFor="let button of this.modal.buttons">
-                                    <button class="rounded-lg bg-{{button.color}} hover:bg-{{button.hoverColor}} text-white font-semibold py-2 px-4 mr-2" (click)="button.onClick()">
+                                    <button class="w-full rounded-lg bg-{{button.color}} hover:bg-{{button.hoverColor}} text-white font-semibold py-2 px-4" (click)="button.onClick()">
                                         <span>{{button.title|lang}}</span>
                                     </button>
                                 </ng-container>
