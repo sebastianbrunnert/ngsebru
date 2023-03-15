@@ -73,6 +73,7 @@ export class NgSLangService {
         entries.set("DECEMBER", "Dezember")
         entries.set("TODAY", "Heute")
         entries.set("TOMORROW", "Morgen")
+        entries.set("YESTERDAY", "Gestern")
         entries.set("MONDAY", "Montag")
         entries.set("TUESDAY", "Dienstag")
         entries.set("WEDNESDAY", "Mittwoch")

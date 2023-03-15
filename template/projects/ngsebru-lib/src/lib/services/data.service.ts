@@ -105,6 +105,10 @@ export class DateToFormattedDayTransformer extends NgSTransformer {
         const month = (this.value.getMonth() + 1).toString().padStart(2, "0")
         const year = this.value.getFullYear().toString()
 
+        if (new IsYesterdayCheck(this.value).result()) {
+            return langService.getTranslation("YESTERDAY") + ", " + day + "." + month + "." + year
+        }
+
         if (new IsTomorrowCheck(this.value).result()) {
             return langService.getTranslation("TOMORROW") + ", " + day + "." + month + "." + year
         }
