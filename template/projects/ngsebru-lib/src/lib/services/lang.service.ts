@@ -87,6 +87,8 @@ export class NgSLangService {
         entries.set("FRIDAY_ABBR", "Fr")
         entries.set("SATURDAY_ABBR", "Sa")
         entries.set("SUNDAY_ABBR", "So")
+        entries.set("CONFIRMABLE_HEADLINE", "Sind Sie sicher?")
+        entries.set("CONFIRMABLE_SUBMIT", "Weiter")
 
         this.language = new Language("Deutsch", "german_default", entries);
     }
