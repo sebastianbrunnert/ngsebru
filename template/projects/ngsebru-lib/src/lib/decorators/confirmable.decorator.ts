@@ -5,7 +5,7 @@ export function Confirmable(body: String): Function {
         const originalMethod = descriptor.value;
         descriptor.value = function (...args: any[]) {
             new NgSModal().setTitle("CONFIRMABLE_HEADLINE")
-                .addButton(new NgSModalButton("CONFIRMABLE_SUBMIT", "blue-500", "blue-700", () => originalMethod.apply(this, args)))
+                .addButton(new NgSModalButton("CONFIRMABLE_SUBMIT", "red-500", "red-700", () => originalMethod.apply(this, args)))
                 .setText(body)
                 .open()
         };
