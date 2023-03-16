@@ -19,12 +19,15 @@ export class NgSModalComponent implements OnInit, AfterViewInit {
     @Input("modal")
     public modal: NgSModal = new NgSModal();
 
-    @ViewChild("modalContent", { read: TemplateRef })
-    public modalContent?: TemplateRef<any>;
-
     constructor(
         private changeDetectorRef: ChangeDetectorRef
     ) { }
+
+    @ViewChild('contentWrapper', { static: true }) contentWrapper: TemplateRef<any> | undefined;
+
+    get hasContent(): boolean {
+        return !!this.contentWrapper && !!this.contentWrapper.createEmbeddedView({});
+    }
 
     ngOnInit() {
         this.modal.setNgSModalComponent(this)
