@@ -16,14 +16,14 @@ export class NgSFormComponent {
     public form: NgSForm = new NgSForm()
 
     @Output()
-    public submit = new EventEmitter<Boolean>();
+    public submitValid = new EventEmitter<Boolean>();
 
     public validate() {
         if (!this.form.submitable) {
             return
         }
         if (this.form.submit()) {
-            this.submit.emit()
+            this.submitValid.emit()
         }
     }
 }
