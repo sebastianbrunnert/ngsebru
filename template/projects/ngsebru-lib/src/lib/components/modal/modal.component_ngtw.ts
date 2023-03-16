@@ -26,7 +26,7 @@ export class NgSModalComponent implements OnInit, AfterViewInit {
     @ViewChild('contentWrapper', { static: true }) contentWrapper: TemplateRef<any> | undefined;
 
     get hasContent(): boolean {
-        return !!this.contentWrapper && !!this.contentWrapper.createEmbeddedView({});
+        return this.contentWrapper != null && this.contentWrapper.elementRef.nativeElement.children != null;
     }
 
     ngOnInit() {
