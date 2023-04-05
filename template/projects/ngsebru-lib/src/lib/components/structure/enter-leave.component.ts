@@ -51,20 +51,16 @@ export class NgSEnterLeaveComponent {
             return
         }
 
-        var nativeElement = this.eRef.nativeElement;
-
-        while (nativeElement && nativeElement.id != "clickout-target") {
-            nativeElement = nativeElement.firstChild;
+        let parent = event.target;
+        while (parent) {
+            if (parent.id == "clickout-target") {
+                return;
+            }
+            parent = parent.parentElement;
         }
 
-        if (!nativeElement) {
-            nativeElement = this.eRef.nativeElement;
-        }
-
-        if (event.target.id == "clickout-target" || event.target.tagName == "HTML") {
-            this.active = false;
-            this.onClose.emit(true);
-        }
+        this.active = false;
+        this.onClose.emit(true);
     }
 
     get openCloseTrigger(): String {
