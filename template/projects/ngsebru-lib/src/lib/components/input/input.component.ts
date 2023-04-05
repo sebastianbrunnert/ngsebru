@@ -95,13 +95,13 @@ export class NgSInput {
             return true
         }
 
-        let result = (this.value != "" && this.value != null && this.value != undefined && (!new IsIteratableCheck(this.value).result || this.value.length > 0));
-        if (!result) {
+        let empty = this.value == "" || this.value == null || this.value == undefined || (new IsIteratableCheck(this.value).result() && this.value.length == 0);
+        if (empty) {
             const langService = NgSInjector.get(NgSLangService)
             this.mark = langService.getTranslation(this.label) + " " + langService.getTranslation("INPUT_REQUIRED") + "."
         }
 
-        return result
+        return !empty
     }
 
     public setRequired(required: Boolean): NgSInput {

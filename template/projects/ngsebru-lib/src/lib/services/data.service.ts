@@ -28,7 +28,7 @@ export class NgSTransformer {
 
 export class IsIteratableCheck extends NgSCheck {
     public result(): Boolean {
-        return Symbol.iterator in Object(this.value) && !(typeof this.value == 'string' || this.value instanceof String)
+        return Symbol.iterator in Object(this.value) && !(typeof this.value == 'string' || this.value instanceof String) && !(typeof this.value == 'number' || this.value instanceof Number)
     }
 }
 
