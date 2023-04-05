@@ -1,7 +1,7 @@
 <ng-container *ngIf="this.input">
     <label for="input">{{this.input!.label}} <span *ngIf="!this.input!.required">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span></label>
     <div class="input-group">
-        <span *ngIf="this.input!.prefix" class="input-group-text">{{this.input!.prefix}}</span>
+        <span *ngIf="this.input!.prefix" class="input-group-text">{{this.input!.prefix | lang}}</span>
 
         <ng-container [ngSwitch]="this.input!.type.toString()">
             <input
@@ -74,7 +74,7 @@
             <ngs-icon [type]="this.input!.icon"></ngs-icon>
         </div>
 
-        <span *ngIf="this.input!.suffix" class="input-group-text" id="basic-addon1">{{this.input!.suffix}}</span>
+        <span *ngIf="this.input!.suffix" class="input-group-text" id="basic-addon1">{{this.input!.suffix | lang}}</span>
     </div>
 
     <ngs-enter-leave *ngIf="this.input.type.toString() == 'date'" [active]="$any(this.input).open" (onClose)="$any(this.input).open = false">

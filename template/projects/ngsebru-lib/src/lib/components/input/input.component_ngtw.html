@@ -2,7 +2,7 @@
     <label for="input" class="block mb-2 text-sm font-medium text-gray-900">{{this.input!.label}} <span *ngIf="!this.input!.required">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span></label>
     <div class="flex">
         <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md" *ngIf="this.input!.prefix">
-            {{this.input!.prefix}}
+            {{this.input!.prefix | lang}}
         </span>
 
         <div class="relative w-full">
@@ -112,7 +112,7 @@
         </div>
 
         <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-md" *ngIf="this.input!.suffix">
-            {{this.input!.suffix}}
+            {{this.input!.suffix | lang}}
         </span>
     </div>
 
