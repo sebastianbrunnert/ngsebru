@@ -61,7 +61,7 @@ export class NgSEnterLeaveComponent {
             nativeElement = this.eRef.nativeElement;
         }
 
-        if (event.target.id == "clickout-target") {
+        if (event.target.id == "clickout-target" || event.target.tagName == "HTML") {
             this.active = false;
             this.onClose.emit(true);
         }
