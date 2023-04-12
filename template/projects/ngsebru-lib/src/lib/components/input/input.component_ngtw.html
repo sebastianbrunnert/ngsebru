@@ -80,6 +80,34 @@
                     rows="{{$any(this.input).rows || 3}}"
                     *ngSwitchCase="'textarea'"></textarea>
 
+                <ng-container *ngSwitchCase="'select'">
+                    <button
+                        type="button"
+                        (click)="$any(this.input).toggle()"
+                        id="input"
+                        class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0 flex items-center justify-between"
+                        [class.rounded-l-lg]="!this.input!.prefix"
+                        [class.rounded-r-lg]="!this.input!.suffix"
+                        [class.bg-gray-100]="this.input!.disabled"
+                        [class.cursor-not-allowed]="this.input!.disabled"
+                        [class.pl-10]="this.input!.icon != ''">
+                        <span *ngIf="this.input!.value == null" class="text-gray-400">{{'INPUT_DEFAULT_CHOOSE' | lang}}</span>
+                        <span *ngIf="this.input!.value != null">{{$any(this.input).selectLabel | lang}}</span>
+                        <ngs-icon [type]="'bottom'"></ngs-icon>
+                    </button>
+
+                    <ngs-enter-leave [active]="$any(this.input).open" (onClose)="$any(this.input).open = false">
+                        <ul class="bg-gray-50 border border-gray-200 shadow mt-2 absolute left-0 z-10 rounded-lg w-full overflow-x-clip overflow-y-auto max-h-64">
+                            <li *ngIf="!this.input!.required" class="cursor-pointer select-none p-2 hover:bg-gray-200 text-gray-400" (click)="$any(this.input).select(null)">
+                                {{'INPUT_DEFAULT_CHOOSE' | lang}}
+                            </li>
+                            <li *ngFor="let option of $any(this.input).options" class="cursor-pointer select-none p-2 hover:bg-gray-200" (click)="$any(this.input).select(option)">
+                                {{option.label|lang}}
+                            </li>
+                        </ul>
+                    </ngs-enter-leave>
+                </ng-container>
+
                 <ng-container *ngSwitchCase="'date'">
                     <input
                         (ngModelChange)="this.input!.onInput($event)"

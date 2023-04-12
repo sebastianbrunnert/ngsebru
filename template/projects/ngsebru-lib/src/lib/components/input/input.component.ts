@@ -255,3 +255,59 @@ export class NgSDateInput extends NgSInput {
         this.onInputFocus()
     }
 }
+
+export class NgSSelectInput extends NgSInput {
+    public options: NgSSelectOption[] = []
+    public open: Boolean = false
+    public selectLabel: String = ""
+
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.SELECT, id)
+        this.setDefaultValue(null)
+    }
+
+    public addOption(option: NgSSelectOption): NgSSelectInput {
+        this.options.push(option)
+        return this
+    }
+
+    public addOptions(options: NgSSelectOption[]): NgSSelectInput {
+        this.options.push(...options)
+        return this
+    }
+
+    public addOptionString(label: String, value: String): NgSSelectInput {
+        this.options.push({
+            value: value,
+            label: label
+        })
+        return this
+    }
+
+    public toggle() {
+        if (this.disabled) {
+            return
+        }
+        this.open = !this.open
+        if (this.open) {
+            this.onInputFocus()
+        }
+    }
+
+    public select(option: NgSSelectOption) {
+        if (option == null) {
+            this.value = null
+            this.selectLabel = ""
+            this.onInput(this.value)
+            return;
+        }
+        this.value = option.value
+        this.selectLabel = option.label
+        this.onInput(this.value)
+    }
+}
+
+export class NgSSelectOption {
+    public value: String = ""
+    public label: String = ""
+}
