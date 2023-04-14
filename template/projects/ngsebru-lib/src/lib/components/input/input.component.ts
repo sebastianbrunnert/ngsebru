@@ -30,6 +30,7 @@ export enum NgSInputType {
     TIME = "time",
     DATE_TIME = "datetime",
     PASSWORD = "password",
+    SELECT = "select",
 }
 
 export class NgSInput {
@@ -48,6 +49,7 @@ export class NgSInput {
     public disabled: Boolean = false
     public icon: String = ""
     public placeholder: String = "INPUT_DEFAULT_PLACEHOLDER"
+    public description: String = ""
 
     public standalone: Boolean = false
 
@@ -155,6 +157,11 @@ export class NgSInput {
         return this
     }
 
+    public setDescription(description: String): NgSInput {
+        this.description = description
+        return this
+    }
+
     public reset() {
         this.value = new IsIteratableCheck(this.defaultValue).result() ? [...this.defaultValue] : this.defaultValue
         this.mark = ""
@@ -220,6 +227,67 @@ export class NgSTextAreaInput extends NgSInput {
     }
 }
 
+export class NgSSelectInput extends NgSInput {
+    public options: NgSSelectOption[] = []
+    public open: Boolean = false
+    public selectLabel: String = ""
+
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.SELECT, id)
+        this.setDefaultValue(null)
+    }
+
+    public addOption(option: NgSSelectOption): NgSSelectInput {
+        if (option.value == this.value) {
+            this.selectLabel = option.label
+        }
+        this.options.push(option)
+        return this
+    }
+
+    public addOptions(options: NgSSelectOption[]): NgSSelectInput {
+        options.forEach(option => {
+            this.addOption(option)
+        })
+        return this
+    }
+
+    public addOptionString(label: String, value: String): NgSSelectInput {
+        return this.addOption({
+            label: label,
+            value: value
+        })
+    }
+
+    public toggle() {
+        if (this.disabled) {
+            return
+        }
+        this.open = !this.open
+        if (this.open) {
+            this.onInputFocus()
+        }
+    }
+
+    public select(option: NgSSelectOption) {
+        this.open = false
+        if (option == null) {
+            this.value = null
+            this.selectLabel = ""
+            this.onInput(this.value)
+            return;
+        }
+        this.value = option.value
+        this.selectLabel = option.label
+        this.onInput(this.value)
+    }
+}
+
+export class NgSSelectOption {
+    public value: String = ""
+    public label: String = ""
+}
+
 export class NgSDateInput extends NgSInput {
 
     public min: String = ""
@@ -254,60 +322,4 @@ export class NgSDateInput extends NgSInput {
         this.open = true
         this.onInputFocus()
     }
-}
-
-export class NgSSelectInput extends NgSInput {
-    public options: NgSSelectOption[] = []
-    public open: Boolean = false
-    public selectLabel: String = ""
-
-    constructor(label: String, id: String = "") {
-        super(label, NgSInputType.SELECT, id)
-        this.setDefaultValue(null)
-    }
-
-    public addOption(option: NgSSelectOption): NgSSelectInput {
-        this.options.push(option)
-        return this
-    }
-
-    public addOptions(options: NgSSelectOption[]): NgSSelectInput {
-        this.options.push(...options)
-        return this
-    }
-
-    public addOptionString(label: String, value: String): NgSSelectInput {
-        this.options.push({
-            value: value,
-            label: label
-        })
-        return this
-    }
-
-    public toggle() {
-        if (this.disabled) {
-            return
-        }
-        this.open = !this.open
-        if (this.open) {
-            this.onInputFocus()
-        }
-    }
-
-    public select(option: NgSSelectOption) {
-        if (option == null) {
-            this.value = null
-            this.selectLabel = ""
-            this.onInput(this.value)
-            return;
-        }
-        this.value = option.value
-        this.selectLabel = option.label
-        this.onInput(this.value)
-    }
-}
-
-export class NgSSelectOption {
-    public value: String = ""
-    public label: String = ""
 }
