@@ -56,6 +56,8 @@ export class NgSInput {
 
     public standalone: Boolean = false
 
+    public showOptional: Boolean = true
+
     constructor(label: String, type: NgSInputType, id: String = "") {
         this.label = label
         this.type = type
@@ -165,6 +167,11 @@ export class NgSInput {
         return this
     }
 
+    public setShowOptional(showOptional: Boolean): NgSInput {
+        this.showOptional = showOptional
+        return this
+    }
+
     public reset() {
         this.value = new IsIteratableCheck(this.defaultValue).result() ? [...this.defaultValue] : this.defaultValue
         this.mark = ""
@@ -234,10 +241,16 @@ export class NgSSelectInput extends NgSInput {
     public options: NgSSelectOption[] = []
     public open: Boolean = false
     public selectLabel: String = ""
+    public emptyValueDefault: String = ""
 
     constructor(label: String, id: String = "") {
         super(label, NgSInputType.SELECT, id)
         this.setDefaultValue(null)
+    }
+
+    public setValue(value: any): NgSSelectInput {
+        this.value = value
+        return this;
     }
 
     public addOption(option: NgSSelectOption): NgSSelectInput {
@@ -284,10 +297,15 @@ export class NgSSelectInput extends NgSInput {
         this.selectLabel = option.label
         this.onInput(this.value)
     }
+
+    public setEmptyValueDefault(emptyValueDefault: String): NgSSelectInput {
+        this.emptyValueDefault = emptyValueDefault
+        return this
+    }
 }
 
 export class NgSSelectOption {
-    public value: String = ""
+    public value?: String = ""
     public label: String = ""
 }
 

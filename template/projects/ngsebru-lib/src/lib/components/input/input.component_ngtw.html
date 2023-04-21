@@ -9,7 +9,7 @@
             class="bg-gray-50 border border-gray-300 p-2.5 focus:outline-none focus:ring-0">
 
         <label for="input-{{this.input!.id}}" class="ml-2 font-medium text-gray-900">{{this.input!.label|lang}}
-            <span *ngIf="!this.input!.required">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
+            <span *ngIf="!this.input!.required && this.input.showOptional">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
         </label>
     </div>
     <label class="block text-sm mt-1 font-light text-gray-500" *ngIf="this.input!.description != ''">
@@ -20,7 +20,7 @@
 
 <ng-container *ngIf="this.input && this.input!.type.toString() != 'checkbox'">
     <label for="input" class="block font-medium text-gray-900">{{this.input!.label|lang}}
-        <span *ngIf="!this.input!.required">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
+        <span *ngIf="!this.input!.required && this.input.showOptional">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
     </label>
     <label class="block text-sm mt-1 font-light text-gray-500" *ngIf="this.input!.description != ''">
         {{this.input!.description|lang}}
@@ -100,7 +100,8 @@
                         [class.bg-gray-100]="this.input!.disabled"
                         [class.cursor-not-allowed]="this.input!.disabled"
                         [class.pl-10]="this.input!.icon != ''">
-                        <span *ngIf="this.input!.value == null" class="text-gray-400">{{'INPUT_DEFAULT_CHOOSE' | lang}}</span>
+                        <span *ngIf="this.input!.value == null && $any(this.input).emptyValueDefault == ''" class="text-gray-400">{{"INPUT_DEFAULT_CHOOSE" | lang}}</span>
+                        <span *ngIf="this.input!.value == null && $any(this.input).emptyValueDefault != ''">{{$any(this.input).emptyValueDefault | lang}}</span>
                         <span *ngIf="this.input!.value != null">{{$any(this.input).selectLabel | lang}}</span>
                         <ngs-icon [type]="'bottom'"></ngs-icon>
                     </button>
@@ -108,8 +109,11 @@
                     <div class="absolute z-50 w-full">
                         <ngs-enter-leave [active]="$any(this.input).open" (onClose)="$any(this.input).open = false" [clickout]="true" [clickoutTarget]="'clickout-target-select'">
                             <ul class="relative block bg-gray-50 border border-gray-200 shadow mt-2 left-0 z-50 rounded-lg w-full overflow-x-clip overflow-y-auto max-h-64" style="z-index: 9999;">
-                                <li *ngIf="!this.input!.required" class="cursor-pointer select-none p-2 hover:bg-gray-200 text-gray-400" (click)="$any(this.input).select(null)">
-                                    {{'INPUT_DEFAULT_CHOOSE' | lang}}
+                                <li *ngIf="!this.input!.required && $any(this.input).emptyValueDefault == ''" class="cursor-pointer select-none p-2 hover:bg-gray-200 text-gray-400" (click)="$any(this.input).select(null)">
+                                    {{"INPUT_DEFAULT_CHOOSE" | lang}}
+                                </li>
+                                <li *ngIf="!this.input!.required && $any(this.input).emptyValueDefault != ''" class="cursor-pointer select-none p-2 hover:bg-gray-200" (click)="$any(this.input).select(null)">
+                                    {{$any(this.input).emptyValueDefault | lang}}
                                 </li>
                                 <li *ngFor="let option of $any(this.input).options" class="cursor-pointer select-none p-2 hover:bg-gray-200" (click)="$any(this.input).select(option)">
                                     {{option.label|lang}}
