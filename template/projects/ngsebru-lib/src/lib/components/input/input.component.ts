@@ -31,6 +31,9 @@ export enum NgSInputType {
     DATE_TIME = "datetime",
     PASSWORD = "password",
     SELECT = "select",
+    CUSTOM_FILE = "custom-file",
+    COLOR = "color",
+    CHECKBOX = "checkbox"
 }
 
 export class NgSInput {
@@ -288,6 +291,18 @@ export class NgSSelectOption {
     public label: String = ""
 }
 
+export class NgSColorInput extends NgSInput {
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.COLOR, id)
+    }
+}
+
+export class NgSCheckboxInput extends NgSInput {
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.CHECKBOX, id)
+    }
+}
+
 export class NgSDateInput extends NgSInput {
 
     public min: String = ""
@@ -321,5 +336,25 @@ export class NgSDateInput extends NgSInput {
         if (this.open) return
         this.open = true
         this.onInputFocus()
+    }
+}
+
+export class CustomFileInput extends NgSInput {
+    public buttonLabel: String = ""
+    public buttonIcon: String = ""
+
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.CUSTOM_FILE, id)
+        this.buttonIcon = "upload"
+    }
+
+    public setButtonLabel(label: String): CustomFileInput {
+        this.buttonLabel = label
+        return this
+    }
+
+    public setButtonIcon(icon: String): CustomFileInput {
+        this.buttonIcon = icon
+        return this
     }
 }
