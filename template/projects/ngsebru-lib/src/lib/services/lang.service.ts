@@ -90,6 +90,9 @@ export class NgSLangService {
         entries.set("SUNDAY_ABBR", "So")
         entries.set("CONFIRMABLE_HEADLINE", "Sind Sie sicher?")
         entries.set("CONFIRMABLE_SUBMIT", "Weiter")
+        entries.set("SECONDS", "Sekunde(n)")
+        entries.set("MINUTES", "Minute(n)")
+        entries.set("HOURS", "Stunde(n)")
 
         this.language = new Language("Deutsch", "german_default", entries);
     }

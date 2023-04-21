@@ -268,3 +268,29 @@ export class GigabytesToStorageTransformer extends NgSTransformer {
         return new BytesToStorageTransformer(this.value * 1024 * 1024 * 1024).result()
     }
 }
+
+/*
+Duration
+*/
+export class SecondsToDurationTranformer extends NgSTransformer {
+    public result(): String {
+        const seconds = this.value
+        const hours = Math.floor(seconds / 3600)
+        const minutes = Math.floor((seconds - (hours * 3600)) / 60)
+        const secs = seconds - (hours * 3600) - (minutes * 60)
+
+        const langService = NgSInjector.get(NgSLangService)
+
+        let result = ""
+        if (hours > 0) {
+            result += hours + " " + langService.getTranslation("HOURS") + " "
+        }
+        if (minutes > 0) {
+            result += minutes + " " + langService.getTranslation("MINUTES") + " "
+        }
+        if (secs > 0) {
+            result += secs + " " + langService.getTranslation("SECONDS")
+        }
+        return result
+    }
+}
