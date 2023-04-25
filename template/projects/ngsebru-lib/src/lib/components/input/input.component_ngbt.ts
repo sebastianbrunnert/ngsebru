@@ -268,6 +268,13 @@ export class NgSSelectInput extends NgSInput {
         return this
     }
 
+    public addOptionStrings(options: String[]): NgSSelectInput {
+        options.forEach(option => {
+            this.addOptionString(option, option)
+        })
+        return this
+    }
+
     public addOptionString(label: String, value: String): NgSSelectInput {
         return this.addOption({
             label: label,
