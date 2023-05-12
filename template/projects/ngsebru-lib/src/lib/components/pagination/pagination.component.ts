@@ -13,7 +13,7 @@ import { NgSLangPipe } from "../../pipes/lang.pipe";
 export class NgSPaginationComponent {
 
     @Input("pagination")
-    public pagination: NgSPagintion<any> = new NgSPagintion<any>();
+    public pagination: NgSPagination<any> = new NgSPagination<any>();
 
     @Input("enablePageSize")
     public enablePageSize: boolean = false;
@@ -106,7 +106,7 @@ export class NgSPaginationRequest {
     public size: number = 25;
 }
 
-export class NgSPagintion<T> {
+export class NgSPagination<T> {
     public page: number = 0;
     public pages: number = 0;
     public size: number = 25;
