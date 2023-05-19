@@ -132,11 +132,13 @@
                 <ng-container *ngSwitchCase="'date'">
                     <input (ngModelChange)="this.input!.onInput($event)" (click)="$any(this.input!).openDatepicker();" [disabled]="this.input!.disabled.toString()" [(ngModel)]="this.input!.value" (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" type="date" id="input-{{this.input!.id}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0 pointer-cursor" [class.rounded-l-lg]="!this.input!.prefix" [class.rounded-r-lg]="!this.input!.suffix" [class.bg-gray-100]="this.input!.disabled" [class.cursor-not-allowed]="this.input!.disabled" [class.pl-10]="this.input!.icon != ''" placeholder="{{this.input!.placeholder|lang}}" autocomplete="off">
 
-                    <ngs-enter-leave [active]="$any(this.input).open" (onClose)="$any(this.input).open = false">
-                        <div class="bg-white absolute left-0 z-10 rounded-lg">
-                            <ngs-datepicker [selected]="this.input!.value" [min]="$any(this.input!).min" [max]="$any(this.input!).max" [blocked]="$any(this.input!).blocked" (onSelected)="this.input!.value = $event; $any(this.input).open = false"></ngs-datepicker>
-                        </div>
-                    </ngs-enter-leave>
+                    <div class="absolute z-50 w-min">
+                        <ngs-enter-leave [active]="$any(this.input).open" (onClose)="$any(this.input).open = false" [clickout]="true">
+                            <div class="relative block bg-white" id="clickout-target">
+                                <ngs-datepicker [selected]="this.input!.value" [min]="$any(this.input!).min" [max]="$any(this.input!).max" [blocked]="$any(this.input!).blocked" (onSelected)="this.input!.value = $event; $any(this.input).open = false"></ngs-datepicker>
+                            </div>
+                        </ngs-enter-leave>                        
+                    </div>
                 </ng-container>
             </ng-container>
         </div>
