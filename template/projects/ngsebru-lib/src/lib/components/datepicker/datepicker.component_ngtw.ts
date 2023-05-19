@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { NgSLangPipe } from "../../pipes/lang.pipe";
 import { DateToDayTagTransformer, DayTagToDateTransformer, IsEmptyCheck, MonthGenerator, WeekdaysAbbrGenerator } from "../../services/data.service";
 import { NgSIconComponent } from "../icons/icon.component";
@@ -10,7 +10,7 @@ import { NgSIconComponent } from "../icons/icon.component";
     templateUrl: "./datepicker.component.html",
     imports: [NgSIconComponent, NgSLangPipe, CommonModule]
 })
-export class NgSDatepickerComponent implements OnInit {
+export class NgSDatepickerComponent implements OnInit, OnChanges {
 
     @Input("selected")
     public selected: String = "";
@@ -34,6 +34,10 @@ export class NgSDatepickerComponent implements OnInit {
 
     @Output()
     public onSelected: EventEmitter<String> = new EventEmitter<String>();
+
+    ngOnChanges(changes: SimpleChanges): void {
+        this.loadDays();
+    }
 
     ngOnInit(): void {
         const date = new IsEmptyCheck(this.selected).result() ? new Date() : new DayTagToDateTransformer(this.selected).result();

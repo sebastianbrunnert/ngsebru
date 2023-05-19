@@ -17,7 +17,7 @@
                 <ng-container *ngFor="let day of this.days">
                     <span *ngIf="day.index == -1" class="block flex-1 leading-9 border-0"></span>
 
-                    <span *ngIf="day.index != -1" class="block flex-1 leading-9 border-0 text-center font-semibold text-sm rounded-lg prev-btn" (click)="this.selectDay(day)" [class.hover:bg-gray-100]="this.selected != day.dayTag && !day.blocked" [class.bg-blue-700]="this.selected == day.dayTag" [class.text-white]="this.selected == day.dayTag" [class.cursor-pointer]="!day.blocked" [class.text-gray-900]="!day.blocked && this.selected != day.dayTag" [class.text-gray-500]="day.blocked">{{day.index}}</span>
+                    <span *ngIf="day.index != -1" class="block flex-1 leading-9 border-0 text-center font-semibold text-sm rounded-lg prev-btn" (click)="this.selectDay(day)" [class.hover:bg-gray-100]="this.selected != day.dayTag && !day.blocked" [class.bg-blue-500]="this.selected == day.dayTag" [class.text-white]="this.selected == day.dayTag" [class.cursor-pointer]="!day.blocked" [class.text-gray-900]="!day.blocked && this.selected != day.dayTag" [class.text-gray-500]="day.blocked">{{day.index}}</span>
                 </ng-container>
             </div>
         </div>
