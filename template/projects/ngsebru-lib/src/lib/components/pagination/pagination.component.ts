@@ -74,7 +74,7 @@ export class NgSPaginationComponent {
     public setPageSize(pageSize: number): void {
         this.pageSize = pageSize;
         this.onPageChange.emit({
-            page: this.pagination.page,
+            page: 1,
             size: this.pageSize
         });
     }
@@ -111,4 +111,10 @@ export class NgSPagination<T> {
     public pages: number = 0;
     public size: number = 25;
     public elements: T[] = [];
+
+    constructor(
+        pagination: any = {}
+    ) {
+        Object.assign(this, pagination);
+    }
 }
