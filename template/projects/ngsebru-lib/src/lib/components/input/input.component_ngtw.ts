@@ -10,17 +10,19 @@ import { NgSEnterLeaveComponent } from "../structure/enter-leave.component";
 import { NgSDatepickerComponent } from "../datepicker/datepicker.component";
 
 @Directive({
-    selector: '[ngSSelectResize]',
+    selector: '[ngSResize]',
     standalone: true
 })
-export class NgSSelectResizeDirective {
+export class NgSResizeDirective {
 
     constructor(private elementRef: ElementRef) { }
 
     @HostListener('click') onClick() {
-        console.log("click")
-        const dropdown = this.elementRef.nativeElement.querySelector('.absolute');
-        const button = this.elementRef.nativeElement.querySelector('button');
+        const dropdown = this.elementRef.nativeElement.querySelector('.dropdown-menu');
+        const button = this.elementRef.nativeElement.querySelector('.dropdown-toggle');
+
+        console.log(dropdown)
+        console.log(button)
 
         const dropdownHeight = dropdown.clientHeight;
         const buttonRect = button.getBoundingClientRect();
