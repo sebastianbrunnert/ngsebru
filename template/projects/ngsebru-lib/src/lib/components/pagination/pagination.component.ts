@@ -74,7 +74,7 @@ export class NgSPaginationComponent {
     public setPageSize(pageSize: number): void {
         this.pageSize = pageSize;
         this.onPageChange.emit({
-            page: 1,
+            page: 0,
             size: this.pageSize
         });
     }
