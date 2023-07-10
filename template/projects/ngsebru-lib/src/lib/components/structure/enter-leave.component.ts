@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { CommonModule } from "@angular/common";
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 @Component({
     selector: "ngs-enter-leave",
@@ -36,14 +36,15 @@ export class NgSEnterLeaveComponent {
     @Input("clickout")
     public clickout: Boolean = true;
 
+    @Input("clickoutTarget")
+    public clickoutTarget: String = "clickout-target";
+
     public finished: Boolean = false;
 
     @Output()
     public onClose: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
-    constructor(
-        private eRef: ElementRef
-    ) { }
+    constructor() { }
 
     @HostListener("document:click", ["$event"])
     public detectClickout(event: any) {
@@ -53,7 +54,7 @@ export class NgSEnterLeaveComponent {
 
         let parent = event.target;
         while (parent) {
-            if (parent.id == "clickout-target") {
+            if (parent.id == this.clickoutTarget) {
                 return;
             }
             parent = parent.parentElement;

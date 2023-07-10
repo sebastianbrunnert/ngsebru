@@ -33,6 +33,7 @@ export class NgSForm {
     public inputs: NgSInput[] = []
     public loading: Boolean = false
     public submitable: Boolean = true
+    public showButton: Boolean = true
 
     constructor(...ngSFormInputs: NgSInput[]) {
         this.inputs = ngSFormInputs
@@ -51,6 +52,11 @@ export class NgSForm {
 
     public setLoading(loading: Boolean): NgSForm {
         this.loading = loading
+        return this
+    }
+
+    public setShowButton(showButton: Boolean): NgSForm {
+        this.showButton = showButton
         return this
     }
 

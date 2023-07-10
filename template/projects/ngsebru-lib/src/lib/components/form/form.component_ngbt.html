@@ -5,7 +5,7 @@
 
     <ng-content></ng-content>
 
-    <button type="submit" class="btn btn-primary btn-block w-100">
+    <button *ngIf="this.form.showButton" type="submit" class="btn btn-primary btn-block w-100">
         <div class="spinner-border spinner-border-sm" role="status" *ngIf="this.form.loading"></div>
         {{this.form.submitText|lang}}
     </button>

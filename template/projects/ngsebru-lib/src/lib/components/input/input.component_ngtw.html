@@ -1,5 +1,5 @@
 <ng-container *ngIf="this.input && this.input!.type.toString() == 'checkbox'">
-    <div class="flex">
+    <div class="flex mt-2">
         <input 
             (ngModelChange)="this.input!.onInput($event)" 
             [disabled]="this.input!.disabled.toString()" 
@@ -8,13 +8,12 @@
             id="input-{{this.input!.id}}" 
             class="bg-gray-50 border border-gray-300 p-2.5 focus:outline-none focus:ring-0">
 
-        <label for="input-{{this.input!.id}}" class="ml-2 font-medium text-gray-900" *ngIf="this.input!.label != ''">{{this.input!.label|lang}}
+        <label for="input-{{this.input!.id}}" class="ml-2 text-gray-900" *ngIf="this.input!.label != ''">
+            <span [innerHtml]="this.input!.label.toString()|lang|safeHtml"></span>
             <span *ngIf="!this.input!.required && this.input.showOptional">({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
         </label>
     </div>
-    <label class="block text-sm mt-1 font-light text-gray-500" *ngIf="this.input!.description != ''">
-        {{this.input!.description|lang}}
-    </label>
+    <label class="block text-sm mt-1 font-light text-gray-500" *ngIf="this.input!.description != ''">{{input!.description|lang}}</label>
     <p class="mt-2 text-sm text-red-600">{{this.input!.mark | lang}}</p>
 </ng-container>
 

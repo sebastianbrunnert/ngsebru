@@ -1,0 +1,3 @@
+<canvas baseChart [type]="'line'"
+    [datasets]="[{ data: this.ngSChart.values, label: this.ngSChart.title?.toString(), borderColor: this.primary.toString(), pointBorderColor: this.body.toString(), pointBackgroundColor: this.body.toString(), pointHoverBorderColor: this.body.toString(), pointHoverBackgroundColor: this.body.toString() }]"
+    [labels]="this.ngSChart.labels" [legend]="false" [options]="this.options"></canvas>

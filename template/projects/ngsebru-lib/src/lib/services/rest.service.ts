@@ -164,7 +164,7 @@ export class RestBuilder {
                 this.terminate()
             }, error => {
                 if (this.handleErrorSelf || !this.restService.onError(error, this)) {
-                    reject(error)
+                    reject(error.error)
                 }
                 this.terminate()
             })
@@ -179,7 +179,7 @@ export class RestBuilder {
                 this.terminate()
             }, error => {
                 if (this.handleErrorSelf || !this.restService.onError(error, this)) {
-                    reject(error)
+                    reject(error.error)
                 }
                 this.terminate()
             })
@@ -194,7 +194,7 @@ export class RestBuilder {
                 this.terminate()
             }, error => {
                 if (this.handleErrorSelf || !this.restService.onError(error, this)) {
-                    reject(error)
+                    reject(error.error)
                 }
                 this.terminate()
             })
@@ -209,7 +209,7 @@ export class RestBuilder {
                 this.terminate()
             }, error => {
                 if (this.handleErrorSelf || !this.restService.onError(error, this)) {
-                    reject(error)
+                    reject(error.eror)
                 }
                 this.terminate()
             });

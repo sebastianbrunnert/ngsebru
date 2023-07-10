@@ -81,7 +81,7 @@ export class NgSModal {
         return this
     }
 
-    public setNgSForm(ngSForm: NgSForm): NgSModal {
+    public setNgSForm(ngSForm?: NgSForm): NgSModal {
         this.ngSForm = ngSForm
         return this
     }
@@ -110,12 +110,18 @@ export class NgSModalButton {
         public title: String = "",
         public color: String = NgSColor.GRAY_400,
         public hoverColor: String = NgSColor.GRAY_600,
-        public onClick: () => void = () => { }
+        public onClick: () => void = () => { },
+        public loading: Boolean = false,
     ) { }
+
+    public setLoading(loading: Boolean): NgSModalButton {
+        this.loading = loading
+        return this
+    }
 }
 
 export class NgSModalType {
     public static S = "md"
     public static L = "2xl"
-    public static XL = "3xl"
+    public static XL = "4xl"
 }

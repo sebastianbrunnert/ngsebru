@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NgSLangPipe } from '../../pipes/lang.pipe';
 import { NgSPageService } from '../../services/page.service';
 import { NgSIconComponent } from '../icons/icon.component';
 import { NgSEnterLeaveComponent } from '../structure/enter-leave.component';
@@ -7,7 +8,7 @@ import { NgSEnterLeaveComponent } from '../structure/enter-leave.component';
     selector: 'ngs-alert',
     templateUrl: './alert.component.html',
     standalone: true,
-    imports: [NgSEnterLeaveComponent, NgSIconComponent]
+    imports: [NgSEnterLeaveComponent, NgSIconComponent, NgSLangPipe]
 })
 export class NgSAlertComponent {
 

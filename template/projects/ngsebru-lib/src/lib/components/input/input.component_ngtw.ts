@@ -8,6 +8,7 @@ import { NgSLangService } from "../../services/lang.service";
 import { NgSIconComponent } from "../icons/icon.component";
 import { NgSEnterLeaveComponent } from "../structure/enter-leave.component";
 import { NgSDatepickerComponent } from "../datepicker/datepicker.component";
+import { SafeHtmlPipe } from "../../pipes/safe-html.pipe";
 
 @Directive({
     selector: '[ngSResize]',
@@ -44,7 +45,7 @@ export class NgSResizeDirective {
     templateUrl: "./input.component.html",
     standalone: true,
     styleUrls: ["./input.component.scss"],
-    imports: [CommonModule, FormsModule, NgSLangPipe, NgSIconComponent, NgSEnterLeaveComponent, NgSDatepickerComponent, NgSSelectResizeDirective]
+    imports: [CommonModule, FormsModule, NgSLangPipe, SafeHtmlPipe, NgSIconComponent, NgSEnterLeaveComponent, NgSDatepickerComponent, NgSResizeDirective]
 })
 export class NgSInputComponent {
 
@@ -272,6 +273,7 @@ export class NgSSelectInput extends NgSInput {
     public open: Boolean = false
     public selectLabel: String = ""
     public emptyValueDefault: String = ""
+    public searchbar?: NgSInput
 
     constructor(label: String, id: String = "") {
         super(label, NgSInputType.SELECT, id)
@@ -312,6 +314,22 @@ export class NgSSelectInput extends NgSInput {
         })
     }
 
+    public activateSearchbar(title: String = ""): NgSSelectInput {
+        this.searchbar = new NgSInput(title, NgSInputType.TEXT, this.id + "_searchbar").setStandalone(true)
+        this.searchbar.onInput = (value: String) => {
+            if (value == null || value == "") {
+                this.options.forEach(option => {
+                    option.hidden = true
+                })
+                return
+            }
+            this.options.forEach(option => {
+                option.hidden = option.label.toLowerCase().startsWith(value.toLowerCase()) == false
+            })
+        }
+        return this
+    }
+
     public toggle() {
         if (this.disabled) {
             return
@@ -322,17 +340,26 @@ export class NgSSelectInput extends NgSInput {
         }
     }
 
-    public select(option: NgSSelectOption) {
+    public selectValue(value: String): NgSSelectInput {
+        const option = this.options.find(option => option.value == value)
+        if (option == null) {
+            return this
+        }
+        return this.select(option)
+    }
+
+    public select(option: NgSSelectOption): NgSSelectInput {
         this.open = false
         if (option == null) {
             this.value = null
             this.selectLabel = ""
             this.onInput(this.value)
-            return;
+            return this;
         }
         this.value = option.value
         this.selectLabel = option.label
         this.onInput(this.value)
+        return this
     }
 
     public setEmptyValueDefault(emptyValueDefault: String): NgSSelectInput {
@@ -344,6 +371,8 @@ export class NgSSelectInput extends NgSInput {
 export class NgSSelectOption {
     public value?: String = ""
     public label: String = ""
+    public hidden?: Boolean = false
+    public fixed?: Boolean = false
 }
 
 export class NgSColorInput extends NgSInput {

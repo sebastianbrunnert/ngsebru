@@ -237,97 +237,6 @@ export class NgSTextAreaInput extends NgSInput {
     }
 }
 
-export class NgSSelectInput extends NgSInput {
-    public options: NgSSelectOption[] = []
-    public open: Boolean = false
-    public selectLabel: String = ""
-    public emptyValueDefault: String = ""
-
-    constructor(label: String, id: String = "") {
-        super(label, NgSInputType.SELECT, id)
-        this.setDefaultValue(null)
-    }
-
-    public setValue(value: any): NgSSelectInput {
-        this.value = value
-        return this;
-    }
-
-    public addOption(option: NgSSelectOption): NgSSelectInput {
-        if (option.value == this.value) {
-            this.selectLabel = option.label
-        }
-        this.options.push(option)
-        return this
-    }
-
-    public addOptions(options: NgSSelectOption[]): NgSSelectInput {
-        options.forEach(option => {
-            this.addOption(option)
-        })
-        return this
-    }
-
-    public addOptionStrings(options: String[]): NgSSelectInput {
-        options.forEach(option => {
-            this.addOptionString(option, option)
-        })
-        return this
-    }
-
-    public addOptionString(label: String, value: String): NgSSelectInput {
-        return this.addOption({
-            label: label,
-            value: value
-        })
-    }
-
-    public toggle() {
-        if (this.disabled) {
-            return
-        }
-        this.open = !this.open
-        if (this.open) {
-            this.onInputFocus()
-        }
-    }
-
-    public select(option: NgSSelectOption) {
-        this.open = false
-        if (option == null) {
-            this.value = null
-            this.selectLabel = ""
-            this.onInput(this.value)
-            return;
-        }
-        this.value = option.value
-        this.selectLabel = option.label
-        this.onInput(this.value)
-    }
-
-    public setEmptyValueDefault(emptyValueDefault: String): NgSSelectInput {
-        this.emptyValueDefault = emptyValueDefault
-        return this
-    }
-}
-
-export class NgSSelectOption {
-    public value?: String = ""
-    public label: String = ""
-}
-
-export class NgSColorInput extends NgSInput {
-    constructor(label: String, id: String = "") {
-        super(label, NgSInputType.COLOR, id)
-    }
-}
-
-export class NgSCheckboxInput extends NgSInput {
-    constructor(label: String, id: String = "") {
-        super(label, NgSInputType.CHECKBOX, id)
-    }
-}
-
 export class NgSDateInput extends NgSInput {
 
     public min: String = ""
@@ -361,25 +270,5 @@ export class NgSDateInput extends NgSInput {
         if (this.open) return
         this.open = true
         this.onInputFocus()
-    }
-}
-
-export class CustomFileInput extends NgSInput {
-    public buttonLabel: String = ""
-    public buttonIcon: String = ""
-
-    constructor(label: String, id: String = "") {
-        super(label, NgSInputType.CUSTOM_FILE, id)
-        this.buttonIcon = "upload"
-    }
-
-    public setButtonLabel(label: String): CustomFileInput {
-        this.buttonLabel = label
-        return this
-    }
-
-    public setButtonIcon(icon: String): CustomFileInput {
-        this.buttonIcon = icon
-        return this
     }
 }

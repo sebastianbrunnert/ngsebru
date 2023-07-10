@@ -49,14 +49,14 @@ export class NgSPaginationComponent {
         const totalPages = this.pagination.pages;
         const pagesToShow = 5;
 
-        let firstPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2) + 1);
-        let lastPage = Math.min(totalPages, firstPage + pagesToShow - 1);
+        let firstPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2) + 1) as number;
+        let lastPage = Math.min(totalPages, firstPage + pagesToShow - 1) as number;
 
         if (lastPage - firstPage + 1 < pagesToShow) {
             firstPage = Math.max(1, lastPage - pagesToShow + 1);
         }
 
-        const pages = [];
+        const pages: number[] = [];
         for (let i = firstPage; i <= lastPage; i++) {
             pages.push(i);
         }

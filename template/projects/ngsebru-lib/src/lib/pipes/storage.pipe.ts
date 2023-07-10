@@ -39,4 +39,3 @@ export class NgSMegabytesToStroagePipe implements PipeTransform {
         return new MegabytesToStorageTransformer(megabytes).result()
     }
 }
-
