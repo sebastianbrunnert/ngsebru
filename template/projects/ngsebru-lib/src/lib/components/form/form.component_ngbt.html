@@ -1,6 +1,6 @@
 <form id="form" (submit)="$event.preventDefault(); this.validate()">
     <div class="mb-4" *ngFor="let input of this.form.inputs">
-        <ngs-input [input]="input"></ngs-input>
+        <ngs-input [input]="this.getInput(input)"></ngs-input>
     </div>
 
     <ng-content></ng-content>

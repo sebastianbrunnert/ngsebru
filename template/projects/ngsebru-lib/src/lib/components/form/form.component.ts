@@ -26,16 +26,28 @@ export class NgSFormComponent {
             this.submitValid.emit()
         }
     }
+
+    public isGroup(input: NgSInput | NgSFormGroup): Boolean {
+        return input instanceof NgSFormGroup
+    }
+
+    public getGroup(input: NgSInput | NgSFormGroup): NgSFormGroup {
+        return input as NgSFormGroup
+    }
+
+    public getInput(input: NgSInput | NgSFormGroup): NgSInput {
+        return input as NgSInput
+    }
 }
 
-export class NgSForm {
+export class NgSForm implements Checkable {
     public submitText: String = "FORM_DEFAULT_SEND"
-    public inputs: NgSInput[] = []
+    public inputs: (NgSInput | NgSFormGroup)[] = []
     public loading: Boolean = false
     public submitable: Boolean = true
     public showButton: Boolean = true
 
-    constructor(...ngSFormInputs: NgSInput[]) {
+    constructor(...ngSFormInputs: (NgSInput | NgSFormGroup)[]) {
         this.inputs = ngSFormInputs
     }
 
@@ -45,7 +57,9 @@ export class NgSForm {
 
     public reset() {
         this.inputs.forEach(input => {
-            input.reset()
+            if (input instanceof NgSInput) {
+                input.reset()
+            }
         })
         this.setLoading(false)
     }
@@ -70,16 +84,42 @@ export class NgSForm {
         this.getNgSInput(ngSError.description).mark = ngSError.message
     }
 
+    public addGroup(ngSFormGroup: NgSFormGroup) {
+        this.inputs.push(ngSFormGroup)
+    }
+
     public addNgSInput(ngSInput: NgSInput) {
         this.inputs.push(ngSInput)
     }
 
     public getNgSInput(id: String): NgSInput {
-        return this.inputs.find(input => input.id == id)!
+        for (let input of this.inputs) {
+            if (input instanceof NgSInput && input.id == id) {
+                return input
+            } else if (input instanceof NgSFormGroup) {
+                for (let subinput of input.inputs) {
+                    if (subinput.id == id) {
+                        return subinput
+                    }
+                }
+            }
+        }
+        throw new Error("No input with id " + id + " found");
     }
 
     public getNgSInputByLabel(label: String): NgSInput {
-        return this.inputs.find(input => input.label == label)!
+        for (let input of this.inputs) {
+            if (input instanceof NgSInput && input.label == label) {
+                return input
+            } else if (input instanceof NgSFormGroup) {
+                for (let subinput of input.inputs) {
+                    if (subinput.label == label) {
+                        return subinput
+                    }
+                }
+            }
+        }
+        throw new Error("No input with label " + label + " found");
     }
 
     public setSubmitable(submitable: Boolean) {
@@ -122,9 +162,63 @@ export class NgSForm {
             [key: string]: any
         } = {}
         this.inputs.forEach(input => {
-            result[input.id as string] = input.value
+            if (input instanceof NgSInput) {
+                result[input.id as string] = input.value
+            }
         })
         return result
     }
 
+    public getGroupsCount(): number {
+        return this.inputs.filter(input => input instanceof NgSFormGroup).length
+    }
+
+    public getGroups(): NgSFormGroup[] {
+        return this.inputs.filter(input => input instanceof NgSFormGroup) as NgSFormGroup[]
+    }
+
+    public getGroup(title: String): NgSFormGroup {
+        return this.inputs.find(input => input instanceof NgSFormGroup && input.title == title) as NgSFormGroup
+    }
+
+}
+
+export class NgSFormGroup implements Checkable {
+    public title: String = ""
+    public inputs: NgSInput[] = []
+
+    constructor(title: String, ...ngSFormInputs: NgSInput[]) {
+        this.title = title
+        this.inputs = ngSFormInputs
+    }
+
+    public checkValidation(): Boolean {
+        let result = true
+        this.inputs.forEach(input => {
+            if (!input.checkValidation()) {
+                result = false
+            }
+        })
+        return result
+    }
+
+    public checkFilled(): Boolean {
+        let result = true
+        this.inputs.forEach(input => {
+            if (!input.checkFilled()) {
+                result = false
+            }
+        })
+        return result
+    }
+
+    public addNgSInput(ngSInput: NgSInput): NgSFormGroup {
+        this.inputs.push(ngSInput)
+        return this
+    }
+}
+
+interface Checkable {
+    checkValidation(): Boolean
+    checkFilled(): Boolean
 }
