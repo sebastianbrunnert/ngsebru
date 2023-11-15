@@ -9,6 +9,22 @@ import { NgSIconComponent } from "../icons/icon.component";
 import { NgSEnterLeaveComponent } from "../structure/enter-leave.component";
 import { NgSDatepickerComponent } from "../datepicker/datepicker.component";
 import { SafeHtmlPipe } from "../../pipes/safe-html.pipe";
+import Map from 'ol/Map';
+import View from 'ol/View';
+import { OSM } from 'ol/source';
+import TileLayer from 'ol/layer/Tile';
+import * as olProj from 'ol/proj';
+import { NgSPageService } from "../../services/page.service";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import Style from "ol/style/Style";
+import CircleStyle from "ol/style/Circle";
+import Fill from "ol/style/Fill";
+import Stroke from "ol/style/Stroke";
+import { Feature } from "ol";
+import { Point } from "ol/geom";
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { HeicDirective } from "../../directives/heic.directive";
 
 @Directive({
     selector: '[ngSResize]',
@@ -21,9 +37,6 @@ export class NgSResizeDirective {
     @HostListener('click') onClick() {
         const dropdown = this.elementRef.nativeElement.querySelector('.dropdown-menu');
         const button = this.elementRef.nativeElement.querySelector('.dropdown-toggle');
-
-        console.log(dropdown)
-        console.log(button)
 
         const dropdownHeight = dropdown.clientHeight;
         const buttonRect = button.getBoundingClientRect();
@@ -45,9 +58,22 @@ export class NgSResizeDirective {
     templateUrl: "./input.component.html",
     standalone: true,
     styleUrls: ["./input.component.scss"],
-    imports: [CommonModule, FormsModule, NgSLangPipe, SafeHtmlPipe, NgSIconComponent, NgSEnterLeaveComponent, NgSDatepickerComponent, NgSResizeDirective]
+    imports: [CommonModule, GooglePlaceModule, FormsModule, NgSLangPipe, HeicDirective, SafeHtmlPipe, NgSIconComponent, NgSEnterLeaveComponent, NgSDatepickerComponent, NgSResizeDirective]
 })
 export class NgSInputComponent {
+
+    @Input("input") public input?: NgSInput;
+
+}
+
+@Component({
+    selector: "[ngs-input]",
+    templateUrl: "./input.component.html",
+    standalone: true,
+    styleUrls: ["./input.component.scss"],
+    imports: [CommonModule, HeicDirective, GooglePlaceModule, NgSInputComponent, FormsModule, NgSLangPipe, SafeHtmlPipe, NgSIconComponent, NgSEnterLeaveComponent, NgSDatepickerComponent, NgSResizeDirective]
+})
+export class NgSClassInputComponent {
 
     @Input("input") public input?: NgSInput;
 
@@ -64,7 +90,11 @@ export enum NgSInputType {
     SELECT = "select",
     CUSTOM_FILE = "custom-file",
     COLOR = "color",
-    CHECKBOX = "checkbox"
+    CHECKBOX = "checkbox",
+    COORDINATES = "coordinates",
+    GROUP = "group",
+    SWITCHER = "switcher",
+    PLACE = "place"
 }
 
 export class NgSInput {
@@ -84,6 +114,7 @@ export class NgSInput {
     public icon: String = ""
     public placeholder: String = "INPUT_DEFAULT_PLACEHOLDER"
     public description: String = ""
+    public tooltip: String = ""
 
     public standalone: Boolean = false
 
@@ -203,6 +234,11 @@ export class NgSInput {
         return this
     }
 
+    public setTooltip(tooltip: String): NgSInput {
+        this.tooltip = tooltip
+        return this
+    }
+
     public reset() {
         this.value = new IsIteratableCheck(this.defaultValue).result() ? [...this.defaultValue] : this.defaultValue
         this.mark = ""
@@ -219,6 +255,20 @@ export class NgSInput {
 export class NgSTextInput extends NgSInput {
     constructor(label: String, id: String = "") {
         super(label, NgSInputType.TEXT, id)
+    }
+}
+
+export class NgSPlaceInput extends NgSInput {
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.PLACE, id)
+    }
+
+    public onCoordinates(lat: number, lon: number) {
+    }
+
+    public handleAddressChange(address: any) {
+        this.value = address.name
+        this.onCoordinates(address.geometry.location.lat(), address.geometry.location.lng())
     }
 }
 
@@ -266,6 +316,42 @@ export class NgSTextAreaInput extends NgSInput {
         this.rows = rows
         return this
     }
+}
+
+export class NgSSwitcherInput extends NgSInput {
+    public options: NgSSelectOption[] = []
+
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.SWITCHER, id)
+        this.setDefaultValue(null)
+    }
+
+    public addOption(option: NgSSelectOption): NgSSwitcherInput {
+        this.options.push(option)
+        return this
+    }
+
+    public addOptions(options: NgSSelectOption[]): NgSSwitcherInput {
+        options.forEach(option => {
+            this.addOption(option)
+        })
+        return this
+    }
+
+    public addOptionStrings(options: String[]): NgSSwitcherInput {
+        options.forEach(option => {
+            this.addOptionString(option, option)
+        })
+        return this
+    }
+
+    public addOptionString(label: String, value: String): NgSSwitcherInput {
+        return this.addOption({
+            label: label,
+            value: value
+        })
+    }
+
 }
 
 export class NgSSelectInput extends NgSInput {
@@ -387,6 +473,86 @@ export class NgSCheckboxInput extends NgSInput {
     }
 }
 
+export class NgSCoordinatesInput extends NgSInput {
+    private vectorLayer = new VectorLayer({
+        source: new VectorSource(),
+    });
+
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.COORDINATES, id)
+
+        NgSInjector.get(NgSPageService).getElement("#map").then(() => {
+            const map = new Map({
+                layers: [
+                    new TileLayer({
+                        source: new OSM()
+                    })
+                ],
+                target: 'map',
+                view: new View({
+                    center: olProj.fromLonLat([10.5, 51.35]),
+                    zoom: 5
+                })
+            })
+
+
+            map.addLayer(this.vectorLayer);
+
+            const redMarkerStyle = new Style({
+                image: new CircleStyle({
+                    radius: 7,
+                    fill: new Fill({
+                        color: 'red'
+                    }),
+                    stroke: new Stroke({
+                        color: 'black',
+                        width: 2
+                    })
+                })
+            });
+
+            if (this.value != null) {
+                const feature = new Feature(new Point(olProj.fromLonLat([this.value.lon, this.value.lat])));
+                feature.setStyle(redMarkerStyle);
+                this.vectorLayer.getSource()!.clear();
+                this.vectorLayer.getSource()!.addFeature(feature);
+            }
+
+            map.on('click', (evt) => {
+                this.select(olProj.toLonLat(evt.coordinate)[1], olProj.toLonLat(evt.coordinate)[0])
+            })
+        })
+    }
+
+    get redMarkerStyle() {
+        return new Style({
+            image: new CircleStyle({
+                radius: 7,
+                fill: new Fill({
+                    color: 'red'
+                }),
+                stroke: new Stroke({
+                    color: 'black',
+                    width: 2
+                })
+            })
+        })
+    }
+
+    public select(lat: number, lon: number) {
+        var coordinate = olProj.fromLonLat([lon, lat]);
+        const feature = new Feature(new Point(coordinate));
+        feature.setStyle(this.redMarkerStyle);
+        this.vectorLayer.getSource()!.clear();
+        this.vectorLayer.getSource()!.addFeature(feature);
+
+        this.value = {
+            lat: lat,
+            lon: lon
+        }
+    }
+}
+
 export class NgSDateInput extends NgSInput {
 
     public min: String = ""
@@ -426,6 +592,7 @@ export class NgSDateInput extends NgSInput {
 export class CustomFileInput extends NgSInput {
     public buttonLabel: String = ""
     public buttonIcon: String = ""
+    public fileUrl: String = ""
 
     constructor(label: String, id: String = "") {
         super(label, NgSInputType.CUSTOM_FILE, id)
@@ -441,4 +608,13 @@ export class CustomFileInput extends NgSInput {
         this.buttonIcon = icon
         return this
     }
+
+    public setFileUrl(fileUrl: String): CustomFileInput {
+        this.fileUrl = fileUrl
+        return this
+    }
+
+    public onInput() { }
+
+    public onRemove() { }
 }

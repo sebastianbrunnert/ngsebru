@@ -2,13 +2,13 @@ import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NgSError } from "../../models/error.model"
 import { NgSLangPipe } from "../../pipes/lang.pipe";
-import { NgSInput, NgSInputComponent } from "../input/input.component"
+import { NgSClassInputComponent, NgSInput } from "../input/input.component"
 
 @Component({
     selector: "ngs-form",
     templateUrl: "./form.component.html",
     standalone: true,
-    imports: [NgSInputComponent, CommonModule, NgSLangPipe]
+    imports: [NgSClassInputComponent, CommonModule, NgSLangPipe]
 })
 export class NgSFormComponent {
 
@@ -157,12 +157,13 @@ export class NgSForm implements Checkable {
 
     public onSubmit() { }
 
-    public getValues(): Object {
+    public getValues(exclude: String[] = []): Object {
         let result: {
             [key: string]: any
         } = {}
         this.inputs.forEach(input => {
             if (input instanceof NgSInput) {
+                if (exclude.includes(input.id as string)) return
                 result[input.id as string] = input.value
             }
         })

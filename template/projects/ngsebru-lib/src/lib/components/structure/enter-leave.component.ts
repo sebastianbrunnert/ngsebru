@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 @Component({
     selector: "ngs-enter-leave",
@@ -44,12 +44,18 @@ export class NgSEnterLeaveComponent {
     @Output()
     public onClose: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
-    constructor() { }
+    constructor(
+        private cdr: ChangeDetectorRef
+    ) { }
 
     @HostListener("document:click", ["$event"])
     public detectClickout(event: any) {
         if (!this.clickout || !this.finished || !this.active) {
             return
+        }
+
+        if (this.isTextSelected()) {
+            return;
         }
 
         let parent = event.target;
@@ -61,7 +67,13 @@ export class NgSEnterLeaveComponent {
         }
 
         this.active = false;
+        this.cdr.detectChanges();
         this.onClose.emit(true);
+    }
+
+    private isTextSelected() {
+        var selection = window.getSelection();
+        return selection && selection.type === 'Range';
     }
 
     get openCloseTrigger(): String {

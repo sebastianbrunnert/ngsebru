@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, HostListener, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { NgSInjector } from "projects/ngsebru-lib/src/public-api";
 import { NgSColor } from "../../models/color.model";
 import { NgSLangPipe } from "../../pipes/lang.pipe";
@@ -14,7 +14,10 @@ import { NgSEnterLeaveComponent } from "../structure/enter-leave.component";
     standalone: true,
     imports: [NgSEnterLeaveComponent, CommonModule, NgSIconComponent, NgSFormComponent, NgSLangPipe]
 })
-export class NgSModalComponent implements OnInit, AfterViewInit {
+export class NgSModalComponent implements OnInit, AfterContentInit, AfterViewInit {
+
+    @Input("onBack")
+    public onBack?: () => void;
 
     @Input("modal")
     public modal: NgSModal = new NgSModal();
@@ -39,7 +42,16 @@ export class NgSModalComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.onLoad()
+    }
+
+    ngAfterContentInit() {
         this.changeDetectorRef.detectChanges()
+    }
+
+    @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+        if (this.modal.closeable) {
+            this.modal.close()
+        }
     }
 
     public onLoad() { }
@@ -49,12 +61,14 @@ export class NgSModalComponent implements OnInit, AfterViewInit {
 export class NgSModal {
 
     public title: String = ""
+    public subtitle: String = ""
     public type: String = NgSModalType.L
     public buttons: NgSModalButton[] = []
     public text?: String
     public ngSForm?: NgSForm
     public active: Boolean = false
     private ngSModalComponent?: NgSModalComponent
+    public closeable: Boolean = true
 
     public setNgSModalComponent(ngSModalComponent: NgSModalComponent): NgSModal {
         this.ngSModalComponent = ngSModalComponent
@@ -63,6 +77,11 @@ export class NgSModal {
 
     public setTitle(title: String): NgSModal {
         this.title = title
+        return this
+    }
+
+    public setSubtitle(subtitle: String): NgSModal {
+        this.subtitle = subtitle
         return this
     }
 
@@ -83,6 +102,11 @@ export class NgSModal {
 
     public setNgSForm(ngSForm?: NgSForm): NgSModal {
         this.ngSForm = ngSForm
+        return this
+    }
+
+    public setCloseable(closeable: Boolean): NgSModal {
+        this.closeable = closeable
         return this
     }
 

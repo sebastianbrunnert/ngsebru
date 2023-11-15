@@ -1,21 +1,19 @@
 <form id="form" (submit)="$event.preventDefault(); this.validate()">
     <div *ngFor="let input of this.form.inputs">
         <div class="mb-3" *ngIf="!this.isGroup(input)">
-            <ngs-input [input]="this.getInput(input)"></ngs-input>
+            <div ngs-input [input]="this.getInput(input)"></div>
         </div>
         <div class="mb-8" [class.mt-5]="this.form.inputs[0] != input" *ngIf="this.isGroup(input)">
             <hr class="mt-5" *ngIf="this.form.inputs[0] != input" [class.mb-5]="this.form.inputs[0] != input">
             <ng-container *ngIf="this.getGroup(input).inputs.length > 1">
                 <span class="text-xl font-bold mb-5">{{this.getGroup(input).title|lang}}</span>
-                <div class="grid grid-cols-2 gap-2">
-                    <div *ngFor="let input of this.getGroup(input).inputs">
-                        <ngs-input [input]="input"></ngs-input>
-                    </div>
+                <div class="container mx-auto grid grid-cols-2 gap-2">
+                    <div class="h-full col-span-1 flex flex-col" ngs-input *ngFor="let input of this.getGroup(input).inputs" [input]="input"></div>
                 </div>
             </ng-container>
             <ng-container *ngIf="this.getGroup(input).inputs.length <= 1">
                 <div class="mt-5">
-                    <ngs-input [input]="this.getGroup(input).inputs[0]"></ngs-input>
+                    <div ngs-input [input]="this.getGroup(input).inputs[0]"></div>
                 </div>
             </ng-container>
         </div>
