@@ -12,7 +12,7 @@
             <span [innerHtml]="this.input!.label.toString()|lang|safeHtml"></span>
             <span *ngIf="!this.input!.required && this.input.showOptional"> ({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
             <div class="has-tooltip">
-                <span class="w-max tooltip inline-block rounded shadow-lg p-2 bg-gray-700 text-gray-300 -mt-10 whitespace-no-wrap">Test</span>
+                <span class="w-max tooltip inline-block rounded shadow-lg p-2 bg-gray-700 text-gray-300 -mt-10 whitespace-no-wrap">{{ this.input.tooltip }}</span>
                 <ngs-icon [type]="'info'" *ngIf="this.input!.tooltip != ''"></ngs-icon>
             </div>            
         </label>
@@ -40,15 +40,15 @@
         </label>
     </div>
     <div class="flex mt-auto pt-2">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none" *ngIf="this.input!.icon != ''" (click)="this.input.onIconClick()">
-            <ngs-icon [type]="this.input!.icon"></ngs-icon>
-        </div>
-
-        <span class="px-3 inline-flex items-center text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md" *ngIf="this.input!.prefix && $any(this.input!).fileUrl == ''">
+        <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md" *ngIf="this.input!.prefix">
             {{this.input!.prefix}}
         </span>
 
         <div class="relative w-full">
+            <div class="absolute top-0 inset-y-0 left-0 flex items-center pl-3 pointer-events-none" *ngIf="this.input!.icon != ''" (click)="this.input.onIconClick()">
+                <ngs-icon [type]="this.input!.icon"></ngs-icon>
+            </div>
+
             <ng-container [ngSwitch]="this.input!.type.toString()">
                 <input 
                     (ngModelChange)="this.input!.onInput($event)" 
