@@ -405,7 +405,7 @@ export class NgSSelectInput extends NgSInput {
         this.searchbar.onInput = (value: String) => {
             if (value == null || value == "") {
                 this.options.forEach(option => {
-                    option.hidden = true
+                    option.hidden = false
                 })
                 return
             }
