@@ -123,9 +123,9 @@ export class RestBuilder {
 
     public addParam(key: String, value: String): RestBuilder {
         if (this.params.length == 0) {
-            this.params = "?" + key + "=" + value
+            this.params = "?" + key + "=" + encodeURIComponent(value.toString())
         } else {
-            this.params += "&" + key + "=" + value
+            this.params += "&" + key + "=" + encodeURIComponent(value.toString())
         }
         return this
     }
