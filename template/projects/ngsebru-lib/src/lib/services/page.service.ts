@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, ComponentRef, Injectable, Type } from "@angular/core";
+import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Type } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { NgSViewContainerRef } from "../../public-api";
 import { NgSAlert } from "../components/alert/alert.component";
@@ -71,6 +71,10 @@ export class NgSPageService {
                 subtree: true
             });
         });
+    }
+
+    public createFactory<T>(type: Type<T>): ComponentFactory<T> {
+        return this.componentFactoryResolver.resolveComponentFactory(type);
     }
 
     public createComponent<T>(type: Type<T>): ComponentRef<T> {

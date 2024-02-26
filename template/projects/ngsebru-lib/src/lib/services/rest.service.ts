@@ -38,6 +38,15 @@ export class NgSRestService {
 
     public onError(error: any, restBuilder: RestBuilder): Boolean {
         var ngSError: NgSError = new NgSError(error.error)
+        if (restBuilder.handleErrorSelf) {
+            if (ngSError.level == NgSErrorLevel.LOGOUT) {
+                restBuilder.getAuthenticationType().onLogout()
+            } else if (ngSError.level != NgSErrorLevel.INPUT) {
+                restBuilder.getInquirer().showError(ngSError)
+            }
+            return false
+        }
+
         if (ngSError.level == NgSErrorLevel.UNKNOWN) {
             return false
         }
@@ -89,7 +98,7 @@ export class RestBuilder {
     private headers: any = {}
     private authenticationType?: AuthenticationType
     private inquirer: any
-    private handleErrorSelf: Boolean = false
+    public handleErrorSelf: Boolean = false
 
     constructor(private restService: NgSRestService) {
         this.endpoint = restService.getDefaultEndpoint()
@@ -122,6 +131,8 @@ export class RestBuilder {
     }
 
     public addParam(key: String, value: String): RestBuilder {
+        if (value == null || value == undefined) return this
+
         if (this.params.length == 0) {
             this.params = "?" + key + "=" + encodeURIComponent(value.toString())
         } else {
@@ -163,7 +174,7 @@ export class RestBuilder {
                 resolve(response)
                 this.terminate()
             }, error => {
-                if (this.handleErrorSelf || !this.restService.onError(error, this)) {
+                if (!this.restService.onError(error, this)) {
                     reject(error.error)
                 }
                 this.terminate()
@@ -178,7 +189,7 @@ export class RestBuilder {
                 resolve(response)
                 this.terminate()
             }, error => {
-                if (this.handleErrorSelf || !this.restService.onError(error, this)) {
+                if (!this.restService.onError(error, this)) {
                     reject(error.error)
                 }
                 this.terminate()
@@ -193,7 +204,7 @@ export class RestBuilder {
                 resolve(response)
                 this.terminate()
             }, error => {
-                if (this.handleErrorSelf || !this.restService.onError(error, this)) {
+                if (!this.restService.onError(error, this)) {
                     reject(error.error)
                 }
                 this.terminate()
@@ -208,7 +219,7 @@ export class RestBuilder {
                 resolve(response)
                 this.terminate()
             }, error => {
-                if (this.handleErrorSelf || !this.restService.onError(error, this)) {
+                if (!this.restService.onError(error, this)) {
                     reject(error.eror)
                 }
                 this.terminate()
@@ -216,21 +227,28 @@ export class RestBuilder {
         })
     }
 
-    public download(fileName: String) {
+    public download(fileName?: String) {
         this.init()
-        this.restService.httpClient.post(this.endpoint as string + this.route + this.params, this.body, { headers: this.headers, responseType: 'blob' }).subscribe(response => {
-            const url = window.URL.createObjectURL(response)
+        this.restService.httpClient.post(this.endpoint as string + this.route + this.params, this.body, { headers: this.headers, responseType: 'blob', observe: 'response' }).subscribe(response => {
+            const url = window.URL.createObjectURL(response.body!)
             const a = document.createElement('a')
             a.setAttribute('style', 'display:none;')
             document.body.appendChild(a)
             a.href = url
-            a.download = fileName as string
+            if (fileName) {
+                a.download = fileName as string
+            } else {
+                const contentDisposition = response.headers.get('Content-Disposition');
+                const match = contentDisposition && contentDisposition.match(/(filename=|filename\*='')(.*)$/);
+                const downloadedFileName = match && match[2] || 'download';
+                a.download = downloadedFileName;
+            }
             a.click()
             window.URL.revokeObjectURL(url)
             a.remove()
             this.terminate()
         }, error => {
-            if (this.handleErrorSelf || !this.restService.onError(error, this)) {
+            if (!this.restService.onError(error, this)) {
                 console.log(error)
             }
             this.terminate()

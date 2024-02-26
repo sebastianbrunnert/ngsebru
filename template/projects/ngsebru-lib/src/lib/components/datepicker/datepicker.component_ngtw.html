@@ -1,4 +1,4 @@
-<div class="inline-block rounded-lg shadow-lg p-4 select-none">
+<div class="inline-block rounded-lg shadow-lg p-4 select-none" id="clickout-target-date">
     <div class="flex justify-between mb-2">
         <button type="button" class="rounded-lg text-gray-500 hover:bg-gray-100 p-2.5 focus:outline-none prev-btn" (click)="this.prevMonth()">
             <ngs-icon [type]="'left'"></ngs-icon>
@@ -12,12 +12,12 @@
     <div class="p-1">
         <div class="flex">
             <div class="grid grid-cols-7 w-64 mb-1" *ngIf="this.days">
-                <span *ngFor="let day of this.weekdays" class="block flex-1 leading-9 border-0 text-center text-gray-500 font-medium text-sm">{{day|lang}}</span>
+                <span id="clickout-target" *ngFor="let day of this.weekdays" class="block flex-1 leading-9 border-0 text-center text-gray-500 font-medium text-sm">{{day|lang}}</span>
 
                 <ng-container *ngFor="let day of this.days">
-                    <span *ngIf="day.index == -1" class="block flex-1 leading-9 border-0"></span>
+                    <span id="clickout-target" *ngIf="day.index == -1" class="block flex-1 leading-9 border-0"></span>
 
-                    <span *ngIf="day.index != -1" class="block flex-1 leading-9 border-0 text-center font-semibold text-sm rounded-lg prev-btn" (click)="this.selectDay(day)" [class.hover:bg-gray-100]="this.selected != day.dayTag && !day.blocked" [class.bg-blue-500]="this.selected == day.dayTag" [class.text-white]="this.selected == day.dayTag" [class.cursor-pointer]="!day.blocked" [class.text-gray-900]="!day.blocked && this.selected != day.dayTag" [class.text-gray-500]="day.blocked">{{day.index}}</span>
+                    <span id="clickout-target" *ngIf="day.index != -1" class="block flex-1 leading-9 border-0 text-center font-semibold text-sm rounded-lg prev-btn" (click)="this.selectDay(day)" [class.hover:bg-gray-100]="this.selected != day.dayTag && !day.blocked" [class.bg-blue-500]="this.selected == day.dayTag" [class.text-white]="this.selected == day.dayTag" [class.cursor-pointer]="!day.blocked" [class.text-gray-900]="!day.blocked && this.selected != day.dayTag" [class.text-gray-300]="day.blocked">{{day.index}}</span>
                 </ng-container>
             </div>
         </div>

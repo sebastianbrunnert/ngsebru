@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
 import { NgSIconComponent } from "../icons/icon.component";
 import { CommonModule } from "@angular/common";
 import { NgSInputComponent, NgSSelectInput } from "../input/input.component";
@@ -10,7 +10,7 @@ import { NgSLangPipe } from "../../pipes/lang.pipe";
     standalone: true,
     imports: [NgSIconComponent, CommonModule, NgSInputComponent, NgSLangPipe]
 })
-export class NgSPaginationComponent {
+export class NgSPaginationComponent implements OnChanges {
 
     @Input("pagination")
     public pagination: NgSPagination<any> = new NgSPagination<any>();
@@ -29,16 +29,21 @@ export class NgSPaginationComponent {
 
     public pageSizeInput: NgSSelectInput = new NgSSelectInput("", "size").setStandalone(true) as NgSSelectInput;
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes["pagination"]) {
+            this.pageSizeInput.select({
+                value: changes["pagination"].currentValue.size.toString(),
+                label: changes["pagination"].currentValue.size.toString(),
+            }, false)
+        }
+    }
+
     constructor() {
         if (!this.pageSizeOptions.includes(this.pageSize)) {
             this.pageSizeOptions.push(this.pageSize);
         }
         this.pageSizeOptions.sort((a, b) => a - b);
         this.pageSizeInput.addOptions(this.pageSizeOptions.map((value) => { return { value: value.toString(), label: value.toString() } }));
-        this.pageSizeInput.select({
-            value: this.pageSize.toString(),
-            label: this.pageSize.toString()
-        });
         this.pageSizeInput.onInput = () => {
             this.setPageSize(parseInt(this.pageSizeInput.value));
         }
@@ -104,6 +109,10 @@ export class NgSPaginationComponent {
 export class NgSPaginationRequest {
     public page: number = 0;
     public size: number = 25;
+
+    constructor() {
+
+    }
 }
 
 export class NgSPagination<T> {

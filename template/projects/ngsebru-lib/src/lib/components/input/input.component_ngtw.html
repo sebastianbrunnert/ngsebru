@@ -8,7 +8,7 @@
             id="input-{{this.input!.id}}" 
             class="bg-gray-50 border border-gray-300 p-2.5 focus:outline-none focus:ring-0">
 
-        <label for="input-{{this.input!.id}}" class="ml-2 text-gray-900 text-left" *ngIf="this.input!.label != ''">
+        <label for="input-{{this.input!.id}}" class="ml-2 text-left" *ngIf="this.input!.label != ''">
             <span [innerHtml]="this.input!.label.toString()|lang|safeHtml"></span>
             <span *ngIf="!this.input!.required && this.input.showOptional"> ({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
             <div class="has-tooltip">
@@ -23,7 +23,7 @@
 
 <ng-container *ngIf="this.input && this.input!.type.toString() != 'checkbox'">
     <div>
-        <label for="input" class="block font-medium text-gray-900 text-left flex space-x-2 items-center" *ngIf="this.input!.label != ''">
+        <label for="input" class="font-medium text-left flex space-x-2 items-center" *ngIf="this.input!.label != ''">
             <div>
                 {{this.input!.label|lang}}
                 <span *ngIf="!this.input!.required && this.input.showOptional"> ({{"INPUT_DEFAULT_OPTIONAL"|lang}})</span>
@@ -39,13 +39,21 @@
             {{this.input!.description|lang}}
         </label>
     </div>
+    <ng-container *ngIf="this.input && this.input!.type.toString() == 'multi-text'">
+        <div *ngFor="let value of $any(this.input).value" class="flex items-center space-x-2" id="clickout-target">
+            <a class="cursor-pointer" (click)="$any(this.input).remove(value)">
+                <ngs-icon [type]="'delete'" [color]="'blue-500'"></ngs-icon>
+            </a>
+            <p class="text-gray-900">{{value}}</p>
+        </div>
+    </ng-container>
     <div class="flex mt-auto pt-2">
-        <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md" *ngIf="this.input!.prefix">
+        <span class="inline-flex items-center px-3 text-sm bg-gray-200 border border-r-0 border-gray-300 rounded-l-md" *ngIf="this.input!.prefix">
             {{this.input!.prefix}}
         </span>
 
         <div class="relative w-full">
-            <div class="absolute top-0 inset-y-0 left-0 flex items-center pl-3 pointer-events-none" *ngIf="this.input!.icon != ''" (click)="this.input.onIconClick()">
+            <div class="absolute top-0 inset-y-0 left-0 flex items-center pl-3 cursor-pointer" *ngIf="this.input!.icon != ''" (click)="this.input.onIconClick()">
                 <ngs-icon [type]="this.input!.icon"></ngs-icon>
             </div>
 
@@ -58,7 +66,7 @@
                     (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" 
                     type="text" 
                     id="input-{{this.input!.id}}" 
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
+                    class="bg-gray-50 border border-gray-300 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
                     [class.rounded-l-lg]="!this.input!.prefix" 
                     [class.rounded-r-lg]="!this.input!.suffix" 
                     [class.bg-gray-100]="this.input!.disabled" 
@@ -77,7 +85,7 @@
                     (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" 
                     type="text" 
                     id="input-{{this.input!.id}}" 
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
+                    class="bg-gray-50 border border-gray-300 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
                     [class.rounded-l-lg]="!this.input!.prefix" 
                     [class.rounded-r-lg]="!this.input!.suffix" 
                     [class.bg-gray-100]="this.input!.disabled" 
@@ -86,25 +94,49 @@
                     placeholder="{{this.input!.placeholder|lang}}"
                     *ngSwitchCase="'place'">
 
-                <input 
-                    (ngModelChange)="this.input!.onInput($event)" 
-                    (focus)="this.input!.onInputFocus()" 
-                    [disabled]="this.input!.disabled.toString()" 
-                    [(ngModel)]="this.input!.value" 
-                    (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" 
-                    type="number" 
-                    id="input-{{this.input!.id}}" 
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
-                    [class.rounded-l-lg]="!this.input!.prefix" 
-                    [class.rounded-r-lg]="!this.input!.suffix" 
-                    [class.bg-gray-100]="this.input!.disabled" 
-                    [class.cursor-not-allowed]="this.input!.disabled" 
-                    [class.pl-10]="this.input!.icon != ''" 
-                    placeholder="{{this.input!.placeholder|lang}}" 
-                    min="{{$any(this.input).min || null}}" 
-                    max="{{$any(this.input).max || null}}" 
-                    step="{{$any(this.input).steps || 1}}" 
-                    *ngSwitchCase="'number'">
+
+                <ng-container *ngSwitchCase="'number'">
+                    <input 
+                        (ngModelChange)="this.input!.onInput($event)" 
+                        (focus)="this.input!.onInputFocus()" 
+                        [disabled]="this.input!.disabled.toString()" 
+                        [(ngModel)]="this.input!.value" 
+                        (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" 
+                        type="number" 
+                        id="input-{{this.input!.id}}" 
+                        class="bg-gray-50 border border-gray-300 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
+                        [class.rounded-l-lg]="!this.input!.prefix" 
+                        [class.rounded-r-lg]="!this.input!.suffix" 
+                        [class.bg-gray-100]="this.input!.disabled" 
+                        [class.cursor-not-allowed]="this.input!.disabled" 
+                        [class.pl-10]="this.input!.icon != ''" 
+                        placeholder="{{this.input!.placeholder|lang}}" 
+                        min="{{$any(this.input).min || null}}" 
+                        max="{{$any(this.input).max || null}}" 
+                        step="{{$any(this.input).steps || 1}}" 
+                        *ngIf="!$any(this.input).slider">
+
+                    <div *ngIf="$any(this.input).slider" class="py-2 flex items-center space-x-4">
+                        <input
+                            (ngModelChange)="this.input!.onInput($event)" 
+                            (focus)="this.input!.onInputFocus()" 
+                            [disabled]="this.input!.disabled.toString()" 
+                            [(ngModel)]="this.input!.value" 
+                            type="range"
+                            id="input-{{this.input!.id}}" 
+                            class="bg-gray-50 border text-sm block w-full h-2 appearance-none accent-blue-500 cursor-pointer" 
+                            [class.rounded-l-lg]="!this.input!.prefix" 
+                            [class.rounded-r-lg]="!this.input!.suffix" 
+                            [class.bg-gray-100]="this.input!.disabled" 
+                            [class.cursor-not-allowed]="this.input!.disabled" 
+                            [class.pl-10]="this.input!.icon != ''" 
+                            placeholder="{{this.input!.placeholder|lang}}" 
+                            min="{{$any(this.input).min || null}}" 
+                            max="{{$any(this.input).max || null}}" 
+                            step="{{$any(this.input).steps || 1}}">
+                        <p class="text-lg whitespace-nowrap">{{this.input!.value}}{{this.input!.suffix}}</p>
+                    </div>
+                </ng-container>
 
                 <input 
                     (ngModelChange)="this.input!.onInput($event)" 
@@ -126,11 +158,11 @@
 
                 <div *ngSwitchCase="'custom-file'">
                     <div class="flex" id="clickout-target">
-                        <button id="clickout-target" *ngIf="!this.input.required && this.input!.value != null" class="hover:bg-gray-200 rounded-lg text-sm p-1.5 mr-1" (click)="$any(this.input!).onRemove()">
+                        <button type="button" id="clickout-target" *ngIf="!this.input.required && this.input!.value != null" class="hover:bg-gray-200 rounded-lg text-sm p-1.5 mr-1" (click)="$any(this.input!).onRemove(); $event.stopPropagation()">
                             <ngs-icon [type]="'delete'"></ngs-icon>
                         </button>
 
-                        <span class="has-tooltip inline-flex items-center text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md" *ngIf="$any(this.input!).fileUrl != ''">
+                        <span class="has-tooltip inline-flex items-center text-sm bg-gray-200 border border-r-0 border-gray-300 rounded-l-md" *ngIf="$any(this.input!).fileUrl != ''">
                             <div class="w-96 bg-gray-700 whitespace-no-wrap inline-block rounded-lg shadow-lg tooltip" style="transition-delay: 0.3s;">
                                 <img class="object-contain rounded-lg" [heicSrc]="$any(this.input).fileUrl">
                             </div>
@@ -143,7 +175,7 @@
                             type="button"
                             id="input-{{this.input!.id}}"
                             (click)="this.input!.onIconClick()"
-                            class="border border-gray-300 text-gray-900 text-sm w-full block py-2.5 px-3 flex items-center space-x-2 justify-center"
+                            class="border border-gray-300 text-sm w-full py-2.5 px-3 flex items-center space-x-2 justify-center"
                             [class.rounded-l-lg]="!this.input!.prefix && $any(this.input!).fileUrl == ''"
                             [class.rounded-r-lg]="!this.input!.suffix"
                             [class.bg-gray-100]="this.input!.disabled"
@@ -158,11 +190,107 @@
 
                 <div *ngSwitchCase="'switcher'">
                     <div class="inline-flex rounded-lg w-full" id="clickout-target">
-                        <button type="button" *ngFor="let option of $any(this.input).options" (click)="this.input!.value = option.value" class="w-full p-2.5 text-sm text-gray-900 border border-gray-200 first:rounded-l-lg last:rounded-r-lg" [class.hover:bg-gray-100]="this.input!.value != option.value" [class.bg-gray-50]="this.input!.value != option.value" [class.bg-gray-200]="this.input!.value == option.value">
+                        <button type="button" *ngFor="let option of $any(this.input).options" (click)="this.input!.value = option.value" class="w-full p-2.5 text-sm border border-gray-200 first:rounded-l-lg last:rounded-r-lg" [class.hover:bg-gray-100]="this.input!.value != option.value" [class.bg-gray-50]="this.input!.value != option.value" [class.bg-gray-200]="this.input!.value == option.value">
                             {{option.label|lang}}
                         </button>
                     </div>
                 </div>
+
+                <div *ngSwitchCase="'multi-text'">
+                    <input 
+                        (focus)="this.input!.onInputFocus()" 
+                        [disabled]="this.input!.disabled.toString()" 
+                        [(ngModel)]="$any(this.input).internValue" 
+                        (keydown)="$any(this.input).enter($event)" 
+                        type="text" 
+                        id="input-{{this.input!.id}}" 
+                        class="bg-gray-50 border border-gray-300 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
+                        [class.rounded-l-lg]="!this.input!.prefix" 
+                        [class.rounded-r-lg]="!this.input!.suffix" 
+                        [class.bg-gray-100]="this.input!.disabled" 
+                        [class.cursor-not-allowed]="this.input!.disabled" 
+                        [class.pl-10]="this.input!.icon != ''" 
+                        placeholder="{{this.input!.placeholder|lang}}">
+                </div>
+
+                <div *ngSwitchCase="'multi-select'" ngSResize>
+                    <div id="clickout-target-select">
+                        <button
+                            type="button"
+                            (click)="$any(this.input).toggle()"
+                            id="input-{{this.input!.id}}"
+                            class="dropdown-toggle cursor-pointer bg-gray-50 border border-gray-300 text-sm w-full p-2.5 focus:outline-none focus:ring-0 flex items-center justify-between"
+                            [class.rounded-l-lg]="!this.input!.prefix"
+                            [class.rounded-r-lg]="!this.input!.suffix"
+                            [class.bg-gray-100]="this.input!.disabled"
+                            [class.cursor-not-allowed]="this.input!.disabled"
+                            [class.pl-10]="this.input!.icon != ''">
+                            <span *ngIf="this.input!.value.length == 0 && $any(this.input).emptyValueDefault == ''" class="text-gray-400">{{"INPUT_DEFAULT_CHOOSE" | lang}}</span>
+                            <span *ngIf="this.input!.value.length == 0 && $any(this.input).emptyValueDefault != ''">{{$any(this.input).emptyValueDefault | lang}}</span>
+                            <div *ngIf="this.input!.value.length > 0">
+                                <div class="flex flex-wrap space-x-1 -mt-1">
+                                    <div *ngFor="let l of $any(this.input).selectLabel" class="bg-blue-500 p-1 text-xs rounded-lg text-white truncate flex items-center group">
+                                        <span>{{l.label | lang}}</span>
+                                        <ngs-icon [type]="'delete'" class="hidden group-hover:block cursor-pointer" [color]="'white'" (click)="$any(this.input).select(l); $event.stopPropagation()"></ngs-icon>
+                                    </div>                                
+                                </div>
+                            </div>
+                            <ngs-icon [type]="'bottom'"></ngs-icon>
+                        </button>
+                    </div>
+
+                    <div class="absolute z-50 w-full dropdown-menu">
+                        <ngs-enter-leave [active]="$any(this.input).open" (onClose)="$any(this.input).open = false" [clickout]="true" [clickoutTarget]="'clickout-target-select'">
+                            <div class="relative block bg-gray-50 border border-gray-200 shadow left-0 z-50 rounded-lg w-full overflow-x-clip overflow-y-auto max-h-64">
+                                <ul style="z-index: 9999;">
+                                    <ng-container *ngFor="let option of $any(this.input).options">
+                                        <li *ngIf="option.fixed" class="cursor-pointer select-none p-2 hover:bg-gray-200" (click)="$any(this.input).select(option)">
+                                            {{option.label|lang}}
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                                <div class="p-2" id="clickout-target-select" *ngIf="$any(this.input).searchbar != null">
+                                    <ngs-input [input]="$any(this.input).searchbar"></ngs-input>
+                                </div>
+                                <ul style="z-index: 9999;" id="clickout-target-select">
+                                    <ng-container *ngFor="let option of $any(this.input).options">
+                                        <li *ngIf="!option.hidden && !option.fixed" class="cursor-pointer select-none p-2 hover:bg-gray-200" (click)="$any(this.input).select(option)">
+                                            <div class="flex space-x-2">
+                                                <ngs-icon [type]="'check'" *ngIf="this.input!.value.includes(option.value)"></ngs-icon>
+                                                <span>{{option.label | lang}}</span>
+                                            </div>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                        </ngs-enter-leave>
+                    </div>
+                </div>
+
+                <div *ngSwitchCase="'editor'" id="clickout-target">
+                    <ckeditor style="min-width: 100%;" [editor]="$any(this.input).Editor"
+                        *ngIf="$any(this.input).Editor" [(ngModel)]="this.input.value"
+                        (ngModelChange)="this.input!.onInput($event)"
+                        [config]="{ toolbar: ['bold','italic','underline','|','fontSize','fontFamily','fontColor','|','link'] }">
+                    </ckeditor>
+                </div>
+
+                <input 
+                    (ngModelChange)="this.input!.onInput($event)" 
+                    (focus)="this.input!.onInputFocus()" 
+                    [disabled]="this.input!.disabled.toString()" 
+                    [(ngModel)]="this.input!.value" 
+                    (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" 
+                    type="time" 
+                    id="input-{{this.input!.id}}" 
+                    class="bg-gray-50 border border-gray-300 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" 
+                    [class.rounded-l-lg]="!this.input!.prefix" 
+                    [class.rounded-r-lg]="!this.input!.suffix" 
+                    [class.bg-gray-100]="this.input!.disabled" 
+                    [class.cursor-not-allowed]="this.input!.disabled" 
+                    [class.pl-10]="this.input!.icon != ''" 
+                    placeholder="{{this.input!.placeholder|lang}}" 
+                    *ngSwitchCase="'time'">
 
                 <div *ngSwitchCase="'select'" ngSResize>
                     <div id="clickout-target-select">
@@ -170,15 +298,15 @@
                             type="button"
                             (click)="$any(this.input).toggle()"
                             id="input-{{this.input!.id}}"
-                            class="dropdown-toggle cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0 flex items-center justify-between"
+                            class="dropdown-toggle cursor-pointer bg-gray-50 border border-gray-300 text-sm w-full p-2.5 focus:outline-none focus:ring-0 flex items-center justify-between"
                             [class.rounded-l-lg]="!this.input!.prefix"
                             [class.rounded-r-lg]="!this.input!.suffix"
                             [class.bg-gray-100]="this.input!.disabled"
                             [class.cursor-not-allowed]="this.input!.disabled"
                             [class.pl-10]="this.input!.icon != ''">
-                            <span *ngIf="this.input!.value == null && $any(this.input).emptyValueDefault == ''" class="text-gray-400">{{"INPUT_DEFAULT_CHOOSE" | lang}}</span>
-                            <span *ngIf="this.input!.value == null && $any(this.input).emptyValueDefault != ''">{{$any(this.input).emptyValueDefault | lang}}</span>
-                            <span *ngIf="this.input!.value != null">{{$any(this.input).selectLabel | lang}}</span>
+                            <span *ngIf="(this.input!.value == null || this.input!.value == undefined) && $any(this.input).emptyValueDefault == ''" class="text-gray-400">{{"INPUT_DEFAULT_CHOOSE" | lang}}</span>
+                            <span *ngIf="(this.input!.value == null || this.input!.value == undefined) && $any(this.input).emptyValueDefault != ''">{{$any(this.input).emptyValueDefault | lang}}</span>
+                            <span *ngIf="!(this.input!.value == null || this.input!.value == undefined)">{{$any(this.input).selectLabel | lang}}</span>
                             <ngs-icon [type]="'bottom'"></ngs-icon>
                         </button>
                     </div>
@@ -214,27 +342,31 @@
                     </div>
                 </div>
 
-                <input autocomplete="pw-{{this.input!.id}}" (ngModelChange)="this.input!.onInput($event)" (focus)="this.input!.onInputFocus()" [disabled]="this.input!.disabled.toString()" [(ngModel)]="this.input!.value" (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" type="password" id="input-{{this.input!.id}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" [class.rounded-l-lg]="!this.input!.prefix" [class.rounded-r-lg]="!this.input!.suffix" [class.bg-gray-100]="this.input!.disabled" [class.cursor-not-allowed]="this.input!.disabled" [class.pl-10]="this.input!.icon != ''" placeholder="{{this.input!.placeholder|lang}}" *ngSwitchCase="'password'">
+                <input autocomplete="pw-{{this.input!.id}}" (ngModelChange)="this.input!.onInput($event)" (focus)="this.input!.onInputFocus()" [disabled]="this.input!.disabled.toString()" [(ngModel)]="this.input!.value" (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" type="password" id="input-{{this.input!.id}}" class="bg-gray-50 border border-gray-300 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" [class.rounded-l-lg]="!this.input!.prefix" [class.rounded-r-lg]="!this.input!.suffix" [class.bg-gray-100]="this.input!.disabled" [class.cursor-not-allowed]="this.input!.disabled" [class.pl-10]="this.input!.icon != ''" placeholder="{{this.input!.placeholder|lang}}" *ngSwitchCase="'password'">
 
-                <textarea (ngModelChange)="this.input!.onInput($event)" (focus)="this.input!.onInputFocus()" [disabled]="this.input!.disabled.toString()" [(ngModel)]="this.input!.value" (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" id="input-{{this.input!.id}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" [class.rounded-l-lg]="!this.input!.prefix" [class.rounded-r-lg]="!this.input!.suffix" [class.bg-gray-100]="this.input!.disabled" [class.cursor-not-allowed]="this.input!.disabled" [class.pl-10]="this.input!.icon != ''" placeholder="{{this.input!.placeholder|lang}}" rows="{{$any(this.input).rows || 3}}" *ngSwitchCase="'textarea'"></textarea>
+                <textarea (ngModelChange)="this.input!.onInput($event)" (focus)="this.input!.onInputFocus()" [disabled]="this.input!.disabled.toString()" [(ngModel)]="this.input!.value" (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" id="input-{{this.input!.id}}" class="bg-gray-50 border border-gray-300 text-sm block w-full p-2.5 focus:outline-none focus:ring-0" [class.rounded-l-lg]="!this.input!.prefix" [class.rounded-r-lg]="!this.input!.suffix" [class.bg-gray-100]="this.input!.disabled" [class.cursor-not-allowed]="this.input!.disabled" [class.pl-10]="this.input!.icon != ''" placeholder="{{this.input!.placeholder|lang}}" rows="{{$any(this.input).rows || 3}}" *ngSwitchCase="'textarea'"></textarea>
 
                 <div *ngSwitchCase="'date'" ngSResize>
-                    <input (ngModelChange)="this.input!.onInput($event)" (click)="$any(this.input!).openDatepicker();" [disabled]="this.input!.disabled.toString()" [(ngModel)]="this.input!.value" (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" type="date" id="input-{{this.input!.id}}" class="dropdown-toggle bg-gray-50 border border-gray-300 text-gray-900 text-sm block w-full p-2.5 focus:outline-none focus:ring-0 pointer-cursor" [class.rounded-l-lg]="!this.input!.prefix" [class.rounded-r-lg]="!this.input!.suffix" [class.bg-gray-100]="this.input!.disabled" [class.cursor-not-allowed]="this.input!.disabled" [class.pl-10]="this.input!.icon != ''" placeholder="{{this.input!.placeholder|lang}}" autocomplete="off">
+                    <input (ngModelChange)="this.input!.onInput($event)" (click)="$any(this.input!).openDatepicker();" [disabled]="this.input!.disabled.toString()" [(ngModel)]="this.input!.value" (keydown.enter)="this.input!.standalone ? this.input!.submit() : null" type="date" id="input-{{this.input!.id}}" class="dropdown-toggle bg-gray-50 border border-gray-300 text-sm block w-full p-[9px] focus:outline-none focus:ring-0 pointer-cursor" [class.rounded-l-lg]="!this.input!.prefix" [class.rounded-r-lg]="!this.input!.suffix" [class.bg-gray-100]="this.input!.disabled" [class.cursor-not-allowed]="this.input!.disabled" [class.pl-10]="this.input!.icon != ''" placeholder="{{this.input!.placeholder|lang}}" autocomplete="off">
 
                     <div class="absolute z-50 w-min dropdown-menu">
-                        <ngs-enter-leave [active]="$any(this.input).open" (onClose)="$any(this.input).open = false" [clickout]="true">
+                        <ngs-enter-leave [active]="$any(this.input).open" (onClose)="$any(this.input).open = false" [clickout]="true" [clickoutTarget]="'clickout-target-date'">
                             <div class="relative block bg-white" id="clickout-target">
                                 <ngs-datepicker [selected]="this.input!.value" [min]="$any(this.input!).min" [max]="$any(this.input!).max" [blocked]="$any(this.input!).blocked" (onSelected)="this.input!.value = $event; $any(this.input).open = false; this.input.onInput($event)"></ngs-datepicker>
                             </div>
-                        </ngs-enter-leave>                        
+                        </ngs-enter-leave>          
                     </div>
                 </div>
 
-                <div id="map" class="map" *ngSwitchCase="'coordinates'" style="width: 100%; height: 400px"></div>
+                <div id="map" class="map rounded-lg" *ngSwitchCase="'coordinates'" style="width: 100%; height: 400px"></div>
             </ng-container>
+        
+            <div class="absolute top-0 inset-y-0 right-0 flex items-center pr-3 cursor-pointer" *ngIf="this.input!.actionIcon != ''" (click)="this.input.onActionIconClick()">
+                <ngs-icon [type]="this.input!.actionIcon"></ngs-icon>
+            </div>
         </div>
 
-        <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-md" *ngIf="this.input!.suffix">
+        <span class="inline-flex items-center px-3 text-sm bg-gray-200 border border-l-0 border-gray-300 rounded-r-md" *ngIf="this.input!.suffix && !$any(this.input).slider">
             {{this.input!.suffix | lang}}
         </span>
     </div>

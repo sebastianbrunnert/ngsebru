@@ -171,7 +171,7 @@ export class MillisToDateTransformer extends NgSTransformer {
 
 export class MillisToDayTagTransformer extends NgSTransformer {
     public result(): String {
-        return new Date(this.value).toISOString().slice(0, 10)
+        return new Date(this.value + 1000 * 60 * 60).toISOString().slice(0, 10);
     }
 }
 

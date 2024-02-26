@@ -1,24 +1,24 @@
-<div class="w-full flex justify-center">
+<div class="w-full flex justify-center" id="clickout-target">
     <div class="flex flex-col my-3 sm:flex-row sm:space-x-2 sm:items-end items-center justify-center">
-        <ul class="flex items-center" *ngIf="this.pagination.pages > 1">
-            <li (click)="this.previous()" class="block rounded-l-lg p-2 border-gray-200 border text-gray-500 hover:bg-gray-100" [class.hover:bg-gray-100]="hasPrevious" [class.cursor-pointer]="hasPrevious">
+        <ul class="flex h-full items-center" *ngIf="this.pagination.pages > 1">
+            <li id="clickout-target" (click)="this.previous()" class="block rounded-l-lg p-2 border-gray-200 border text-gray-500 hover:bg-gray-100" [class.hover:bg-gray-100]="hasPrevious" [class.cursor-pointer]="hasPrevious">
                 <ngs-icon [type]="'left'" [size]="6"></ngs-icon>
             </li>
-            <ng-container *ngFor="let page of this.pages">
-                <li class="block py-2 px-4 border-gray-200 border text-gray-500 hover:bg-gray-100 cursor-pointer" *ngIf="this.pagination.page != page-1" (click)="this.setPage(page-1)">
+            <div *ngFor="let page of this.pages">
+                <li id="clickout-target" class="block py-2 px-4 border-gray-200 border text-gray-500 hover:bg-gray-100 cursor-pointer" *ngIf="this.pagination.page != page-1" (click)="this.setPage(page-1)">
                     {{page}}
                 </li>
-                <li class="block py-2 px-4 border-gray-200 border text-gray-500 bg-gray-200" *ngIf="this.pagination.page == page-1">
+                <li id="clickout-target" class="block py-2 px-4 border-gray-200 border text-gray-500 bg-gray-200" *ngIf="this.pagination.page == page-1">
                     {{page}}
                 </li>
-            </ng-container>
-            <li (click)="this.next()" class="block rounded-r-lg p-2 border-gray-200 border text-gray-500 hover:bg-gray-100" [class.hover:bg-gray-100]="hasNext" [class.cursor-pointer]="hasNext">
+            </div>
+            <li id="clickout-target" (click)="this.next()" class="block rounded-r-lg p-2 border-gray-200 border text-gray-500 hover:bg-gray-100" [class.hover:bg-gray-100]="hasNext" [class.cursor-pointer]="hasNext">
                 <ngs-icon [type]="'right'" [size]="6"></ngs-icon>
             </li>
         </ul>
         <div class="flex items-center space-x-2" *ngIf="this.enablePageSize && (this.pagination.elements.length > this.pageSizeOptions[0] || this.pagination.pages > 1)">
             <ngs-input [input]="this.pageSizeInput"></ngs-input>
-            <p class="text-gray-900 mt-2">{{'PAGINATION_ELEMENT_PER_PAGE'|lang}}</p>
+            <p class="text-gray-900">{{'PAGINATION_ELEMENT_PER_PAGE'|lang}}</p>
         </div>
     </div>
 </div>

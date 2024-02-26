@@ -18,8 +18,12 @@ export class NgSFormComponent {
     @Output()
     public submitValid = new EventEmitter<Boolean>();
 
+    constructor() {
+
+    }
+
     public validate() {
-        if (!this.form.submitable) {
+        if (!this.form.submitable || !this.form.hasInput) {
             return
         }
         if (this.form.submit()) {
@@ -46,9 +50,17 @@ export class NgSForm implements Checkable {
     public loading: Boolean = false
     public submitable: Boolean = true
     public showButton: Boolean = true
+    public hasInput: Boolean = false
+    public blockable: Boolean = true
 
     constructor(...ngSFormInputs: (NgSInput | NgSFormGroup)[]) {
-        this.inputs = ngSFormInputs
+        ngSFormInputs.forEach(input => {
+            if (input instanceof NgSFormGroup) {
+                this.addGroup(input)
+            } else {
+                this.addNgSInput(input)
+            }
+        })
     }
 
     public isExistant(): Boolean {
@@ -59,6 +71,10 @@ export class NgSForm implements Checkable {
         this.inputs.forEach(input => {
             if (input instanceof NgSInput) {
                 input.reset()
+            } else {
+                input.inputs.forEach(subinput => {
+                    subinput.reset()
+                })
             }
         })
         this.setLoading(false)
@@ -66,6 +82,10 @@ export class NgSForm implements Checkable {
 
     public setLoading(loading: Boolean): NgSForm {
         this.loading = loading
+        if (!loading) {
+            this.onDisableLoading()
+            this.setHasInput(false)
+        }
         return this
     }
 
@@ -79,6 +99,22 @@ export class NgSForm implements Checkable {
         return this
     }
 
+    public setBlockable(blockable: Boolean): NgSForm {
+        this.blockable = blockable
+        if (!blockable) {
+            this.setHasInput(true)
+        }
+        return this
+    }
+
+    public setHasInput(hasInput: Boolean): NgSForm {
+        if (this.blockable) {
+            this.hasInput = false
+        }
+        this.hasInput = hasInput
+        return this
+    }
+
     public showError(ngSError: NgSError) {
         this.setLoading(false)
         this.getNgSInput(ngSError.description).mark = ngSError.message
@@ -86,10 +122,36 @@ export class NgSForm implements Checkable {
 
     public addGroup(ngSFormGroup: NgSFormGroup) {
         this.inputs.push(ngSFormGroup)
+        ngSFormGroup.inputs.forEach(input => {
+            input.onInput = () => {
+                this.onInput()
+                this.setHasInput(true)
+            }
+        })
     }
 
     public addNgSInput(ngSInput: NgSInput) {
         this.inputs.push(ngSInput)
+        ngSInput.onInput = (_) => {
+            this.onInput()
+            this.setHasInput(true)
+        }
+    }
+
+    public removeNgSInput(ngSInput: NgSInput) {
+        this.inputs = this.inputs.filter(input => input != ngSInput)
+        ngSInput.onInput = (_) => { }
+    }
+
+    public existsNgSInput(id: String): Boolean {
+        return this.inputs.some(input => {
+            if (input instanceof NgSInput && input.id == id) {
+                return true
+            } else if (input instanceof NgSFormGroup) {
+                return input.inputs.some(subinput => subinput.id == id)
+            }
+            return false
+        })
     }
 
     public getNgSInput(id: String): NgSInput {
@@ -122,6 +184,14 @@ export class NgSForm implements Checkable {
         throw new Error("No input with label " + label + " found");
     }
 
+    public getValue(id: String): any {
+        try {
+            return this.getNgSInput(id).value
+        } catch (error) {
+            return undefined
+        }
+    }
+
     public setSubmitable(submitable: Boolean) {
         this.submitable = submitable
     }
@@ -146,6 +216,13 @@ export class NgSForm implements Checkable {
         return result
     }
 
+    public silentSubmit(): Boolean {
+        if (!this.loading) {
+            return true
+        }
+        return false
+    }
+
     public submit(): Boolean {
         if (!this.loading && this.checkFilled() && this.checkValidation()) {
             this.setLoading(true)
@@ -155,7 +232,11 @@ export class NgSForm implements Checkable {
         return false
     }
 
+    public onInput() { }
+
     public onSubmit() { }
+
+    public onDisableLoading() { }
 
     public getValues(exclude: String[] = []): Object {
         let result: {
@@ -187,6 +268,9 @@ export class NgSForm implements Checkable {
 export class NgSFormGroup implements Checkable {
     public title: String = ""
     public inputs: NgSInput[] = []
+    public prominent: Boolean = true
+    public split: Boolean = true
+    public description: String = ""
 
     constructor(title: String, ...ngSFormInputs: NgSInput[]) {
         this.title = title
@@ -215,6 +299,21 @@ export class NgSFormGroup implements Checkable {
 
     public addNgSInput(ngSInput: NgSInput): NgSFormGroup {
         this.inputs.push(ngSInput)
+        return this
+    }
+
+    public setProminent(prominent: Boolean): NgSFormGroup {
+        this.prominent = prominent
+        return this
+    }
+
+    public setSplit(split: Boolean): NgSFormGroup {
+        this.split = split
+        return this
+    }
+
+    public setDescription(description: String): NgSFormGroup {
+        this.description = description
         return this
     }
 }

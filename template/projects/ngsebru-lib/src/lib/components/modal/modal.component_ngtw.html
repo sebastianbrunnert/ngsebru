@@ -1,8 +1,8 @@
-<div class="fixed top-0 left-0 z-50" *ngIf="this.modal.active">
+<div class="fixed top-0 left-0" *ngIf="this.modal.active" style="z-index: 9999;">
     <div class="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity"></div>
 </div>
 
-<div class="fixed top-0 left-0 z-50">
+<div class="fixed top-0 left-0" style="z-index: 9999;">
     <ngs-enter-leave [clickout]="this.modal.closeable" [active]="this.modal.active" (onClose)="this.modal.active = false">
         <div class="relative w-screen h-screen z-50">
             <div class="fixed inset-0 overflow-y-auto">
@@ -14,7 +14,7 @@
                                     <ngs-icon [type]="'left'"></ngs-icon>
                                 </button>
                                 <div>
-                                    <h1 class="text-2xl font-semibold text-gray-900">
+                                    <h1 class="text-2xl font-semibold">
                                         {{this.modal.title | lang}}
                                     </h1>
                                     <span class="text-md text-gray-500">{{ this.modal.subtitle | lang }}</span>
@@ -30,8 +30,14 @@
                                     {{this.modal.text | lang}}
                                 </p>
                             </div>
+                            <div class="py-4 px-8 border-t" [innerHTML]="this.modal.body" *ngIf="this.modal.body != null"></div>
                             <div class="py-4 px-8 border-t" *ngIf="this.modal.ngSForm != null">
                                 <ngs-form [form]="this.modal.ngSForm"></ngs-form>
+                            </div>
+                            <div class="py-4 px-8 border-t" *ngIf="modal.hasDynamicContent">
+                                <ng-template #dynamicContentWrapper>
+                                    <ng-content></ng-content>
+                                </ng-template>
                             </div>
                             <ng-template #contentWrapper>
                                 <ng-content></ng-content>

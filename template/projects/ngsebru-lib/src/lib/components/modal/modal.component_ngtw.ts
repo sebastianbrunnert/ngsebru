@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, HostListener, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentRef, HostListener, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from "@angular/core";
 import { NgSInjector } from "projects/ngsebru-lib/src/public-api";
 import { NgSColor } from "../../models/color.model";
 import { NgSLangPipe } from "../../pipes/lang.pipe";
@@ -14,18 +14,19 @@ import { NgSEnterLeaveComponent } from "../structure/enter-leave.component";
     standalone: true,
     imports: [NgSEnterLeaveComponent, CommonModule, NgSIconComponent, NgSFormComponent, NgSLangPipe]
 })
-export class NgSModalComponent implements OnInit, AfterContentInit, AfterViewInit {
+export class NgSModalComponent implements OnInit, AfterViewInit {
 
     @Input("onBack")
     public onBack?: () => void;
 
     @Input("modal")
-    public modal: NgSModal = new NgSModal();
+    public modal: NgSModal = new NgSModal().setType(NgSModalType.XXL);
 
     constructor(
         private changeDetectorRef: ChangeDetectorRef
     ) { }
 
+    @ViewChild('dynamicContentWrapper', { read: ViewContainerRef }) dynamicContentWrapper: ViewContainerRef | undefined;
     @ViewChild('contentWrapper', { static: true }) contentWrapper: TemplateRef<any> | undefined;
 
     get hasContent(): boolean {
@@ -36,15 +37,13 @@ export class NgSModalComponent implements OnInit, AfterContentInit, AfterViewIni
         return view != null && view.rootNodes.length > 0;
     }
 
+
     ngOnInit() {
         this.modal.setNgSModalComponent(this)
     }
 
     ngAfterViewInit() {
         this.onLoad()
-    }
-
-    ngAfterContentInit() {
         this.changeDetectorRef.detectChanges()
     }
 
@@ -67,8 +66,10 @@ export class NgSModal {
     public text?: String
     public ngSForm?: NgSForm
     public active: Boolean = false
-    private ngSModalComponent?: NgSModalComponent
+    public ngSModalComponent?: NgSModalComponent
     public closeable: Boolean = true
+    public body?: String
+    public hasDynamicContent: Boolean = false
 
     public setNgSModalComponent(ngSModalComponent: NgSModalComponent): NgSModal {
         this.ngSModalComponent = ngSModalComponent
@@ -110,6 +111,16 @@ export class NgSModal {
         return this
     }
 
+    public setBody(body: String): NgSModal {
+        this.body = body
+        return this
+    }
+
+    public setHasDynamicContent(hasDynamicContent: Boolean): NgSModal {
+        this.hasDynamicContent = hasDynamicContent
+        return this
+    }
+
     public open() {
         if (!this.ngSModalComponent) {
             this.ngSModalComponent = NgSInjector.get(NgSPageService).createComponent(NgSModalComponent).instance
@@ -121,7 +132,6 @@ export class NgSModal {
             this.active = true
         }
     }
-
 
     public close() {
         this.active = false
@@ -148,4 +158,5 @@ export class NgSModalType {
     public static S = "md"
     public static L = "2xl"
     public static XL = "4xl"
+    public static XXL = "6xl"
 }

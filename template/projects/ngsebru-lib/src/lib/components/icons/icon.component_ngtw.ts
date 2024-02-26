@@ -23,6 +23,10 @@ export class NgSIconComponent implements OnInit {
 
     public iconText: String = "";
 
+    private static iconCache: { [key: string]: string } = {};
+
+    private static iconLoadPromises: { [key: string]: Promise<string | undefined> } = {};
+
     constructor(private http: HttpClient) { }
 
     ngOnInit(): void {
@@ -33,13 +37,31 @@ export class NgSIconComponent implements OnInit {
     }
 
     private loadIcon(icon: String) {
-        this.http.get("./assets/icons/" + icon + ".svg", { responseType: "text" }).subscribe((data: String) => {
-            this.iconText = data;
-        }, (error) => {
-            this.loadIcon("error");
-        })
+        if (NgSIconComponent.iconCache[icon.toString()]) {
+            this.iconText = NgSIconComponent.iconCache[icon.toString()];
+        } else if (NgSIconComponent.iconLoadPromises[icon.toString()] != undefined) {
+            NgSIconComponent.iconLoadPromises[icon.toString()].then((data: string | undefined) => {
+                if (data == undefined)
+                    this.loadIcon('error');
+                else
+                    this.iconText = data;
+            });
+        } else {
+            const iconLoadPromise = this.http.get(`./assets/icons/${icon}.svg`, { responseType: 'text' }).toPromise();
+            NgSIconComponent.iconLoadPromises[icon.toString()] = iconLoadPromise
+            iconLoadPromise.then((data: string | undefined) => {
+                if (data == undefined) {
+                    this.loadIcon('error');
+                } else {
+                    this.iconText = data;
+                    NgSIconComponent.iconCache[icon.toString()] = data;
+                    delete NgSIconComponent.iconLoadPromises[icon.toString()];
+                }
+            }).catch((error) => {
+                this.loadIcon('error');
+            });
+        }
     }
-
     get usesCustomColor(): boolean {
         return this.color instanceof NgSCustomColor;
     }

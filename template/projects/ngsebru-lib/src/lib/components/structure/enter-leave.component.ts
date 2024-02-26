@@ -5,7 +5,7 @@ import { ChangeDetectorRef, Component, EventEmitter, HostListener, Input, Output
 @Component({
     selector: "ngs-enter-leave",
     standalone: true,
-    template: "<div [@enterLeave]=\"openCloseTrigger\" (@enterLeave.start)=\"this.finished = false\" (@enterLeave.done)=\"this.finished = true\"><ng-content *ngIf=\"this.active || !this.finished\"></ng-content></div>",
+    template: "<div class='z-50' [@enterLeave]=\"openCloseTrigger\" (@enterLeave.start)=\"this.finished = false\" (@enterLeave.done)=\"this.finished = true\"><ng-content *ngIf=\"this.active || !this.finished\"></ng-content></div>",
     imports: [CommonModule],
     animations: [
         trigger("enterLeave", [

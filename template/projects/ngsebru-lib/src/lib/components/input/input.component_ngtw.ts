@@ -11,7 +11,7 @@ import { NgSDatepickerComponent } from "../datepicker/datepicker.component";
 import { SafeHtmlPipe } from "../../pipes/safe-html.pipe";
 import Map from 'ol/Map';
 import View from 'ol/View';
-import { OSM } from 'ol/source';
+import { OSM, XYZ } from 'ol/source';
 import TileLayer from 'ol/layer/Tile';
 import * as olProj from 'ol/proj';
 import { NgSPageService } from "../../services/page.service";
@@ -25,6 +25,8 @@ import { Feature } from "ol";
 import { Point } from "ol/geom";
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { HeicDirective } from "../../directives/heic.directive";
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import * as customEditor from '../../../assets/ckeditor.js';
 
 @Directive({
     selector: '[ngSResize]',
@@ -58,7 +60,7 @@ export class NgSResizeDirective {
     templateUrl: "./input.component.html",
     standalone: true,
     styleUrls: ["./input.component.scss"],
-    imports: [CommonModule, GooglePlaceModule, FormsModule, NgSLangPipe, HeicDirective, SafeHtmlPipe, NgSIconComponent, NgSEnterLeaveComponent, NgSDatepickerComponent, NgSResizeDirective]
+    imports: [CommonModule, CKEditorModule, GooglePlaceModule, FormsModule, NgSLangPipe, HeicDirective, SafeHtmlPipe, NgSIconComponent, NgSEnterLeaveComponent, NgSDatepickerComponent, NgSResizeDirective]
 })
 export class NgSInputComponent {
 
@@ -71,7 +73,7 @@ export class NgSInputComponent {
     templateUrl: "./input.component.html",
     standalone: true,
     styleUrls: ["./input.component.scss"],
-    imports: [CommonModule, HeicDirective, GooglePlaceModule, NgSInputComponent, FormsModule, NgSLangPipe, SafeHtmlPipe, NgSIconComponent, NgSEnterLeaveComponent, NgSDatepickerComponent, NgSResizeDirective]
+    imports: [CommonModule, CKEditorModule, HeicDirective, GooglePlaceModule, NgSInputComponent, FormsModule, NgSLangPipe, SafeHtmlPipe, NgSIconComponent, NgSEnterLeaveComponent, NgSDatepickerComponent, NgSResizeDirective]
 })
 export class NgSClassInputComponent {
 
@@ -88,13 +90,16 @@ export enum NgSInputType {
     DATE_TIME = "datetime",
     PASSWORD = "password",
     SELECT = "select",
+    MULTI_SELECT = "multi-select",
     CUSTOM_FILE = "custom-file",
     COLOR = "color",
     CHECKBOX = "checkbox",
     COORDINATES = "coordinates",
     GROUP = "group",
     SWITCHER = "switcher",
-    PLACE = "place"
+    PLACE = "place",
+    EDITOR = "editor",
+    MULTI_TEXT = "multi-text"
 }
 
 export class NgSInput {
@@ -112,6 +117,7 @@ export class NgSInput {
     public required: Boolean = true
     public disabled: Boolean = false
     public icon: String = ""
+    public actionIcon: String = ""
     public placeholder: String = "INPUT_DEFAULT_PLACEHOLDER"
     public description: String = ""
     public tooltip: String = ""
@@ -134,7 +140,10 @@ export class NgSInput {
 
     public onIconClick() { }
 
-    public onInput(value: any) { }
+    public onActionIconClick() { }
+
+    public onInput(value: any) {
+    }
 
     public onInputFocus() { }
 
@@ -208,8 +217,17 @@ export class NgSInput {
         return this
     }
 
+    public setActionIcon(icon: String): NgSInput {
+        this.actionIcon = icon
+        return this
+    }
+
     public setValue(value: any): NgSInput {
-        this.value = new IsIteratableCheck(value).result() ? [...value] : value
+        if (value == null || value == undefined) {
+            this.value = value
+        } else {
+            this.value = new IsIteratableCheck(value).result() ? [...value] : value
+        }
         return this
     }
 
@@ -258,6 +276,12 @@ export class NgSTextInput extends NgSInput {
     }
 }
 
+export class NgSTimeInput extends NgSInput {
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.TIME, id)
+    }
+}
+
 export class NgSPlaceInput extends NgSInput {
     constructor(label: String, id: String = "") {
         super(label, NgSInputType.PLACE, id)
@@ -283,6 +307,7 @@ export class NgSNumberInput extends NgSInput {
     public min?: Number
     public max?: Number
     public steps: Number = 1
+    public slider: Boolean = false
 
     constructor(label: String, id: String = "") {
         super(label, NgSInputType.NUMBER, id)
@@ -300,6 +325,11 @@ export class NgSNumberInput extends NgSInput {
 
     public setSteps(steps: Number): NgSNumberInput {
         this.steps = steps
+        return this
+    }
+
+    public setSlider(slider: Boolean): NgSNumberInput {
+        this.slider = slider
         return this
     }
 }
@@ -350,6 +380,88 @@ export class NgSSwitcherInput extends NgSInput {
             label: label,
             value: value
         })
+    }
+
+}
+
+export class NgSMultipleSelectInput extends NgSInput {
+    public options: NgSSelectOption[] = []
+    public emptyValueDefault: String = ""
+    public open: Boolean = false
+    public selectLabel: NgSSelectOption[] = []
+    public searchbar?: NgSInput
+
+    constructor(label: String, id: String = "") {
+        super(label, NgSInputType.MULTI_SELECT, id)
+        this.setDefaultValue([])
+    }
+
+    public selectAll() {
+        this.value = this.options.map(option => option.value)
+        this.selectLabel = this.value.map((value: String) => this.options.find(option => option.value == value))
+        return this
+    }
+
+    public removeOption(id: String): NgSMultipleSelectInput {
+        this.options = this.options.filter(option => option.value != id)
+        return this
+    }
+
+    public addOption(option: NgSSelectOption): NgSMultipleSelectInput {
+        if (option.value == this.value) {
+            this.selectLabel = [option]
+        }
+        this.options.push(option)
+        return this
+    }
+
+    public addOptions(options: NgSSelectOption[]): NgSMultipleSelectInput {
+        options.forEach(option => {
+            this.addOption(option)
+        })
+        return this
+    }
+
+    public toggle() {
+        if (this.disabled) {
+            return
+        }
+        this.open = !this.open
+        if (this.open) {
+            this.onInputFocus()
+        }
+    }
+
+    public select(option: NgSSelectOption): NgSMultipleSelectInput {
+        if (this.value.includes(option.value)) {
+            this.value.splice(this.value.indexOf(option.value), 1)
+        } else {
+            this.value.push(option.value)
+        }
+        this.selectLabel = this.value.map((value: String) => this.options.find(option => option.value == value))
+        this.onInput(this.value)
+        return this
+    }
+
+    public setEmptyValueDefault(emptyValueDefault: String): NgSMultipleSelectInput {
+        this.emptyValueDefault = emptyValueDefault
+        return this
+    }
+
+    public activateSearchbar(title: String = ""): NgSMultipleSelectInput {
+        this.searchbar = new NgSInput(title, NgSInputType.TEXT, this.id + "_searchbar").setStandalone(true)
+        this.searchbar.onInput = (value: String) => {
+            if (value == null || value == "") {
+                this.options.forEach(option => {
+                    option.hidden = false
+                })
+                return
+            }
+            this.options.forEach(option => {
+                option.hidden = option.label.toLowerCase().startsWith(value.toLowerCase()) == false
+            })
+        }
+        return this
     }
 
 }
@@ -434,7 +546,7 @@ export class NgSSelectInput extends NgSInput {
         return this.select(option)
     }
 
-    public select(option: NgSSelectOption): NgSSelectInput {
+    public select(option?: NgSSelectOption, emit: boolean = true): NgSSelectInput {
         this.open = false
         if (option == null) {
             this.value = null
@@ -444,7 +556,8 @@ export class NgSSelectInput extends NgSInput {
         }
         this.value = option.value
         this.selectLabel = option.label
-        this.onInput(this.value)
+        if (emit)
+            this.onInput(this.value)
         return this
     }
 
@@ -485,8 +598,11 @@ export class NgSCoordinatesInput extends NgSInput {
             const map = new Map({
                 layers: [
                     new TileLayer({
-                        source: new OSM()
-                    })
+                        source: new XYZ({
+                            url: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png',
+                            attributions: "<a href='https://foundation.wikimedia.org/wiki/Policy:Maps_Terms_of_Use'>Wikimedia maps</a> | Map data © <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
+                        }),
+                    }),
                 ],
                 target: 'map',
                 view: new View({
@@ -586,6 +702,48 @@ export class NgSDateInput extends NgSInput {
         if (this.open) return
         this.open = true
         this.onInputFocus()
+    }
+}
+
+export class NgSMultipleTextInput extends NgSInput {
+
+    public internValue: String = ""
+
+    constructor(name: String, id: String = "") {
+        super(name, NgSInputType.MULTI_TEXT, id)
+        this.setIcon("plus")
+        this.onIconClick = this.add
+    }
+
+    add() {
+        if (this.internValue != "" && !this.value.includes(this.internValue)) {
+            this.value.push(this.internValue)
+            this.internValue = ""
+            this.onInput(this.value)
+        }
+    }
+
+    remove(value: String) {
+        if (this.value.includes(value)) {
+            this.value.splice(this.value.indexOf(value), 1)
+            this.onInput(this.value)
+        }
+    }
+
+    enter(event: any) {
+        if (this.internValue != "" && event.key == "Enter") {
+            event.preventDefault()
+            this.add()
+        }
+    }
+}
+
+export class NgSTextEditorInput extends NgSInput {
+    public Editor
+
+    constructor(name: String, id: String = "") {
+        super(name, NgSInputType.EDITOR, id)
+        this.Editor = customEditor
     }
 }
 
