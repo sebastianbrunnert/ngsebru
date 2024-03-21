@@ -41,7 +41,7 @@ export class NgSRestService {
         if (restBuilder.handleErrorSelf) {
             if (ngSError.level == NgSErrorLevel.LOGOUT) {
                 restBuilder.getAuthenticationType().onLogout()
-            } else if (ngSError.level != NgSErrorLevel.INPUT) {
+            } else if (ngSError.level == NgSErrorLevel.INPUT) {
                 restBuilder.getInquirer().showError(ngSError)
             }
             return false
